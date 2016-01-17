@@ -1,1 +1,1 @@
-# cs362
+Group repository for Computer Science 362.
