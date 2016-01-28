@@ -53,6 +53,9 @@ hs_err_pid*
 *.synctex.gz(busy)
 *.pdfsync
 
+# Whatever this is
+auto/
+
 
 #######################################
 # Vim
