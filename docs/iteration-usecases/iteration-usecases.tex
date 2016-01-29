@@ -1,19 +1,41 @@
-\documentclass[a4paper]{article}
+% Usually I would go with 11pt, but I needed a smaller font to keep the table a
+% reasonable size.
+\documentclass[10pt]{article}
 
-\title{Com Sci 362 - Iteration Use Cases}
+% I included this to decrease the size of the margins, a trick I needed to help
+% center the table.
+\usepackage{fullpage}
+
+% Set title parameters
+\title{Com Sci 362 - Use Case Schedule}
 \author{Adam Hammes $\bullet$ Nick Rieger $\bullet$ Steve Monson}
 
 \begin{document}
+
+% Actually put title in document
 \maketitle
 
+\begin{center}
+% tabular takes one argument: a list of columns w/ their alignment (l, c, r)
+% with optional pipes as column separators
 \begin{tabular}{| r | l | l | l |}
-  \hline             & Adam        & Nick                & Steve                \\ 
-  \hline Iteration 1 & Add User    & Tag Book            & List all Books       \\ 
-                     & Add Book    & Untag Book          & Rate Book            \\ 
-                     & Add Version & Find Books With Tag & List Books By Rating \\
-  \hline Iteration 2 & & & \\
-  \hline Iteration 3 & & & \\
+  % \hline gives a horizontal line
+  % & separates columns; make sure to end each column with \\
+  % It's not necessary to align everything like I did, but it greatly improves readability.
+  \hline             & Adam                    & Nick                        & Steve                       \\ 
+  \hline Iteration 1 & Add User                & Tag Book                    & List all Books              \\ 
+                     & Add Book                & Untag Book                  & Rate Book                   \\ 
+                     & Add Version             & Find Books With Tag         & List Books By Rating        \\
+  \hline Iteration 2 & Search By Series        & Change Rating               & Add Description             \\
+                     & Add Book To Series      & Remove Rating/Review        & Edit Book Description       \\
+                     & Remove Book From Series & View Rating/Review for Book & Remove Book Description     \\
+                     &                         &                             & Retrieve Book Description   \\
+  \hline Iteration 3 & Delete User             & List All Versions of a Book & Add Author Description      \\
+                     & Delete Book             & Retrieve Version of a Book  & Delete Author Description   \\
+                     & Delete Version of Book  & Find Books By Author        & Retrieve Author Description \\
+                     &                         &                             & Edit Author Description     \\
   \hline
 \end{tabular}
+\end{center}
 
 \end{document}
