@@ -1,0 +1,33 @@
+\documentclass{article}
+
+\begin{document}
+
+\section*{Use Case}
+
+\begin{tabular}{l l}
+Use Case     & Add User \\
+Actor        & User \\
+Precondition & None \\
+\end{tabular}
+
+Main Success Scenario:
+
+\begin{enumerate}
+    \item User provides unique name for account
+    \item System acknowledges successful add of user
+\end{enumerate}
+
+\begin{enumerate}
+    \item Requested name already in use
+    \begin{enumerate}
+        \item System indicates the operation failed.
+    \end{enumerate}
+\end{enumerate}
+
+Information Expert:
+
+The information expert for Add User is System.
+System knows Users.
+The addUser() method assigned to System will create a new instance of Student and put it in the database.
+
+\end{document}
