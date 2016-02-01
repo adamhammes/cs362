@@ -7,11 +7,42 @@
 \maketitle
 
 \section*{Use Case}
+\begin{tabular}{l l}
+  Use Case:     & Untag Book \\
+  Actor:        & User       \\
+  Precondition: & None       \\
+\end{tabular}
 
 \section*{Main Success Scenario:}
+\begin{enumerate}
+    \item User provides a book title and tag
+    \item The system removes the link between the book and tag
+\end{enumerate}
 
 \section*{Extensions}
+\begin{description}
+    \item[1a.] Tag does not exist
+    \begin{enumerate}
+        \item System returns operation unsuccessful
+    \end{enumerate}
+    \item[1b.] Book does not exist
+    \begin{enumerate}
+        \item System returns operation unsuccessful
+    \end{enumerate}
+    \item[1c.] Book is not tagged by the specified tag
+    \begin{enumerate}
+        \item System returns operation unsuccessful
+    \end{enumerate}
+    \item[2a.] After the tag has been removed, there are no books with that tag
+    \begin{enumerate}
+        \item Remove that tag from the system
+    \end{enumerate}
+\end{description}
 
 \section*{Information Expert}
+The information expert for this use case is the System class.
+The method removeTag() will unlink the tag and the book, and if
+necessary remove the tag from the system. The database will then
+be updated to reflect these changes.
 
 \end{document}
