@@ -1,17 +1,44 @@
 \documentclass{article}
 
 \title{Tag Book}
-\author{Nicholas Rieger}
+\author{Nicholas Riesen}
 
 \begin{document}
 \maketitle
 
 \section*{Use Case}
+ \begin{tabular}{l l}
+ 
+Use Case:     & Tag Book \\
+Actor:        & User     \\
+Precondition: & None     \\
+\end{tabular}
 
 \section*{Main Success Scenario:}
+\begin{enumerate}
+    \item User provides a book title and a tag
+    \item The system links the book to the tag and  acknowledges successful completion of the operation
+\end{enumerate}
 
 \section*{Extensions}
+\begin{description}
+    \item[1a.] Tag does not exist
+    \begin{enumerate}
+        \item System creates tag and links the book and new tag
+    \end{enumerate}
+    \item[1b.] Book does not exist
+    \begin{enumerate}
+        \item System returns operation unsuccessful
+    \end{enumerate}
+\end{description}
 
 \section*{Information Expert}
+The information expert for this use case is the System class. The System has
+direct access to all of the tags and the books. These relationships make it the
+most logical point to implement this functionality.
+
+
+The method tagBook() will create a new instance of tag if needed, and link the
+requested tag and book, and put all changes into the database.
 
 \end{document}
