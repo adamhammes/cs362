@@ -8,10 +8,34 @@
 
 \section*{Use Case}
 
+\begin{tabular}{l l}
+Use Case:     & List All Books \\
+Actor:        & User \\
+Precondition: & None \\
+\end{tabular}
+
 \section*{Main Success Scenario:}
+
+\begin{enumerate}
+    \item User requests a listing of all books
+    \item System outputs a listing of all books belonging to the user
+\end{enumerate}
 
 \section*{Extensions}
 
+\begin{enumerate}
+    \item User has no books belonging to them
+    \begin{enumerate}
+        \item System indicates no books to output
+    \end{enumerate}
+\end{enumerate}
+
 \section*{Information Expert}
+
+The information expert for List All Books is System.
+System knows Users and Books
+The displayAllBooks() method assigned to System will create a listing of all books beloning to a user.
+
+\pagebreak
 
 \end{document}
