@@ -8,10 +8,32 @@
 
 \section*{Use Case}
 
+\begin{tabular}{l l}
+Use Case:     & List Books By Rating \\
+Actor:        & User \\
+Precondition: & None \\
+\end{tabular}
+
 \section*{Main Success Scenario:}
+
+\begin{enumerate}
+    \item User requests a listing of all books in order of rating
+    \item System outputs a listing of all books belonging to the user in order of ranking
+\end{enumerate}
 
 \section*{Extensions}
 
+
+\begin{itemize}
+    \item [1a.] User has no books belonging to them
+       
+    - System indicates no books to output
+\end{itemize}
+
 \section*{Information Expert}
+
+The information expert for List All Books is System.
+System knows Users and Books
+The displayAllBooksByRating() method assigned to System will create a listing of all books beloning to a user and order them by rating.
 
 \end{document}
