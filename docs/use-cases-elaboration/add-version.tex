@@ -1,6 +1,6 @@
 \documentclass{article}
 
-\title{Add Version}
+\title{Use Case Elaboration - Add Version}
 \author{Adam Hammes}
 
 \begin{document}
@@ -8,10 +8,43 @@
 
 \section*{Use Case}
 
+\begin{tabular}{l l}
+  Use Case:     & Add Version \\
+  Actor:        & User        \\
+  Precondition: & None        \\
+\end{tabular}
+
 \section*{Main Success Scenario:}
+
+\begin{enumerate}
+  \item User provides the location of the file, type of version
+    to be added, and the unique id for the book.
+  \item System acknowledges that the version has been added.
+\end{enumerate}
 
 \section*{Extensions}
 
+\begin{enumerate}
+  \item [1a.] File is not at given location
+
+    - System indicates that the operation failed.
+
+  \item [1b.] Version of file already exists
+
+    - System confirms overwriting of old version.
+
+  \item [1c.] Book id does not exist.
+
+    - System indicates that the operation failed.
+\end{enumerate}
 \section*{Information Expert}
+
+The information experts for addVersion are System (knows users), User (knows
+books) and Book (knows versions).
+
+The addVersion method assigned to System will get the User instance from the
+database. The addVersion method assigned to User will then fetch the book
+instance from the database. The addVersion method assigned to Book will then add
+the version to the database.
 
 \end{document}
