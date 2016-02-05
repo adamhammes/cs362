@@ -8,10 +8,32 @@
 
 \section*{Use Case}
 
+\begin{tabular}{l l}
+Use Case:     & Rate Book \\
+Actor:        & User \\
+Precondition: & User has selected to edit a specific book \\
+\end{tabular}
+
 \section*{Main Success Scenario:}
+
+\begin{enumerate}
+    \item User enters a value for their rating of the book
+    \item System updates rating for the book
+    \item System outputs that the rating is updated
+\end{enumerate}
 
 \section*{Extensions}
 
+\begin{itemize}
+    \item [2a.] System cannot update the book's ranking
+       
+    - System indicates update couldn't occur.
+\end{itemize}
+
 \section*{Information Expert}
+
+The information expert for Rate Book is System.
+System knows Users and Books.
+The rateBook() method assigned to System will allow a book's rating to be updated.
 
 \end{document}
