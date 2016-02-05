@@ -1,17 +1,36 @@
 \documentclass{article}
 
-\title{Add Book}
+\title{Use Case Elaboration: Add Book}
 \author{Adam Hammes}
 
 \begin{document}
 \maketitle
 
 \section*{Use Case}
+\begin{tabular}{l l}
+  Use Case:     & Add Book    \\
+  Actor:        & User        \\
+  Precondition: & None \\
+\end{tabular}
 
 \section*{Main Success Scenario:}
+\begin{enumerate}
+  \item User provides a unique id and title for the book to be added.
+  \item System acknowledges that the book has been added.
+\end{enumerate}
 
 \section*{Extensions}
+\begin{itemize}
+  \item [1a.] Book ID is not unique
+
+    - System indicates that the operation failed.
+\end{itemize}
 
 \section*{Information Expert}
+
+The information experts for addBook are System (knows Users) and User (knows
+Books).
+This means that the addBook method assigned to Gradebook will get the User
+instance from the database and then call the addGrade method assigned to User.
 
 \end{document}
