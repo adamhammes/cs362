@@ -23,7 +23,15 @@
   }
 ]
 
-% Content goes here
+\node[] (start) {};
+
+\node[block, below = 2cm of start]      (controller) {\underline{: SystemController}};
+\node[block, below = 3cm of controller] (system)     {\underline{: System}}; 
+\node[block, below = 3cm of system]     (database)   {\underline{: DatabaseSupport}};
+
+\draw (start)      -- (controller) node[midway] {\texttt{1: b:=getBooksWithTag(uid:String, tid:string):boolean}};
+\draw (controller) -- (system)     node[midway] {\texttt{2: b:=getBooksWithTag(uid:String, tid:string):boolean}};
+\draw (system)     -- (database)   node[midway] {\texttt{3: b:=getBooksWithTag(uid:String, tid:string):boolean}};
 
 \end{tikzpicture}
 \end{center}
