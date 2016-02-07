@@ -24,6 +24,22 @@
 ]
 
 % Content goes here
+% Used for the arrow coming down to SystemController
+\node[] (start)  {};
+
+%     style     location                variable name    content 
+\node[block, below = 2cm of start]      (controller) {\underline{: SystemController}};
+\node[block, below = 3cm of controller] (system)     {\underline{: System}}; 
+\node[block, right = 4cm of system]     (user)       {\underline{u: User}};
+\node[block, below = 3cm of system]     (database)   {\underline{: DatabaseSupport}};
+
+
+%     (start_node) -- (end_node)   node[location] {content}
+\draw (start)      -- (controller) node[midway] {\texttt{1:b:=removeTag(uid:String, bookTitle:string, tag:string):boolean}};
+\draw (controller) -- (system)     node[midway] {\texttt{2:b:=removeTag(uid:String, bookTitle:string, tag:string):boolean}};
+\draw (system)     -- (database)   node[shift={(-2.7,2.5)}] {\texttt{3:u:=getUser(uid:String):User}};
+\draw (system)     -- (user)       node[shift={(0.5,.5)}] {\texttt{4:b:=removeTag(bookTitle:String, tag:String):boolean}};
+\draw (user) -- (database) node[midway]{\texttt{5:b:=removeTag(uid:string, bookTitle:string, tag:string):boolean}}
 
 \end{tikzpicture}
 \end{center}
