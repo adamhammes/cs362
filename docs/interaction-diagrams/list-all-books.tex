@@ -1,5 +1,6 @@
 \documentclass{article}
 
+\usepackage{amssymb}
 \usepackage{tikz}
 \usetikzlibrary{positioning}
 
@@ -24,8 +25,31 @@
 ]
 
 % Content goes here
+\node[] (start)  {};
+
+\node[block, below = 2cm of start]      (controller) {\underline{: SystemController}};
+\node[block, below = 2cm of controller] (system)     {\underline{: System}}; 
+\node[block, below = 2cm of system]     (database)   {\underline{: DatabaseSupport}};
+\node[block, right = 2cm of system]     (user)       {\underline{u: User}};
+
+\draw (start)      -- (controller) node[midway] {1. $\blacktriangledown$};
+\draw (controller) -- (system)     node[midway] {2. $\blacktriangledown$};
+\draw (system)  -- (database)      node[midway] {3. $\blacktriangledown$};
+\draw (system)     -- (user)       node[midway] {4. \blacktriangleright$};
+\draw (user)       -- (database)       node[midway] {5. $\blacktriangleleft$};
 
 \end{tikzpicture}
 \end{center}
+
+\vspace{0.5cm}
+
+
+\begin{enumerate}
+    \item \texttt{l:=displayAllBooks(uid:String):list<Book>}
+    \item \texttt{l:=displayAllBooks(uid:String):list<Book>}
+    \item \texttt{u:= getUser(uid:Strin):User}
+    \item \texttt{l:= getAllBooks():list<Book>}
+    \item \texttt{book:= getBook(bid:String):Book}
+\end{enumerate}
 
 \end{document}
