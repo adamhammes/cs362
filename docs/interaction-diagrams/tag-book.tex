@@ -1,5 +1,6 @@
 \documentclass{article}
 
+\usepackage{amssymb}
 \usepackage{tikz}
 \usetikzlibrary{positioning}
 
@@ -23,25 +24,29 @@
   }
 ]
 
-% Content goes here
-% Used for the arrow coming down to SystemController
 \node[] (start)  {};
 
-%     style     location                variable name    content 
 \node[block, below = 2cm of start]      (controller) {\underline{: SystemController}};
 \node[block, below = 3cm of controller] (system)     {\underline{: System}}; 
 \node[block, right = 4cm of system]     (user)       {\underline{u: User}};
 \node[block, below = 3cm of system]     (database)   {\underline{: DatabaseSupport}};
 
-
-%     (start_node) -- (end_node)   node[location] {content}
-\draw (start)      -- (controller) node[midway] {\texttt{1:b:=addTag(uid:String, bookTitle:string, tag:string):boolean}};
-\draw (controller) -- (system)     node[midway] {\texttt{2:b:=addTag(uid:String, bookTitle:string, tag:string):boolean}};
-\draw (system)     -- (database)   node[shift={(-2.7,2.5)}] {\texttt{3:u:=getUser(uid:String):User}};
-\draw (system)     -- (user)       node[shift={(0.5,.5)}] {\texttt{4:b:=addTag(bookTitle:String, tag:String):boolean}};
-\draw (user) -- (database) node[midway]{\texttt{5:b:=addTag(uid:string, bookTitle:string, tag:string):boolean}}
+\draw (start)      -- (controller) node[midway] {1. $\blacktriangledown$};
+\draw (controller) -- (system)     node[midway] {2. $\blacktriangledown$};
+\draw (system)     -- (database)   node[midway] {3. $\blacktriangledown$};
+\draw (system)     -- (user)       node[midway] {4. $\blacktriangleright$};
+\draw (user)       -- (database)   node[midway] {$\blacktriangledown$ 5.};
 
 \end{tikzpicture}
 \end{center}
 
+\vspace{0.5cm}
+
+\begin{enumerate}
+  \item \texttt{b:=addTag(uid:String, bookTitle:string, tag:string):boolean}
+  \item \texttt{b:=addTag(uid:String, bookTitle:string, tag:string):boolean}
+  \item \texttt{u:=getUser(uid:String):User}
+  \item \texttt{b:=addTag(bookTitle:String, tag:String):boolean}
+  \item \texttt{5:b:=addTag(uid:string, bookTitle:string, tag:string):boolean}
+\end{enumerate}
 \end{document}
