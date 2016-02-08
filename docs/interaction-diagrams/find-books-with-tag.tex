@@ -29,9 +29,9 @@
 \node[block, below = 3cm of controller] (system)     {\underline{: System}}; 
 \node[block, below = 3cm of system]     (database)   {\underline{: DatabaseSupport}};
 
-\draw (start)      -- (controller) node[midway] {\texttt{1: b:=getBooksWithTag(uid:String, tid:string):boolean}};
-\draw (controller) -- (system)     node[midway] {\texttt{2: b:=getBooksWithTag(uid:String, tid:string):boolean}};
-\draw (system)     -- (database)   node[midway] {\texttt{3: b:=getBooksWithTag(uid:String, tid:string):boolean}};
+\draw (start)      -- (controller) node[midway] {\texttt{1: l:=getBooksWithTag(uid:String, tid:string):string[]}};
+\draw (controller) -- (system)     node[midway] {\texttt{2: l:=getBooksWithTag(uid:String, tid:string):string[]}};
+\draw (system)     -- (database)   node[midway] {\texttt{3: l:=getBooksWithTag(uid:String, tid:string):string[]}};
 
 \end{tikzpicture}
 \end{center}
