@@ -1,5 +1,6 @@
 \documentclass{article}
 
+\usepackage{amssymb}
 \usepackage{tikz}
 \usetikzlibrary{positioning}
 
@@ -16,6 +17,7 @@
 \begin{tikzpicture}[
   auto,
   block/.style = {
+    minimum width = 9em,
     rectangle,
     draw=black,
     align=center,
@@ -24,8 +26,39 @@
 ]
 
 % Content goes here
+\node[] (start)  {};
+
+\node[block, below = 2cm of start]      (controller) {\underline{: SystemController}};
+\node[block, below = 2cm of controller] (system)     {\underline{: System}}; 
+\node[block, below = 2cm of system]     (database)   {\underline{: DatabaseSupport}};
+\node[block, right = 2cm of database]     (user)       {\underline{u: User}};
+\node[block, right = 2cm of system]       (book)       {\underline{book: Book}};
+
+\draw (start)      -- (controller) node[midway] {1. $\blacktriangledown$};
+\draw (controller) -- (system)     node[midway] {2. $\blacktriangledown$};
+\draw ([xshift=-1cm]system.south) -- ([xshift=-1cm]database.north)
+      node[midway] {3. $\blacktriangledown$};
+\draw (user)    -- (database)      node[midway] {4., 7. $\blacktriangleleft$};
+\draw (system)     -- (user)       node[midway] {5. $\blacktriangleright$};
+\draw (system)     -- (book)       node[midway] {6. $\blacktriangleright$};
+\draw (user)     -- (database)     node[midway] {};
+\draw ([xshift=0.8cm]system.south) -- ([xshift=0.8cm]database.north)
+      node[midway] {8. $\blacktriangledown$};
 
 \end{tikzpicture}
 \end{center}
+
+\vspace{0.5cm}
+
+\begin{enumerate}
+    \item \texttt{b:= addRating(uid:String, bid:String, rating:int):boolean}
+    \item \texttt{b:= addRating(uid:String, bid:String, rating:int):boolean}
+    \item \texttt{u:= getUser(uid:String):User}
+    \item \texttt{b:= getBook(bid:String):Book}
+    \item \texttt{b:= addRating(book:Book, rating:int):boolean}
+    \item \texttt{b:= addRating(rating:int):boolean}
+    \item \texttt{b:= putBook(book:Book):boolean}
+    \item \texttt{b:= putUser(u:User):boolean}
+\end{enumerate}
 
 \end{document}
