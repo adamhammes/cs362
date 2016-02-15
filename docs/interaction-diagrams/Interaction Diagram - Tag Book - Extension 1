@@ -1,0 +1,55 @@
+\documentclass{article}
+
+\usepackage{amssymb}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+
+\title{Interaction Diagram - Tag Book - Extention 1}
+\author{Nicholas Riesen}
+
+% no page number at bottom
+\pagenumbering{gobble}
+
+\begin{document}
+\maketitle
+
+\begin{center}
+\begin{tikzpicture}[
+  auto,
+  block/.style = {
+    rectangle,
+    draw=black,
+    align=center,
+    rounded corners
+  }
+]
+
+\node[] (start)  {};
+
+\node[block, below = 2cm of start]      (controller) {\underline{: SystemController}};
+\node[block, below = 3cm of controller] (system)     {\underline{: System}}; 
+\node[block, right = 4cm of system]     (user)       {\underline{u: User}};
+\node[block, below = 3cm of system]     (database)   {\underline{: DatabaseSupport}};
+\node[red, block, below right = 2cm of user]  (book)       {\underline{B: Book}};
+\node[block, below = 1.4cm of user] (tag)             {\underline{t: Tag}};
+
+\draw (start)      -- (controller) node[midway] {1. $\blacktriangledown$};
+\draw (controller) -- (system)     node[midway] {2. $\blacktriangledown$};
+\draw (system)     -- (database)   node[midway] {3. $\blacktriangledown$};
+\draw (system)     -- (user)       node[midway] {4. $\blacktriangleright$};
+\draw (user)       -- (tag);        
+\draw (user)       -- (book);       
+
+\end{tikzpicture}
+\end{center}
+
+%\vspace{0.5cm}
+\begin{enumerate}
+  \item \texttt{b:=addTag(uid:string, bookTitle:string, tag:string):false}
+  \item \texttt{b:=addTag(uid:string, bookTitle:string, tag:string):false}
+  \item \texttt{u:=getUser(uid:String):User}
+  \item \texttt{b:=addTag(bookTitle:String, tag:String):false}
+\end{enumerate}
+
+
+\end{document}
