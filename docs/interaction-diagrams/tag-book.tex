@@ -30,23 +30,28 @@
 \node[block, below = 3cm of controller] (system)     {\underline{: System}}; 
 \node[block, right = 4cm of system]     (user)       {\underline{u: User}};
 \node[block, below = 3cm of system]     (database)   {\underline{: DatabaseSupport}};
+\node[block, below right = 2cm of user]  (book)       {\underline{B: Book}};
+\node[block, below = 1.4cm of user] (tag)             {\underline{t: Tag}};
 
 \draw (start)      -- (controller) node[midway] {1. $\blacktriangledown$};
 \draw (controller) -- (system)     node[midway] {2. $\blacktriangledown$};
-\draw (system)     -- (database)   node[midway] {3. $\blacktriangledown$};
+\draw (system)     -- (database)   node[midway] {3.7. $\blacktriangledown$};
 \draw (system)     -- (user)       node[midway] {4. $\blacktriangleright$};
-\draw (user)       -- (database)   node[midway] {$\blacktriangledown$ 5.};
+\draw (user)       -- (tag)        node[midway] {$\blacktriangledown$ 5.};
+\draw (user)       -- (book)       node[midway] {$\blacktriangledown$ 6.};
 
 \end{tikzpicture}
 \end{center}
 
-\vspace{0.5cm}
+%\vspace{0.5cm}
 
 \begin{enumerate}
-  \item \texttt{b:=addTag(uid:String, bookTitle:string, tag:string):boolean}
-  \item \texttt{b:=addTag(uid:String, bookTitle:string, tag:string):boolean}
+  \item \texttt{b:=addTag(uid:string, bookTitle:string, tag:string):boolean}
+  \item \texttt{b:=addTag(uid:string, bookTitle:string, tag:string):boolean}
   \item \texttt{u:=getUser(uid:String):User}
   \item \texttt{b:=addTag(bookTitle:String, tag:String):boolean}
-  \item \texttt{5:b:=addTag(uid:string, bookTitle:string, tag:string):boolean}
+  \item \texttt{b:=addBook(b:book):boolean}
+  \item \texttt{b:=addTag(t:Tag):boolean}
+  \item \texttt{b:=updateUser(u:User):boolean}
 \end{enumerate}
 \end{document}
