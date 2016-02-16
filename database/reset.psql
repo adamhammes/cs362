@@ -63,4 +63,4 @@ CREATE TABLE Book_Tag (
     tag VARCHAR(20),
     CONSTRAINT book_tag_pkey PRIMARY KEY (account_name, book_id, tag)
 );
-    
+
