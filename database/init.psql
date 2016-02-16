@@ -56,3 +56,11 @@ CREATE TABLE Book_Series (
     index INTEGER,
     CONSTRAINT book_series_pkey PRIMARY KEY (book_id, series_id)
 );
+
+CREATE TABLE Book_Tag (
+    account_name VARCHAR REFERENCES Account (account_name),
+    book_id VARCHAR REFERENCES Book (book_id),
+    tag VARCHAR(20),
+    CONSTRAINT book_tag_pkey PRIMARY KEY (account_name, book_id, tag)
+);
+    
