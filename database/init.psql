@@ -48,7 +48,7 @@ CREATE TABLE Book_Author (
 
 CREATE TABLE Book_Series (
     book_id VARCHAR REFERENCES Book (book_id),
-    series_id VARCHAR REFERNCES Series (series_id),
+    series_id VARCHAR REFERENCES Series (series_id),
     index INTEGER,
     CONSTRAINT book_series_pkey PRIMARY KEY (book_id, series_id)
 );
