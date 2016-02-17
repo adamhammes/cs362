@@ -24,8 +24,8 @@ CREATE TABLE Series (
 );
 
 CREATE TABLE Account_Book (
-    book_id VARCHAR REFERENCES Book (book_id),
     account_name VARCHAR REFERENCES Account (account_name),
+    book_id VARCHAR REFERENCES Book (book_id),
     CONSTRAINT account_book_pkey PRIMARY KEY (book_id, account_name)
 );
 
