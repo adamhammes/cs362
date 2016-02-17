@@ -1,5 +1,7 @@
 INSERT INTO Account Values
-	('adam'), ('nick'), ('steve');
+	('adam'),
+	('nick'),
+	('steve');
 
 INSERT INTO Book VALUES
 	('mobydick', 'Moby Dick'),
