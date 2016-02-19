@@ -10,22 +10,33 @@
 
 \section*{Use Case}
 \begin{tabular}{l l}
-  Use Case:     & \\
-  Actor:        & \\
-  Precondition: & \\
+  Use Case:     & Add Juror to Pool\\
+  Actor:        & Clerk\\
+  Precondition: & Clerk Must Be Logged In\\
 \end{tabular}
 
 \section*{Main Success Scenario:}
 \begin{enumerate}
-  \item 
+  \item Clerk provides unique id, name, telephone number and address for juror to be added.
+  \item System acknowledges that the operation succeeded.
 \end{enumerate}
 
 \section*{Extensions}
 \begin{itemize}
-  \item [1a.]
-
+  \item [1a.] ID is not unique
+  
+  - System indicates that the operation failed.
+  
+  \item [1b.] Not all information is present.
+  
+  - System indicates that the operation failed.
+    
 \end{itemize}
 
 \section*{Information Expert}
+
+The information expert for addJurorToPool is Court, as Court knows Jury Pool.
+
+The addJurorToPool method assigned to Court will create a Juror instance from the given data, then use the addJuror method assigned to Jury Pool to actually add the juror to the pool.
 
 \end{document}
