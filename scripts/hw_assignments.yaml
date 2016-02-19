@@ -1,0 +1,17 @@
+Adam Hammes:
+    - Add Juror to Pool
+    - Delete Juror From Pool
+    - Check Exemption Status
+
+Nick Riesen:
+    - Create Trial
+    - Get Jurors in Pool
+    - Request Exemption
+    - Grant Exemption
+
+Steve Monson:
+    - Assign Juror to Trial
+    - Get Jurors in Trial
+    - Remove Juror From Trial
+    - See if Juror is in Trail
+
