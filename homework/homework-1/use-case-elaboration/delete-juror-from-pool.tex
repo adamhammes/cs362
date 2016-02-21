@@ -8,24 +8,31 @@
 \begin{document}
 \maketitle
 
+
 \section*{Use Case}
 \begin{tabular}{l l}
-  Use Case:     & \\
-  Actor:        & \\
-  Precondition: & \\
+  Use Case:     & Delete Juror From Pool\\
+  Actor:        & Clerk\\
+  Precondition: & None\\
 \end{tabular}
 
 \section*{Main Success Scenario:}
 \begin{enumerate}
-  \item 
+  \item Clerk provides unique ID of juror to be removed
+  \item System acknowledges that the juror is removed
 \end{enumerate}
+
 
 \section*{Extensions}
 \begin{itemize}
-  \item [1a.]
-
+  \item [1a.] Juror ID doesn't exist
+  
+  - System indicates that the operation failed
 \end{itemize}
 
+
 \section*{Information Expert}
+
+The information expert for deleteJurorFromPool is Jury Pool, as Jury Pool knows Jurors.
 
 \end{document}
