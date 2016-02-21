@@ -63,9 +63,9 @@
   node[pos=0.9] {1};
                           
 \draw (trial) -- (juror)
-  node[midway] {Has $\shortrightarrow$}
-  node[pos=0.1] {1}
-  node[pos=0.9] {12};
+  node[midway, swap] {Has $\shortrightarrow$}
+  node[pos=0.1, swap] {1}
+  node[pos=0.9, swap] {12};
 
 \path
   (court.south west) edge[bend right] 
@@ -73,6 +73,13 @@
   node [pos=0.1, swap] {1}
   node [pos=0.9, swap] {*}
   (judge.north west);
+  
+\path
+  (court.south east) edge[bend left=16]
+  node [pos=.45] {$\shortdownarrow$ Tracks}
+  node [pos=.1] {1}
+  node [pos=.95] {*}
+  (exemption.north west);
 
 \end{tikzpicture}
 \end{center}
