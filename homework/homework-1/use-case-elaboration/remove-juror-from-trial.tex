@@ -1,6 +1,6 @@
 \documentclass{article}
 
-\title{Use Case Elaboration: Remove Juror From Trial}
+\title{Use Case Elaboration: Assign Juror to Trial}
 \author{Steve Monson}
 
 \pagenumbering{gobble}
@@ -10,22 +10,38 @@
 
 \section*{Use Case}
 \begin{tabular}{l l}
-  Use Case:     & \\
-  Actor:        & \\
-  Precondition: & \\
+  Use Case:     & Remove Juror from Trial\\
+  Actor:        & Clerk\\
+  Precondition: & Clerk must be logged in\\
 \end{tabular}
 
 \section*{Main Success Scenario:}
 \begin{enumerate}
-  \item 
+  \item Clerk gives unique ID of juror and trial number
+  \item System disassociates the juror with given ID to the trial with the given trial number
+  \item System acknowledges remove is successful
 \end{enumerate}
 
 \section*{Extensions}
 \begin{itemize}
-  \item [1a.]
+  \item [2a.] Juror with given ID isn't in the system
+  
+    -System indicates that the operation failed
+  
+  \item [2b.] Trial with the given ID isn't in the system
+
+    -System indicates that the operation failed
+    
+  \item [2c.] Trial doesn't have the juror assigned to it
+  
+    -Sytem indicates that the operation failed
 
 \end{itemize}
 
 \section*{Information Expert}
+
+The information expert will be Court as it knows the jury pool and trial.
+
+The trial will have a method removeJuror to be called on the correct trial and fed the juror to remove. 
 
 \end{document}
