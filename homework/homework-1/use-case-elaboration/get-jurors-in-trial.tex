@@ -10,22 +10,34 @@
 
 \section*{Use Case}
 \begin{tabular}{l l}
-  Use Case:     & \\
-  Actor:        & \\
-  Precondition: & \\
+  Use Case:     & Get Jurors in Trial\\
+  Actor:        & Clerk\\
+  Precondition: & Clerk must be logged in\\
 \end{tabular}
 
 \section*{Main Success Scenario:}
 \begin{enumerate}
-  \item 
+  \item Clerk gives trial number
+  \item System opens the appropriate trial and gets jurors assigned to it
+  \item System returns list of jurors
 \end{enumerate}
 
 \section*{Extensions}
 \begin{itemize}
-  \item [1a.]
+    \item [2a.] Trial with the given ID isn't in the system
+
+    -System indicates that the operation failed
+    
+  \item [2b.] Trial doesn't have any jurors assigned to it
+  
+    -Sytem indicates that there are no jurors to show
 
 \end{itemize}
 
 \section*{Information Expert}
+
+The information expert will be Court as it knows trial.
+
+The trial will have a method getAllJurors to be called on the correct trial and return the jurors assigned to it. 
 
 \end{document}
