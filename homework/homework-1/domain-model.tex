@@ -1,10 +1,80 @@
 \documentclass{article}
 
+\usepackage[margin=0.5in]{geometry}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usepackage{ stmaryrd }
 
-\title{Homework 1 - Domain Model}
-\author{Adam Hammes $\bullet$ Nick Riesen $\bullet$ Steve Monson}
+\title{\vspace{1in}Homework 1 Domain Model}
+\author{Adam Hammes $\bullet$ Steve Monson $\bullet$ Nick Riesen}
+
+% no page number at bottom
+\pagenumbering{gobble}
 
 \begin{document}
 \maketitle
+
+\vspace{0.5cm}
+
+\begin{center}
+\begin{tikzpicture}[
+  auto,
+  block/.style = {
+    minimum width = 9em,
+    minimum height = 1.2em,
+    rectangle,
+    draw=black,
+    align=center,
+    rounded corners
+  }
+]
+
+\node[block] (court) {Court};
+\node[block, right=4cm of court] (pool) {Jury Pool};
+\node[block, below=4cm of pool]  (juror) {Juror};
+\node[block, below=4cm of court] (trial) {Trial};
+\node[block, below=4cm of trial] (judge) {Judge};
+\node[block, below=4cm of juror] (exemption) {Exemption};
+
+\draw (court) -- (pool)
+  node[midway] {Has $\shortrightarrow$}
+  node[pos=0.1] {1}
+  node[pos=0.9] {1};
+  
+\draw (pool) -- (juror) 
+  node[midway] {$\shortdownarrow$ Contains}
+  node[pos=0.1] {1}
+  node[pos=0.9] {*};
+
+\draw (juror) -- (exemption)
+  node[midway] {$\shortdownarrow$ Requests}
+  node[pos=0.1] {1}
+  node[pos=0.9] {*};
+
+\draw (court) -- (trial) 
+  node[midway] {$\shortdownarrow$ Trying}
+  node[pos=0.1] {1}
+  node[pos=0.9] {*};
+                          
+\draw (trial) -- (judge) 
+  node[midway] {$\shortdownarrow$ Presided By}
+  node[pos=0.1] {1}
+  node[pos=0.9] {1};
+                          
+\draw (trial) -- (juror)
+  node[midway] {Has $\shortrightarrow$}
+  node[pos=0.1] {1}
+  node[pos=0.9] {12};
+
+\path
+  (court.south west) edge[bend right] 
+  node [swap] {Employs $\shortdownarrow$} 
+  node [pos=0.1, swap] {1}
+  node [pos=0.9, swap] {*}
+  (judge.north west);
+
+\end{tikzpicture}
+\end{center}
 
 \end{document}
