@@ -10,22 +10,34 @@
 
 \section*{Use Case}
 \begin{tabular}{l l}
-  Use Case:     & \\
-  Actor:        & \\
-  Precondition: & \\
+  Use Case:     & Request Exception            \\
+  Actor:        & Juror                        \\
+  Precondition: & Juror has been authenticated \\
 \end{tabular}
 
 \section*{Main Success Scenario:}
 \begin{enumerate}
-  \item 
+  \item juror provides a list of dates they unavailable for
+  \item system acknowledges and prompts for letter citing circumstances
+  \item juror provides letter
+  \item system acknowledges successful submission 
 \end{enumerate}
 
 \section*{Extensions}
 \begin{itemize}
-  \item [1a.]
+  \item [2a.] Dates provided are incorrectly formatted
+        -system returns format error
+        -system gives prompt for date entry
+  \item [2b] No dates were provided
+        -system returns No dates entered error
+        -system gives prompt for date entry
+  \item [4a] No letter was provided
+        -system returns No letter provided error
+        -system gives prompt for letter citing circumstances
 
 \end{itemize}
 
 \section*{Information Expert}
+In this use case, the information expert is the juror. The juror is responsible for creating exemption requests, and the exception is tied to that juror. No other major participants are needed. 
 
 \end{document}
