@@ -5,7 +5,7 @@
 \usetikzlibrary{positioning}
 
 \title{Interaction Diagram - {{ title }}}
-\author{{{ author }}}
+\author{ {{ author }} }
 
 % no page number at bottom
 \pagenumbering{gobble}
