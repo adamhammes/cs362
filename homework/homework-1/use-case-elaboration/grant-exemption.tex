@@ -10,22 +10,33 @@
 
 \section*{Use Case}
 \begin{tabular}{l l}
-  Use Case:     & \\
-  Actor:        & \\
-  Precondition: & \\
+  Use Case:     & Grant Exemption              \\
+  Actor:        & Clerk                        \\
+  Precondition: & Clerk has been authenticated \\
 \end{tabular}
 
 \section*{Main Success Scenario:}
 \begin{enumerate}
-  \item 
+  \item clerk requests list of pending exception requests
+  \item system returns list of requests
+  \item clerk selects a request 
+  \item system returns the details about the selected request
+  \item clerk reviews requests and ether approved or rejects it
+  \item system acknowledges decision 
 \end{enumerate}
 
 \section*{Extensions}
 \begin{itemize}
-  \item [1a.]
+  \item[*a] clerk wishes to stop process
+        - clerk tells system to stop process
+        - system acknowledges and exits process
+  \item [4a.] invalid selection
+        - system reports invalid selection error
+        - system prompts for exemption request
 
 \end{itemize}
 
 \section*{Information Expert}
+The information expert for this use case is the court. The court has access to all of the Exceptions and can return a list of pending exceptions. From there, an exemption can be marked as ether approved or rejects.
 
 \end{document}
