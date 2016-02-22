@@ -10,22 +10,24 @@
 
 \section*{Use Case}
 \begin{tabular}{l l}
-  Use Case:     & \\
-  Actor:        & \\
-  Precondition: & \\
+  Use Case:     &  Create Trial            \\
+  Actor:        &  Clerk                   \\
+  Precondition: &  Clerk is authenticated  \\
 \end{tabular}
 
 \section*{Main Success Scenario:}
 \begin{enumerate}
-  \item 
+   \item Clerk specifies a trial id
+   \item System acknowledges the trial has been successfully created
 \end{enumerate}
 
 \section*{Extensions}
 \begin{itemize}
-  \item [1a.]
-
+  \item [1a.] Trial id is already used
+       -System reports failure to create trial
 \end{itemize}
 
 \section*{Information Expert}
+The information expert for this use case is the Court. The court has exclusive access to all of the trials and is therefore the only one capable of creating trials. 
 
 \end{document}
