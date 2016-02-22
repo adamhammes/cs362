@@ -25,7 +25,8 @@ def write_files(template_path, data_path):
 
 
 def main():
-    write_files('interaction.jnj', 'hw_assignments.yaml')
+    template_path = sys.argv[1]
+    write_files(template_path, 'hw_assignments.yaml')
 
 if __name__ == '__main__':
     main()
