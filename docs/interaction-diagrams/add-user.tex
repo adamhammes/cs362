@@ -1,5 +1,6 @@
 \documentclass{article}
 
+\usepackage{stmaryrd}
 \usepackage{tikz}
 \usetikzlibrary{positioning}
 
@@ -33,12 +34,20 @@
 \node[block, below = 3cm of system]     (database)   {\underline{: DatabaseSupport}};
 
 %     (start_node) -- (end_node)   node[location] {content}
-\draw (start)      -- (controller) node[midway] {\texttt{1:b:=addUser(uid:String, name:string):boolean}};
-\draw (controller) -- (system)     node[midway] {\texttt{2:b:=addUser(uid:String, name:string):boolean}};
-\draw (system)     -- (user)       node[midway] {\texttt{3:create()}};
-\draw (system)     -- (database)   node[midway] {\texttt{4:b:=putUser(u:User):boolean}};
+\draw (start)      -- (controller) node[midway] {1. $\shortdownarrow$};
+\draw (controller) -- (system)     node[midway] {2. $\shortdownarrow$};
+\draw (system)     -- (user)       node[midway] {3. $\shortrightarrow$};
+\draw (system)     -- (database)   node[midway] {4. $\shortdownarrow$};
 
 \end{tikzpicture}
+
+\begin{enumerate}
+  \item \texttt{b:=addUser(uid:String, name:string):boolean}
+  \item \texttt{b:=addUser(uid:String, name:string):boolean}
+  \item \texttt{create()};
+  \item \texttt{b:=putUser(u:User):boolean}
+\end{enumerate}
+
 \end{center}
 
 \end{document}
