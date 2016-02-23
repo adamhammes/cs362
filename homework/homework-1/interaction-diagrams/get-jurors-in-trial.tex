@@ -1,11 +1,12 @@
 \documentclass{article}
+\usepackage{stmaryrd}
 
-\usepackage{amssymb}
+
 \usepackage{tikz}
 \usetikzlibrary{positioning}
 
 \title{Interaction Diagram - Get Jurors in Trial}
-\author{ Steve Monson }
+\author{Steven Monson}
 
 % no page number at bottom
 \pagenumbering{gobble}
@@ -14,7 +15,6 @@
 \maketitle
 
 \begin{center}
-
 \begin{tikzpicture}[
   auto,
   block/.style = {
@@ -24,15 +24,32 @@
     rounded corners
   }
 ]
+
+% Used for the arrow coming down to SystemController
 \node[] (start)  {};
 
-\end{tikzpicture}
+%     style     location                variable name    content 
+\node[block, below = 2cm of start]      (controller) {\underline{: SystemController}};
+\node[block, below = 3cm of controller] (system)     {\underline{: System}}; 
+\node[block, right = 4cm of system]     (trial)       {\underline{t: Trial}};
+\node[block, below = 3cm of system]     (database)   {\underline{: DatabaseSupport}};
 
-\vspace{0.5cm}
+%     (start_node) -- (end_node)   node[location] {content}
+\draw (start)      -- (controller) node[midway] {\texttt{1:$\shortdownarrow$}};
+\draw (controller) -- (system)     node[midway] {\texttt{2:$\shortdownarrow$}};
+\draw (system)     -- (trial)       node[midway] {\texttt{4:$\shortrightarrow$}};
+\draw (system)     -- (database)   node[midway] {\texttt{3:$\shortdownarrow$}};
+
+\end{tikzpicture}
+\end{center}
 
 \begin{enumerate}
-  \item 
+    \item \texttt{l:=getAllJurors(tId: String):List<Juror>}
+    \item \texttt{l:=getAllJurors(tId: String):List<Juror>}
+    \item \texttt{t:=getTrial(tId: String):Trial}
+    \item \texttt{l:=getAllJurors():List<Juror>}
+    
 \end{enumerate}
-\end{center}
+
 
 \end{document}
