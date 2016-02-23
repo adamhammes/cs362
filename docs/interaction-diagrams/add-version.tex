@@ -1,11 +1,12 @@
 \documentclass{article}
 
-\usepackage[margin=1in]{geometry}
+\usepackage{stmaryrd}
+\usepackage[margin=0.5in]{geometry}
 \usepackage{amssymb}
 \usepackage{tikz}
-\usetikzlibrary{positioning}
+\usetikzlibrary{positioning, shadows}
 
-\title{Interaction Diagram - Add Version}
+\title{\vspace{1in}Interaction Diagram - Add Version}
 \author{Adam Hammes}
 
 % no page number at bottom
@@ -18,10 +19,19 @@
 \begin{tikzpicture}[
   auto,
   block/.style = {
+    minimum width = 9em,
     rectangle,
     draw=black,
     align=center,
     rounded corners
+  },
+  multiple/.style = {
+    rectangle, draw, rounded corners, fill= white, 
+    text width=9em, align= center,
+    copy shadow = {
+      ,fill=white, draw=black,
+      shadow xshift=0.7mm, shadow yshift=-0.7mm
+    }
   }
 ]
 
@@ -30,20 +40,19 @@
 \node[block, below = of start]         (controller) {\underline{: SystemController}};
 \node[block, below = 1.5of controller] (system)     {\underline{: System}};
 \node[block, below = 2cm of system]    (database)   {\underline{: DatabaseSupport}};
-\node[block, right = 1.5cm of system]  (user)       {\underline{u: User}};
-\node[block, below right = of user]    (book)       {\underline{book: Book}};
-\node[block, right = of book]          (version)    {\underline{v: Version}};
-\node[block, below = of book]          (versions)   {Versions};
+\node[block, right = 3cm of system]  (user)       {\underline{u: User}};
+\node[block, below = of user]    (book)       {\underline{book: Book}};
+\node[block, right = 2cm of book]          (version)    {\underline{v: Version}};
+\node[multiple, below = of book]          (versions)   {Versions};
 
-\draw (start)      -- (controller) node[midway] {1. $\blacktriangledown$};
-\draw (controller) -- (system)     node[midway] {2. $\blacktriangledown$};
-\draw (system) -- (database)     node[midway]   {3. $\blacktriangledown$};
-\draw (system) -- (user)     node[midway]       {4. $\blacktriangleright$};
-\draw (user.south west) -- (database) node[midway] {$\blacktriangledown$ 5.};
-\draw (user) -- (book) node[midway] {6. $\blacktriangleright$};
-\draw (book) -- (version) node[midway] {7. $\blacktriangleright$};
-\draw (book) -- (versions) node[midway] {8. $\blacktriangledown$};
-\draw (book) -- (database) node[midway] {$\blacktriangleleft$ 9.};
+\draw (start)      -- (controller) node[midway] {1. $\shortdownarrow$};
+\draw (controller) -- (system)     node[midway] {2. $\shortdownarrow$};
+\draw (system) -- (database)     node[midway]   {$\shortdownarrow$ 3., 9.};
+\draw (system) -- (user)     node[midway]       {4. $\shortrightarrow$};
+\draw (user.south west) -- (database) node[midway] {$\shortdownarrow$ 5.};
+\draw (user) -- (book) node[midway] {6. $\shortdownarrow$};
+\draw (book) -- (version) node[midway] {7. $\shortrightarrow$};
+\draw (book) -- (versions) node[midway] {8. $\shortdownarrow$};
 
 \end{tikzpicture}
 
