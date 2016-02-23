@@ -1,11 +1,12 @@
 \documentclass{article}
+\usepackage{stmaryrd}
 
-\usepackage{amssymb}
+
 \usepackage{tikz}
 \usetikzlibrary{positioning}
 
 \title{Interaction Diagram - Assign Juror to Trial}
-\author{ Steve Monson }
+\author{Steven Monson}
 
 % no page number at bottom
 \pagenumbering{gobble}
@@ -14,7 +15,6 @@
 \maketitle
 
 \begin{center}
-
 \begin{tikzpicture}[
   auto,
   block/.style = {
@@ -24,15 +24,35 @@
     rounded corners
   }
 ]
+
+% Used for the arrow coming down to SystemController
 \node[] (start)  {};
 
-\end{tikzpicture}
+%     style     location                variable name    content 
+\node[block, below = 2cm of start]      (controller) {\underline{: SystemController}};
+\node[block, below = 3cm of controller] (system)     {\underline{: System}}; 
+\node[block, right = 4cm of system]     (trial)       {\underline{t: Trial}};
+\node[block, below = 3cm of system]     (database)   {\underline{: DatabaseSupport}};
 
-\vspace{0.5cm}
+%     (start_node) -- (end_node)   node[location] {content}
+\draw (start)      -- (controller) node[midway] {\texttt{1:$\shortdownarrow$}};
+\draw (controller) -- (system)     node[midway] {\texttt{2:$\shortdownarrow$}};
+\draw (system)     -- (trial)       node[midway] {\texttt{4:$\shortrightarrow$}};
+\draw (trial)      -- (database)    node[midway] {\texttt{5:$\shortdownarrow$}};
+\draw (system)     -- (database)   node[midway] {\texttt{3,6:$\shortdownarrow$}};
+
+\end{tikzpicture}
+\end{center}
 
 \begin{enumerate}
-  \item 
+    \item b:=assignJuror(tId: String, jId:String):boolean
+    \item b:=assignJuror(tId: String, jId:String):boolean
+    \item t:=getTrial(tId: String):Trial
+    \item b:=assignJuror(jId: String):boolean
+    \item j:=getJuror(jId: String):Juror
+    \item b:=putTrial(t:Trial):boolean
+    
 \end{enumerate}
-\end{center}
+
 
 \end{document}
