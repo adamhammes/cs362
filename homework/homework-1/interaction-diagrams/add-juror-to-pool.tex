@@ -1,5 +1,6 @@
 \documentclass{article}
 
+\usepackage{stmaryrd}
 \usepackage{amssymb}
 \usepackage{tikz}
 \usetikzlibrary{positioning}
@@ -19,6 +20,7 @@
   auto,
   block/.style = {
     rectangle,
+    minimum width = 9em,
     draw=black,
     align=center,
     rounded corners
@@ -26,12 +28,25 @@
 ]
 \node[] (start)  {};
 
+\node[block, below = 2cm of start] (controller) {\underline{: CourtController}};
+\node[block, below = 2cm of controller] (court) {\underline{: Court}};
+\node[block, right = 3cm of court] (juror) {\underline{j: Juror}};
+\node[block, below = 2cm of court] (database) {\underline{: DatabaseSupport}};
+
+\draw (start)      -- (controller) node[midway] {1. $\shortdownarrow$};
+\draw (controller) -- (court)      node[midway] {2. $\shortdownarrow$};
+\draw (court)      -- (juror)      node[midway] {3. $\shortrightarrow$};
+\draw (court)      -- (database)   node[midway] {4. $\shortdownarrow$};
+
 \end{tikzpicture}
 
 \vspace{0.5cm}
 
 \begin{enumerate}
-  \item 
+  \item \texttt{b:=addJurorToPool(jid:String):boolean}
+  \item \texttt{b:=addJurorToPool(jid:String):boolean}
+  \item \texttt{create()}
+  \item \texttt{b:=putJuror(j):boolean}
 \end{enumerate}
 \end{center}
 
