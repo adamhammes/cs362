@@ -1,4 +1,5 @@
 \documentclass{article}
+\usepackage{stmaryrd}
 
 \usepackage{amssymb}
 \usepackage{tikz}
@@ -25,13 +26,26 @@
   }
 ]
 \node[] (start)  {};
+%     style     location                variable name    content 
+\node[block, below = 2cm of start]      (controller) {\underline{: SystemController}};
+\node[block, below = 2cm of controller]      (court) {\underline{: Court}};
+\node[block, below = 2cm of court]      (juryPool) {\underline{: Jury Pool}};
+\node[block, below = 2cm of juryPool]      (databaseSupport) {\underline{: Database Support}};
 
+%     (start_node) -- (end_node)   node[location] {content}
+\draw (start)      -- (controller) node[midway] {1: $\shortdownarrow$};
+\draw (controller) -- (court) node[midway] {2: $\shortdownarrow$};
+\draw (court)      -- (juryPool) node[midway] {3: $\shortdownarrow$};
+\draw (juryPool)   -- (databaseSupport) node[midway] {4: $\shortdownarrow$};
 \end{tikzpicture}
 
 \vspace{0.5cm}
 
 \begin{enumerate}
-  \item 
+  \item \texttt{getJurorsInPool():List<Juror>}
+  \item \texttt{getJurorsInPool():List<Juror>}
+  \item \texttt{getJurorsInPool():List<Juror>}
+  \item \texttt{getJurorsInPool():List<Juror>}
 \end{enumerate}
 \end{center}
 
