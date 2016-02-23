@@ -1,47 +1,58 @@
 \documentclass{article}
+\usepackage{stmaryrd}
 
-\title{Use Case Elaboration: Remove Juror from Trial}
-\author{Steve Monson}
 
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+
+\title{Interaction Diagram - Remove Juror from Trial}
+\author{Steven Monson}
+
+% no page number at bottom
 \pagenumbering{gobble}
 
 \begin{document}
 \maketitle
 
-\section*{Use Case}
-\begin{tabular}{l l}
-  Use Case:     & Remove Juror from Trial\\
-  Actor:        & Clerk\\
-  Precondition: & Clerk must be logged in\\
-\end{tabular}
+\begin{center}
+\begin{tikzpicture}[
+  auto,
+  block/.style = {
+    rectangle,
+    draw=black,
+    align=center,
+    rounded corners
+  }
+]
 
-\section*{Main Success Scenario:}
+% Used for the arrow coming down to SystemController
+\node[] (start)  {};
+
+%     style     location                variable name    content 
+\node[block, below = 2cm of start]      (controller) {\underline{: SystemController}};
+\node[block, below = 3cm of controller] (system)     {\underline{: System}}; 
+\node[block, right = 4cm of system]     (trial)       {\underline{t: Trial}};
+\node[block, below = 3cm of system]     (database)   {\underline{: DatabaseSupport}};
+
+%     (start_node) -- (end_node)   node[location] {content}
+\draw (start)      -- (controller) node[midway] {\texttt{1:$\shortdownarrow$}};
+\draw (controller) -- (system)     node[midway] {\texttt{2:$\shortdownarrow$}};
+\draw (system)     -- (trial)       node[midway] {\texttt{4:$\shortrightarrow$}};
+\draw (trial)      -- (database)    node[midway] {\texttt{5:$\shortdownarrow$}};
+\draw (system)     -- (database)   node[midway] {\texttt{3,6:$\shortdownarrow$}};
+
+\end{tikzpicture}
+\end{center}
+
 \begin{enumerate}
-  \item Clerk gives unique ID of juror and trial number
-  \item System disassociates the juror with given ID to the trial with the given trial number
-  \item System acknowledges remove is successful
+    \item b:=removeJuror(tId: String, jId:String):boolean
+    \item b:=removeJuror(tId: String, jId:String):boolean
+    \item t:=getTrial(tId: String):Trial
+    \item b:=removeJuror(jId: String):boolean
+    \item j:=getJuror(jId: String):Juror
+    \item b:=putTrial(t:Trial):boolean
+    
 \end{enumerate}
 
-\section*{Extensions}
-\begin{itemize}
-  \item [2a.] Juror with given ID isn't in the system
-  
-    -System indicates that the operation failed
-  
-  \item [2b.] Trial with the given ID isn't in the system
-
-    -System indicates that the operation failed
-    
-  \item [2c.] Trial doesn't have the juror assigned to it
-  
-    -Sytem indicates that the operation failed
-
-\end{itemize}
-
-\section*{Information Expert}
-
-The information expert will be Court as it knows the jury pool and trial.
-
-The trial will have a method removeJuror to be called on the correct trial and fed the juror to remove. 
 
 \end{document}
