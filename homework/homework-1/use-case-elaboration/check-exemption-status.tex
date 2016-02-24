@@ -1,6 +1,6 @@
 \documentclass{article}
 
-\title{Use Case Elaboration: Check Exemption}
+\title{Use Case Elaboration: Check Exemption Status}
 \author{Adam Hammes}
 
 \pagenumbering{gobble}
@@ -10,22 +10,27 @@
 
 \section*{Use Case}
 \begin{tabular}{l l}
-  Use Case:     & \\
-  Actor:        & \\
-  Precondition: & \\
+  Use Case:     & Check Exemption Status\\
+  Actor:        & Juror \\
+  Precondition: & None \\
 \end{tabular}
 
 \section*{Main Success Scenario:}
 \begin{enumerate}
-  \item 
+  \item Juror provides unique id of exemption
+  \item System returns status of exemption
 \end{enumerate}
 
 \section*{Extensions}
 \begin{itemize}
-  \item [1a.]
+  \item [1a.] Juror has no exemption with the provided id
+  
+  - System indicates that the operation failed
 
 \end{itemize}
 
 \section*{Information Expert}
+
+The information expert for checkExemptionStatus is System, as it has direct access to Exemption.
 
 \end{document}
