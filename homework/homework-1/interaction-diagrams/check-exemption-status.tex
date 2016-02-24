@@ -1,5 +1,6 @@
 \documentclass{article}
 
+\usepackage{stmaryrd}
 \usepackage{amssymb}
 \usepackage{tikz}
 \usetikzlibrary{positioning}
@@ -26,12 +27,25 @@
 ]
 \node[] (start)  {};
 
+\node[block, below = 2cm of start]      (controller) {\underline{: CourtController}};
+\node[block, below = 3cm of controller] (system)     {\underline{: Court}};
+\node[block, below = 3cm of system] (database) {\underline{: DatabaseSupport}};
+\node[block, right = 3cm of system] (exemption) {\underline{e: Exemption}};
+
+\draw (start)      -- (controller) node[midway] {\texttt{1. $\shortdownarrow$}};
+\draw (controller) -- (system)     node[midway] {\texttt{2. $\shortdownarrow$}};
+\draw (system) -- (database)     node[midway] {\texttt{3. $\shortdownarrow$}};
+\draw (system) -- (exemption)     node[midway] {\texttt{4. $\shortdownarrow$}};
+
 \end{tikzpicture}
 
 \vspace{0.5cm}
 
 \begin{enumerate}
-  \item 
+  \item \texttt{s:=checkExemptionStatus(eid:String):Status}
+  \item \texttt{s:=checkExemptionStatus(eid:String):Status}
+  \item \texttt{e:=getExemption(eid:String):Exemption}
+  \item \texttt{s:=getStatus():Status}
 \end{enumerate}
 \end{center}
 
