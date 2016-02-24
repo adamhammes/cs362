@@ -1,10 +1,11 @@
 \documentclass{article}
+\usepackage{stmaryrd}
 
 \usepackage{amssymb}
 \usepackage{tikz}
 \usetikzlibrary{positioning}
 
-\title{Interaction Diagram - Grant Exemption}
+\title{Interaction Diagram - Get Jurors in Pool}
 \author{ Nick Riesen }
 
 % no page number at bottom
@@ -25,13 +26,31 @@
   }
 ]
 \node[] (start)  {};
+%     style     location                variable name    content 
+\node[block, below = 2cm of start]      (controller) {\underline{: SystemController}};
+\node[block, below = 2cm of controller]      (court) {\underline{: Court}};
+\node[block, below left = 2.7cm of court]      (databaseSupport) {\underline{: Database Support}};
+\node[block, below = 2cm of court] (exemp) {\underline{: Exception}};
+
+%     (start_node) -- (end_node)   node[location] {content}
+\draw (start)      -- (controller) node[midway] {1: $\shortdownarrow$};
+\draw (controller) -- (court) node[midway] {2: $\shortdownarrow$};
+\draw (court) -- (databaseSupport) node[midway] {3: $\shortdownarrow$};
+\draw (court) -- (exemp) node[midway] {4: $\shortdownarrow$};
+
+
+
+
 
 \end{tikzpicture}
 
 \vspace{0.5cm}
 
 \begin{enumerate}
-  \item 
+  \item \texttt{b := approveExemption(extentionId: int, approved: boolean):boolean}
+  \item \texttt{b := approveExemption(extentionId: int, approved: boolean):boolean}
+  \item \texttt{e := getExemption(exemptionId: int):Exemption}
+  \item \texttt{b := setApproved(approved: boolean):boolean}
 \end{enumerate}
 \end{center}
 
