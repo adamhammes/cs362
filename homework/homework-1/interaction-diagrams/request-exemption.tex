@@ -1,4 +1,7 @@
 \documentclass{article}
+\usepackage[a4paper, total={6in, 8in}]{geometry}
+\usepackage{stmaryrd}
+
 
 \usepackage{amssymb}
 \usepackage{tikz}
@@ -25,13 +28,29 @@
   }
 ]
 \node[] (start)  {};
+\node[block, below = 2cm of start] (controller) {\underline{: SystemController}};
+\node[block, below = 2cm of controller] (juryPool) {\underline{: JurryPool}};
+\node[block, below left = 2.5cm of juryPool] (database) {\underline{: DatabaseSupport}};
+\node[block, below = 2cm of juryPool] (user) {\underline{u : User}};
+\node[block, below = 2cm of user] (exemp) {\underline{: Exemption}};
+
+\draw (start) -- (controller) node[midway]{1:$\shortdownarrow$};
+\draw (controller) -- (juryPool) node[midway]{2:$\shortdownarrow$};
+\draw (juryPool) -- (database) node[midway]{3, 6:$\shortleftarrow$};
+\draw (juryPool) -- (user) node[midway]{4:$\shortdownarrow$};
+\draw (user) -- (exemp) node[midway]{5:$\shortdownarrow$}
 
 \end{tikzpicture}
 
 \vspace{0.5cm}
 
 \begin{enumerate}
-  \item 
+  \item \texttt {b := requestExemption(userId: int, dates: List<date>, letter: string):boolean}
+  \item \texttt {b := requestExemption(userId: int, dates: List<date>, letter: string):boolean}
+  \item \texttt {u := getUser(userId: int): User}
+  \item \texttt {b := addExemption(dates: List<date>, letter: string):boolean}
+  \item \texttt {create()}
+  \item \texttt {b := putUser(u:User):boolean}
 \end{enumerate}
 \end{center}
 
