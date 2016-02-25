@@ -4,7 +4,7 @@
 \usepackage{tikz}
 \usetikzlibrary{positioning}
 
-\title{Interaction Diagram - Tag Book - Extention 1}
+\title{Interaction Diagram - Tag Book - Extension 1}
 \author{Nicholas Riesen}
 
 % no page number at bottom
