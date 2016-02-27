@@ -1,15 +1,19 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map.Entry;
 
 public class User {
     private String name;
-    ArrayList<Tag> userTags;
-    ArrayList<Book> userBooks;
+    
+    HashMap<String, Book> userBooks;
+    HashMap<String, Tag> userTags;
+    
 
     public User(String name)  {
         this.name = name;
         
-        userTags = new ArrayList<Tag>();
-        userBooks = new ArrayList<Book>();
+        userTags = new HashMap<String, Tag>();
+        userBooks = new HashMap<String, Book>();
     }
 
     
@@ -35,40 +39,37 @@ public class User {
 	
 	
 	private Tag getTag(String tagname){
-		for (Tag tag : userTags){
-			if (tag.getName().equals(tagname))
-				return tag;
+		Tag tag = userTags.get(tagname);
+		
+		if (tag == null){
+			tag = new Tag(tagname);
+			userTags.put(tagname, tag);
 		}
+		return tag;
 		
-		Tag newTag = new Tag(tagname);
-		userTags.add(newTag);
-		
-		return newTag;
 	}
 	
 	
 	private Book getBook(String bookTitle){
 		
-		for (Book book : userBooks){
-			if(book.getTitle().equals(bookTitle))
-				return book;
-		}
+		return userBooks.get(bookTitle);
 		
-		return null;
 	}
 	
 	public void printUser(){
 		System.out.println("name: " + name);
 		System.out.print("books: ");
-		for (Book book : userBooks){
-			System.out.print(book.getTitle() + " ");
+		for (String book : userBooks.keySet()){
+			System.out.print(book + " ");
 		}
 		System.out.println();
 		
 		System.out.print("tags: ");
-		for (Tag tag : userTags){
-			System.out.print(tag.getName() + " ");
+		for (String tag : userTags.keySet()){
+			System.out.print(tag + " ");
 		}
 		System.out.println();
+		
+		System.out.println("Tag fantasy: " + this.userTags.get("fantasy").books.get(0).getTitle());
 	}
 }
