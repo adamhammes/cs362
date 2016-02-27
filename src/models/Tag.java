@@ -14,8 +14,13 @@ public class Tag {
         return name;
     }
 
+    
+    /**
+     * Add book to this tag. 
+     * 
+     * @param book book to tag
+     */
 	public void addBook(Book book) {
-		// TODO Auto-generated method stub
-		
+		books.add(book);
 	}
 }

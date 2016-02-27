@@ -1,6 +1,4 @@
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map.Entry;
 
 public class User {
     private String name;
@@ -22,6 +20,14 @@ public class User {
     }
 
     
+    /**
+     * Adds tags a book owned by the user. If the tag does not exist a tag will
+     * be created.
+     * 
+     * @param bookTitle the title of the book to tag
+     * @param tagName what to tag the book with
+     * @return successfully completed operation
+     */
 	public boolean addTag(String bookTitle, String tagName) {
 		
 		Tag tag = getTag(tagName);
@@ -38,6 +44,13 @@ public class User {
 	}
 	
 	
+	/**
+	 * Retrieves the users tag specified by the tagname. If no tag by that name exists, 
+	 * one will be created.
+	 * 
+	 * @param tagname name of the tag to retrieve
+	 * @return requested tag
+	 */
 	private Tag getTag(String tagname){
 		Tag tag = userTags.get(tagname);
 		
@@ -46,15 +59,20 @@ public class User {
 			userTags.put(tagname, tag);
 		}
 		return tag;
-		
 	}
 	
 	
+	/**
+	 * Retrieves teh users book specified by the book title. If the user does not own 
+	 * a book by this title, then null will be returned.
+	 * 
+	 * @param bookTitle title of the book to retrieve
+	 * @return requested book
+	 */
 	private Book getBook(String bookTitle){
-		
 		return userBooks.get(bookTitle);
-		
 	}
+	
 	
 	public void printUser(){
 		System.out.println("name: " + name);
