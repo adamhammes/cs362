@@ -10,9 +10,7 @@ public class EbookSystem {
 		
 		if (user != null){
 			boolean result = user.addTag(bookTitle, tag);
-			
-			user.printUser();
-			
+					
 			if (result == false)
 				return false;
 			

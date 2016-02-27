@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.Map.Entry;
 
 public class DatabaseSupport {
 	Connection connection;
@@ -104,11 +105,36 @@ public class DatabaseSupport {
 
 		try {
 			conn = openConnection();
-			PreparedStatement stmt = conn.prepareStatement("INSERT INTO Account Values (?);");
+			
+			//put user
+			PreparedStatement stmt = conn.prepareStatement("INSERT INTO account (account_name) VALUES (?) "
+															+ "ON CONFLICT (account_name) DO NOTHING;");
 			stmt.setString(1, u.getName());
 			stmt.executeUpdate();
-			conn.commit();
+			
+			//put all of the users books
+			for (Book book : u.userBooks.values()){
+				stmt = conn.prepareStatement("INSERT INTO account_book (account_name, book_id) VALUES (?, ?) "
+												+ "ON CONFLICT (account_name, book_id) DO NOTHING;");
+				stmt.setString(1, u.getName());
+				stmt.setString(2, book.getId());
+				stmt.executeUpdate();
+			}
+			
+			//put all tags for this user
+			for (Tag tag : u.userTags.values()){
+				for (Book book : tag.books){
+					stmt = conn.prepareStatement("INSERT INTO book_tag (account_name, book_id, tag) VALUES (?, ?, ?) "
+							+ "ON CONFLICT (account_name, book_id, tag) DO NOTHING;");
+					stmt.setString(1, u.getName());
+					stmt.setString(2, book.getId());
+					stmt.setString(3, tag.getName());
+					stmt.executeUpdate();
+				}
+			}
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
 			return false;
 		} finally {
 			if (conn != null)
