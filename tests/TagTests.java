@@ -5,7 +5,7 @@ public class TagTests {
 			
 		EbookSystem sys = new EbookSystem();
 		
-		boolean result = sys.addTag("nick", "myBook", "myTag");
+		boolean result = sys.addTag("adam", "myBook", "myTag");
 	
 		System.out.println("result: " + result);
 	}

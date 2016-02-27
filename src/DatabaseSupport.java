@@ -37,17 +37,38 @@ public class DatabaseSupport {
 
 	
 	public User getUser(String uid) throws SQLException {
+
 		User user = null;
 		Connection conn = null;
 		
 		try {
 			conn = openConnection();
+			
+			//Get User
 			PreparedStatement stmt = conn.prepareStatement("SELECT * FROM account WHERE account_name = ?;");
 			stmt.setString(1, uid);
 			ResultSet results = stmt.executeQuery();
 			
 			results.next();
 			user = new User(results.getString("account_name"));
+			
+			//Get Tags
+			stmt = conn.prepareStatement("SELECT DISTINCT tag FROM Book_tag WHERE account_name = ?;");
+			stmt.setString(1, uid);
+			results = stmt.executeQuery();
+			
+			while(results.next()){
+				user.userTags.add(new Tag(results.getString("tag")));
+			}
+			
+			//Get Books
+			stmt = conn.prepareStatement("SELECT book.book_id, book.title FROM account_book join book on account_book.book_id=book.book_id where account_book.account_name=?;");
+			stmt.setString(1, uid);
+			results = stmt.executeQuery();
+			
+			while(results.next()){
+				user.userBooks.add(new Book(results.getString("book_id"), results.getString("title")));
+			}
 			
 			
 		} catch (ClassNotFoundException e) {

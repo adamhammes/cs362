@@ -9,8 +9,14 @@ public class EbookSystem {
 		User user = db.getUser(uid);
 		
 		if (user != null){
-			user.addTag(bookTitle, tag);
-		
+			boolean result = user.addTag(bookTitle, tag);
+			
+			user.printUser();
+			
+			if (result == false)
+				return false;
+			
+			System.out.println("results prior to database :" + result);
 			return db.putUser(user);
 		}
 		
