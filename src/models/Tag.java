@@ -8,4 +8,9 @@ public class Tag {
     public String getName() {
         return name;
     }
+
+	public void addBook(Book book) {
+		// TODO Auto-generated method stub
+		
+	}
 }

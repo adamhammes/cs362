@@ -35,6 +35,33 @@ public class DatabaseSupport {
 
 	}
 
+	
+	public User getUser(String uid) throws SQLException {
+		User user = null;
+		Connection conn = null;
+		
+		try {
+			conn = openConnection();
+			PreparedStatement stmt = conn.prepareStatement("SELECT * FROM account WHERE account_name = ?;");
+			stmt.setString(1, uid);
+			ResultSet results = stmt.executeQuery();
+			
+			results.next();
+			user = new User(results.getString("account_name"));
+			
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally{
+			if (conn != null)
+				conn.close();
+		}
+		
+		return user;
+	}
+	
 	public boolean putUser(User u) throws SQLException {
 
 		Connection conn = null;
@@ -54,6 +81,7 @@ public class DatabaseSupport {
 		return true;
 	}
 
+	
 	public Connection openConnection() throws SQLException, ClassNotFoundException {
 		Class.forName("org.postgresql.Driver");
 		return DriverManager.getConnection(CONN_STRING, USERNAME, PASSWORD);

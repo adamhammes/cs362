@@ -18,4 +18,9 @@ public class Book {
     public void setTitle() {
         this.title = title;
     }
+
+	public void addTag(Tag tag) {
+		// TODO Auto-generated method stub
+		
+	}
 }
