@@ -9,13 +9,10 @@ public class DatabaseSupport {
 	private static final String CONN_STRING = "jdbc:postgresql://localhost:5432/System";
 
 	public static void main(String[] args) throws SQLException, ClassNotFoundException {
-
 		User user = new User("Anthony");
 		DatabaseSupport db = new DatabaseSupport();
 		db.putUser(user);
 		
-		
-		// Class.forName("com.mysql.jdbc.Driver");
 		Class.forName("org.postgresql.Driver");
 
 		try (Connection conn = DriverManager.getConnection(CONN_STRING, USERNAME, PASSWORD);
@@ -33,12 +30,9 @@ public class DatabaseSupport {
 		} catch (SQLException e) {
 			System.err.println(e);
 		}
-
 	}
-
 	
 	public User getUser(String uid) throws SQLException {
-
 		User user = null;
 		Connection conn = null;
 		
@@ -69,24 +63,13 @@ public class DatabaseSupport {
 			results = stmt.executeQuery();
 			
 			while(results.next()){
-//				//user.userTags.add(new Tag(results.getString("tag")));
-//				int index = user.userTags.indexOf(new Tag(results.getString("tag")));
-//				if (index == -1){
-//					user.userTags.add(new Tag(results.getString("tag")));
-//					index = user.userTags.size() - 1;
-//				}
-//				user.userTags.get(index).addBook(user.userBooks.);
-				
 				Tag tag = user.userTags.get(results.getString("tag"));
 				if (tag == null){
 					tag = new Tag(results.getString("tag"));
 					user.userTags.put(tag.getName(), tag);
 				}
 				tag.books.add(user.userBooks.get(results.getString("title")));
-				
 			}
-			
-			
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -100,7 +83,6 @@ public class DatabaseSupport {
 	}
 	
 	public boolean putUser(User u) throws SQLException {
-
 		Connection conn = null;
 
 		try {
@@ -142,7 +124,6 @@ public class DatabaseSupport {
 		}
 		return true;
 	}
-
 	
 	public Connection openConnection() throws SQLException, ClassNotFoundException {
 		Class.forName("org.postgresql.Driver");
