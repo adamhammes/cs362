@@ -17,22 +17,14 @@
 
 \section*{Main Success Scenario:}
 \begin{enumerate}
-  \item clerk requests list of pending exception requests
-  \item system returns list of requests
-  \item clerk selects a request 
-  \item system returns the details about the selected request
-  \item clerk reviews requests and ether approved or rejects it
-  \item system acknowledges decision 
+  \item clerk provides the exemption id and the approved status
+  \item system acknowledges 
 \end{enumerate}
 
 \section*{Extensions}
 \begin{itemize}
-  \item[*a] clerk wishes to stop process
-        - clerk tells system to stop process
-        - system acknowledges and exits process
-  \item [4a.] invalid selection
-        - system reports invalid selection error
-        - system prompts for exemption request
+  \item [1a.] invalid exemption id
+        - system reports invalid exemption id error
 
 \end{itemize}
 
