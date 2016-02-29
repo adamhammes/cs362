@@ -1,9 +1,12 @@
+package models;
+
 import java.util.ArrayList;
 
 public class Tag {
     private String name;
 
-    ArrayList<Book> books;
+    //needs to be public for databaseSupport
+    public ArrayList<Book> books;
     
     public Tag(String name) {
         this.name = name;

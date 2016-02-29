@@ -1,11 +1,13 @@
+package models;
+
 import java.util.HashMap;
 
 public class User {
     private String name;
     
-    HashMap<String, Book> userBooks;
-    HashMap<String, Tag> userTags;
-    
+    //Needs to be public for databaseSupport
+    public HashMap<String, Book> userBooks;
+    public HashMap<String, Tag> userTags;
 
     public User(String name)  {
         this.name = name;
@@ -86,8 +88,6 @@ public class User {
 		for (String tag : userTags.keySet()){
 			System.out.print(tag + " ");
 		}
-		System.out.println();
-		
-		System.out.println("Tag fantasy: " + this.userTags.get("fantasy").books.get(0).getTitle());
+	
 	}
 }

@@ -1,4 +1,7 @@
+package databaseSupport;
+
 import java.sql.*;
+import models.*;
 
 public class DatabaseSupport {
 	Connection connection;

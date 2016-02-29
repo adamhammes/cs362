@@ -1,4 +1,9 @@
+package models;
+
 import java.sql.SQLException;
+
+import databaseSupport.DatabaseSupport;
+
 
 public class EbookSystem {
 	public boolean addTag(String uid, String bookTitle, String tag) throws SQLException{
