@@ -1,0 +1,52 @@
+\documentclass{article}
+\usepackage{stmaryrd}
+
+\usepackage{amssymb}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+
+\title{Interaction Diagram - Grant Exemption Extension 1A}
+\author{ Nick Riesen }
+
+% no page number at bottom
+\pagenumbering{gobble}
+
+\begin{document}
+\maketitle
+
+\begin{center}
+
+\begin{tikzpicture}[
+  auto,
+  block/.style = {
+    rectangle,
+    draw=black,
+    align=center,
+    rounded corners
+  }
+]
+\node[] (start)  {};
+%     style     location                variable name    content 
+\node[block, below = 2cm of start]      (controller) {\underline{: SystemController}};
+\node[block, below = 2cm of controller]      (court) {\underline{: Court}};
+\node[block, below = 2cm of court]      (databaseSupport) {\underline{: Database Support}};
+
+%     (start_node) -- (end_node)   node[location] {content}
+\draw (start)      -- (controller) node[midway] {1: $\shortdownarrow$};
+\draw (controller) -- (court) node[midway] {2: $\shortdownarrow$};
+\draw (court) -- (databaseSupport) node[midway] {3: $\shortdownarrow$};
+
+
+
+\end{tikzpicture}
+
+\vspace{0.5cm}
+
+\begin{enumerate}
+  \item \texttt{b := approveExemption(extentionId: int, approved: boolean):false}
+  \item \texttt{b := approveExemption(extentionId: int, approved: boolean):false}
+  \item \texttt{e := getExemption(exemptionId: int):null}
+\end{enumerate}
+\end{center}
+
+\end{document}
