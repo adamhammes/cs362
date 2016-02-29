@@ -44,8 +44,8 @@
 \end{center}
 
 \begin{enumerate}
-    \item b:=createTrial(trialId:int):boolean
-    \item b:=createTrial(trialId:int):boolean
+    \item b:=createTrial(trialId:int):false
+    \item b:=createTrial(trialId:int):false
     \item create()
     \item b:=addTrial(t:Trial):false
 \end{enumerate}
