@@ -1,5 +1,4 @@
 import java.sql.*;
-import java.util.Map.Entry;
 
 public class DatabaseSupport {
 	Connection connection;

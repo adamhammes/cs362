@@ -1,7 +1,8 @@
+package interfaces;
 
 public interface BookInterface {
 	
 	public boolean addRating(int rating);
-	public boolean addTag(Tag t);
+	public boolean addTag(TagInterface t);
 
 }
