@@ -20,8 +20,7 @@ Precondition: & User has selected to edit a specific book \\
 
 \begin{enumerate}
     \item User enters a value for their rating of the book
-    \item System updates rating for the book
-    \item System outputs that the rating is updated
+    \item System acknowledges that the rating is updated
 \end{enumerate}
 
 \section*{Extensions}
@@ -34,8 +33,8 @@ Precondition: & User has selected to edit a specific book \\
 
 \section*{Information Expert}
 
-The information expert for Rate Book is System.
-System knows Users and Books.
+The information expert for Rate Book is System and User.
+System knows Users and Books. User knows Rating
 The rateBook() method assigned to System will allow a book's rating to be updated.
 
 \end{document}
