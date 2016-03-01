@@ -4,6 +4,7 @@ import interfaces.BookInterface;
 import interfaces.TagInterface;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class Tag implements TagInterface {
     private String name;
@@ -29,5 +30,10 @@ public class Tag implements TagInterface {
 	public boolean addBook(BookInterface book) {
 		books.add(book);
 		return true;
+	}
+
+	@Override
+	public Collection<BookInterface> getBooks() {
+		return books;
 	}
 }
