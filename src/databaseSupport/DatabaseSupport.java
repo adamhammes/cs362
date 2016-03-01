@@ -1,9 +1,14 @@
 package databaseSupport;
 
 import java.sql.*;
-import models.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
-public class DatabaseSupport {
+import models.*;
+import interfaces.*;
+
+public class DatabaseSupport implements DatabaseSupportInterface {
 	Connection connection;
 
 	private static final String USERNAME = "Nicholas";
@@ -34,7 +39,7 @@ public class DatabaseSupport {
 		}
 	}
 	
-	public User getUser(String uid) throws SQLException {
+	public UserInterface getUser(String uid) {
 		User user = null;
 		Connection conn = null;
 		
@@ -65,26 +70,29 @@ public class DatabaseSupport {
 			results = stmt.executeQuery();
 			
 			while(results.next()){
-				Tag tag = user.userTags.get(results.getString("tag"));
+				TagInterface tag = user.userTags.get(results.getString("tag"));
 				if (tag == null){
 					tag = new Tag(results.getString("tag"));
 					user.userTags.put(tag.getName(), tag);
 				}
-				tag.books.add(user.userBooks.get(results.getString("title")));
+				tag.addBook(user.userBooks.get(results.getString("title")));
 			}
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
 			e.printStackTrace();
+			return null;
 		}
 		finally{
-			if (conn != null)
+			try {
 				conn.close();
+			} catch (Exception e2) {
+				// do nothing
+			}
 		}
 		
 		return user;
 	}
 	
-	public boolean putUser(User u) throws SQLException {
+	public boolean putUser(UserInterface u) {
 		Connection conn = null;
 
 		try {
@@ -97,7 +105,7 @@ public class DatabaseSupport {
 			stmt.executeUpdate();
 			
 			//put all of the users books
-			for (Book book : u.userBooks.values()){
+			for (BookInterface book: u.getAllBooks()){
 				stmt = conn.prepareStatement("INSERT INTO account_book (account_name, book_id) VALUES (?, ?) "
 												+ "ON CONFLICT (account_name, book_id) DO NOTHING;");
 				stmt.setString(1, u.getName());
@@ -106,8 +114,8 @@ public class DatabaseSupport {
 			}
 			
 			//put all tags for this user
-			for (Tag tag : u.userTags.values()){
-				for (Book book : tag.books){
+			for (TagInterface tag : u.getTags()){
+				for (BookInterface book : tag.getBooks()){
 					stmt = conn.prepareStatement("INSERT INTO book_tag (account_name, book_id, tag) VALUES (?, ?, ?) "
 							+ "ON CONFLICT (account_name, book_id, tag) DO NOTHING;");
 					stmt.setString(1, u.getName());
@@ -121,8 +129,11 @@ public class DatabaseSupport {
 			e.printStackTrace();
 			return false;
 		} finally {
-			if (conn != null)
+			try {
 				conn.close();
+			} catch (Exception e2) {
+				// do nothing
+			}
 		}
 		return true;
 	}
@@ -130,5 +141,58 @@ public class DatabaseSupport {
 	public Connection openConnection() throws SQLException, ClassNotFoundException {
 		Class.forName("org.postgresql.Driver");
 		return DriverManager.getConnection(CONN_STRING, USERNAME, PASSWORD);
+	}
+
+	@Override
+	public boolean addVersion(String uid, String bid, String path, String type) {
+		return false;
+	}
+
+	@Override
+	public List<String> getBooksWithTag(String uid, String tid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<BookInterface> getAllBooks(String uid) {
+		UserInterface user = getUser(uid);
+		if (null == user) {
+			return null;
+		}
+		return user.getAllBooks();
+	}
+
+	@Override
+	public List<BookInterface> getBooksByRating(String uid) {
+		UserInterface user = getUser(uid);
+		if (null == user) {
+			return null;
+		}
+		List<BookInterface> books = user.getAllBooks();
+		Collections.sort(books);
+		Collections.reverse(books);
+		return books;
+	}
+
+	@Override
+	public BookInterface getBook(String bid) {
+		return null;
+	}
+
+	@Override
+	public boolean putBook(BookInterface book) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean removeTag(String uid, String bookTitle, String tag) {
+		UserInterface user = getUser(uid);
+		if (null == user){
+			return false;
+		}
+		
+		return user.removeTag(bookTitle, tag);
 	}
 }
