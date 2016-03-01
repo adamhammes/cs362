@@ -5,6 +5,7 @@ import interfaces.TagInterface;
 import interfaces.UserInterface;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -78,6 +79,10 @@ public class User implements UserInterface {
 	 */
 	private BookInterface getBook(String bookTitle){
 		return userBooks.get(bookTitle);
+	}
+	
+	public Collection<BookInterface> getBooks() {
+		return userBooks.values();
 	}
 	
 	
