@@ -1,19 +1,25 @@
 package models;
 
-import java.util.HashMap;
+import interfaces.BookInterface;
+import interfaces.TagInterface;
+import interfaces.UserInterface;
 
-public class User {
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+public class User implements UserInterface {
     private String name;
     
     //Needs to be public for databaseSupport
-    public HashMap<String, Book> userBooks;
-    public HashMap<String, Tag> userTags;
+    public HashMap<String, BookInterface> userBooks;
+    public HashMap<String, TagInterface> userTags;
 
     public User(String name)  {
         this.name = name;
         
-        userTags = new HashMap<String, Tag>();
-        userBooks = new HashMap<String, Book>();
+        userTags = new HashMap<String, TagInterface>();
+        userBooks = new HashMap<String, BookInterface>();
     }
 
     
@@ -31,9 +37,8 @@ public class User {
      * @return successfully completed operation
      */
 	public boolean addTag(String bookTitle, String tagName) {
-		
-		Tag tag = getTag(tagName);
-		Book book = getBook(bookTitle);
+		TagInterface tag = getTag(tagName);
+		BookInterface book = getBook(bookTitle);
 		
 		if (book != null){
 			tag.addBook(book);
@@ -53,8 +58,8 @@ public class User {
 	 * @param tagname name of the tag to retrieve
 	 * @return requested tag
 	 */
-	private Tag getTag(String tagname){
-		Tag tag = userTags.get(tagname);
+	private TagInterface getTag(String tagname){
+		TagInterface tag = userTags.get(tagname);
 		
 		if (tag == null){
 			tag = new Tag(tagname);
@@ -71,7 +76,7 @@ public class User {
 	 * @param bookTitle title of the book to retrieve
 	 * @return requested book
 	 */
-	private Book getBook(String bookTitle){
+	private BookInterface getBook(String bookTitle){
 		return userBooks.get(bookTitle);
 	}
 	
@@ -89,5 +94,28 @@ public class User {
 			System.out.print(tag + " ");
 		}
 	
+	}
+
+
+	@Override
+	public boolean addBook(String bid, String title) {
+		userBooks.put(bid, new Book(bid, title));
+		return true;
+	}
+
+
+	@Override
+	public List<BookInterface> getAllBooks() {
+		return new ArrayList<BookInterface>(userBooks.values());
+	}
+
+
+	@Override
+	public boolean removeTag(String bookTitle, String tag) {
+		if (!userTags.containsKey(tag)) {
+			return false;
+		}
+		userTags.remove(tag);
+		return true;
 	}
 }
