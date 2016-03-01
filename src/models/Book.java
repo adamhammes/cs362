@@ -2,12 +2,10 @@ package models;
 
 import java.util.ArrayList;
 
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
-
 import interfaces.BookInterface;
 import interfaces.TagInterface;
 
-public class Book implements BookInterface {
+public class Book implements BookInterface, Comparable<BookInterface> {
     private String id;
     private String title;
     private ArrayList<Integer> ratings = new ArrayList<Integer>();
@@ -38,5 +36,27 @@ public class Book implements BookInterface {
 	@Override
 	public boolean addTag(TagInterface t) {
 		return tags.add(t);
+	}
+
+	@Override
+	public ArrayList<TagInterface> getTags() {
+		return tags;
+	}
+	
+
+
+	@Override
+	public int compareTo(BookInterface o) {
+		return averageRating().compareTo(o.averageRating());
+	}
+
+	@Override
+	public Double averageRating() {
+		double total = 0.;
+		for (Integer i: ratings) {
+			total += i;
+		}
+		double average = total/ratings.size();
+		return new Double(average);
 	}
 }
