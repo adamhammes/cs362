@@ -118,4 +118,10 @@ public class User implements UserInterface {
 		userTags.remove(tag);
 		return true;
 	}
+
+
+	@Override
+	public ArrayList<TagInterface> getTags() {
+		return new ArrayList<>(userTags.values());
+	}
 }
