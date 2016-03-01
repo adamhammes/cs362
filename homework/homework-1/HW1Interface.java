@@ -5,7 +5,7 @@ public interface ICourt {
 	public boolean createTrial(int trialid);
 	public boolean deleteJurorFromPool(String jid);
 	public List<Juror> getJurorsInPool();
-	public List<Juror> getAllJurors(String tid);
+	public List<Juror> getAllJurorsInTrial(String tid);
 	public boolean approveExemption(int extemptionId, boolean approved);
 	public boolean removeJuror(String tid, String jid);
 	public boolean requestExemption(int uid, List<Date> dates, String letter);
