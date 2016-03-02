@@ -5,7 +5,6 @@ import interfaces.BookInterface;
 import interfaces.TagInterface;
 import models.Book;
 import models.User;
-import models.Tag;
 
 public class TagTests {
 //	public static void main(String[] args) throws SQLException{
@@ -28,18 +27,18 @@ public class TagTests {
 			System.out.println();
 		}
 		
-		Tag t = ((Tag) u.userTags.get("awesome"));
-		t.books.get(0).getTags().remove(t);
-		u.userTags.remove("awesome");
-		
-		for (BookInterface b : u.userBooks.values()){
-			System.out.println("book: " + ((Book) b).getTitle());
-			System.out.print("\tTags: ");
-			for (TagInterface at : b.getTags()){
-				System.out.print(at.getName() + " ");
-			}
-			System.out.println();
-		}
+//		Tag t = ((Tag) u.userTags.get("awesome"));
+//		t.books.get(0).getTags().remove(t);
+//		u.userTags.remove("awesome");
+//		
+//		for (BookInterface b : u.userBooks.values()){
+//			System.out.println("book: " + ((Book) b).getTitle());
+//			System.out.print("\tTags: ");
+//			for (TagInterface at : b.getTags()){
+//				System.out.print(at.getName() + " ");
+//			}
+//			System.out.println();
+//		}
 		
 		db.putUser(u);
 	}
