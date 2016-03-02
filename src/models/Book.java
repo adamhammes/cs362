@@ -8,12 +8,9 @@ import interfaces.TagInterface;
 public class Book implements BookInterface, Comparable<BookInterface> {
     private String id;
     private String title;
-<<<<<<< HEAD
     private Review review;
-=======
     private ArrayList<Integer> ratings = new ArrayList<Integer>();
     private ArrayList<TagInterface> tags = new ArrayList<TagInterface>();
->>>>>>> origin/master
 
     public Book(String id, String title) {
         this.id = id;
@@ -64,11 +61,4 @@ public class Book implements BookInterface, Comparable<BookInterface> {
 		return new Double(average);
 	}
 	
-	public boolean addRating(int rating){
-		
-		this.review = new Review(rating);
-		
-		return true;
-		
-	}
 }

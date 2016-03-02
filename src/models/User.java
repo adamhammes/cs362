@@ -78,16 +78,7 @@ public class User implements UserInterface {
 	 */
 	private BookInterface getBook(String bookTitle){
 		return userBooks.get(bookTitle);
-	}
-	
-	
-	public List<Book> getAllBooks(){
-		if(userBooks.isEmpty())
-			return null;
-		else
-			return (List<Book>) userBooks;
-	}
-	
+	}	
 	
 	public void printUser(){
 		System.out.println("name: " + name);

@@ -1,8 +1,10 @@
 package models;
 
+import interfaces.BookInterface;
 import interfaces.UserInterface;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import databaseSupport.DatabaseSupport;
 
@@ -24,9 +26,9 @@ public class EbookSystem {
 		return false;	
 	}
 	
-	public List<Book> getAllBooks(String uid){
+	public List<BookInterface> getAllBooks(String uid){
 		DatabaseSupport db = new DatabaseSupport();
-		User user = db.getUser(uid);
+		UserInterface user = db.getUser(uid);
 		
 		if(user != null)
 			return user.getAllBooks();
