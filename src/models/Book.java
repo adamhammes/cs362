@@ -3,6 +3,7 @@ package models;
 public class Book {
     private String id;
     private String title;
+    private Review review;
 
     public Book(String id, String title) {
         this.id = id;
@@ -23,6 +24,14 @@ public class Book {
 
 	public void addTag(Tag tag) {
 		// TODO Auto-generated method stub
+		
+	}
+	
+	public boolean addRating(int rating){
+		
+		this.review = new Review(rating);
+		
+		return true;
 		
 	}
 }
