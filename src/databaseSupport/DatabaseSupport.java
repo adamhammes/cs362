@@ -1,7 +1,6 @@
 package databaseSupport;
 
 import java.sql.*;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -75,7 +74,9 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 					tag = new Tag(results.getString("tag"));
 					user.userTags.put(tag.getName(), tag);
 				}
-				tag.addBook(user.userBooks.get(results.getString("title")));
+				BookInterface book = user.userBooks.get(results.getString("title"));
+				tag.addBook(book);
+				book.addTag(tag);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
