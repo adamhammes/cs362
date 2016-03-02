@@ -1,6 +1,7 @@
 package databaseSupport;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -125,6 +126,41 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 					stmt.executeUpdate();
 				}
 			}
+			
+			//Remove all deleted tags
+			if (u.getTags().size() > 0){
+				StringBuffer rmsmt = new StringBuffer("DELETE FROM book_tag WHERE (account_name, book_id, tag) NOT IN "
+						+ "(SELECT account_name, book_id, tag FROM book_tag WHERE account_name != ? OR (");
+				
+				int size = 0;
+				for (TagInterface tag : u.getTags()) size+= tag.getBooks().size();
+				
+				for (int i = 0; i < size - 1; i++){
+					rmsmt.append("(book_id = ? AND tag = ?) OR ");
+				}
+				rmsmt.append("(book_id = ? AND tag = ?)));");
+				System.out.println(rmsmt);
+				
+				stmt = conn.prepareStatement(rmsmt.toString());
+				stmt.setString(1, u.getName());
+				int index = 2;
+				for (TagInterface tag : u.getTags()){
+					for (BookInterface book : tag.getBooks()){
+						stmt.setString(index++, book.getId());
+						stmt.setString(index++, tag.getName());
+					}
+				}
+				System.out.println("statement: " + stmt);
+				stmt.executeUpdate();
+			}
+			else {
+				stmt = conn.prepareStatement("DELETE FROM book_tag WHERE account_name = ?;");
+				stmt.setString(1, u.getName());
+				System.out.println("statement: " + stmt);
+				stmt.executeUpdate();
+			}
+			
+			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
