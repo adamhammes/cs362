@@ -1,6 +1,7 @@
 package models;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class User {
     private String name;
@@ -73,6 +74,14 @@ public class User {
 	 */
 	private Book getBook(String bookTitle){
 		return userBooks.get(bookTitle);
+	}
+	
+	
+	public List<Book> getAllBooks(){
+		if(userBooks.isEmpty())
+			return null;
+		else
+			return (List<Book>) userBooks;
 	}
 	
 	
