@@ -21,4 +21,15 @@ public class EbookSystem {
 		}
 		return false;	
 	}
+	
+	public List<Book> getAllBooks(String uid){
+		DatabaseSupport db = new DatabaseSupport();
+		User user = db.getUser(uid);
+		
+		if(user != null)
+			return user.getAllBooks();
+		else
+			return null;
+		
+	}
 }
