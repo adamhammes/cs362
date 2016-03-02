@@ -1,6 +1,8 @@
 package models;
 
-public class Author {
+import interfaces.AuthorInterface;
+
+public class Author implements AuthorInterface {
     private String id;
     private String name;
 

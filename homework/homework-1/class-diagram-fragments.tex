@@ -1,0 +1,99 @@
+\documentclass[12pt]{article}
+
+\usepackage[margin=0.5in]{geometry}
+
+\title{\vspace{1in}Interaction Diagram - Class Diagram Fragments}
+\author{Adam Hammes}
+
+% no page number at bottom
+\pagenumbering{gobble}
+
+\begin{document}
+\maketitle
+
+\begin{tabular}{| l |}
+    \hline
+    Court\\
+    \hline\\
+    \hline
+    \texttt{b:=addJurorToPool(jid:String):boolean}\\
+    \texttt{b:=assignJuror(tId: String, jId:String):boolean}\\
+    \texttt{s:=checkExemptionStatus(eid:String):Status}\\
+    \texttt{b:=createTrial(trialId:int):boolean}\\
+    \texttt{b:=deleteJurorFromPool(jid:String):boolean}\\
+    \texttt{l:=getJurorsInPool():List<Juror>}\\
+    \texttt{l:=getJurorsInTrial(tId:String):List<Juror>}\\
+    \texttt{b := approveExemption(extensionId:int, approved:boolean):boolean}\\
+    \texttt{b:=removeJuror(tId: String, jId:String):boolean}\\
+    \texttt {b:=requestExemption(userId:int, dates:List<date>, letter:string):boolean}\\
+    \texttt{b:=jurorInTrial(tId:String, jId:String):boolean}\\
+    \hline
+\end{tabular}
+
+\vspace{1cm}
+
+\begin{tabular}{| l |}
+    \hline
+    DatabaseSupport\\
+    \hline\\
+    \hline
+    \texttt{b:=putJuror(j):boolean}\\
+    \texttt{t:=getTrial(tId: String):Trial}\\
+    \texttt{b:=putTrial(t:Trial):boolean}\\
+    \texttt{e:=getExemption(eid:String):Exemption}\\
+    \texttt{b:=addTrial(t:Trial):boolean}\\
+    \texttt{b:=removeJuror(jid:String):boolean}\\
+    \texttt{getJurorsInPool():List<Juror>}\\
+    \texttt{j:=getJuror(jId: String):Juror}\\
+    \hline
+\end{tabular}
+
+\vspace{1cm}
+
+\begin{tabular}{| l |}
+    \hline
+    Juror\\
+    \hline\\
+    \hline
+    \texttt {b:=putUser(u:User):boolean}\\
+    \hline
+\end{tabular}
+
+\vspace{1cm}
+
+\begin{tabular}{| l |}
+    \hline
+    Trial\\
+    \hline\\
+    \hline
+    \texttt{b:=assignJuror(jId: String):boolean}\\
+    \texttt{l:=getAllJurors():List<Juror>}\\
+    \texttt{b:=removeJuror(jId: String):boolean}\\
+    \texttt{b:=jurorInTrial(jId: String):boolean}\\
+    \hline
+\end{tabular}
+
+\vspace{1cm}
+
+\begin{tabular}{| l |}
+    \hline
+    Exemption\\
+    \hline\\
+    \hline
+    \texttt{s:=getStatus():Status}\\
+    \texttt{b:=setApproved(approved:boolean):boolean}\\
+    \hline
+\end{tabular}
+
+\vspace{1cm}
+
+\begin{tabular}{| l |}
+    \hline
+    JuryPool\\
+    \hline\\
+    \hline
+    \texttt{l:=getJurorsInPool():List<Juror>}\\
+    \hline
+\end{tabular}
+
+\end{document}
