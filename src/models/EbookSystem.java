@@ -4,6 +4,7 @@ import interfaces.BookInterface;
 import interfaces.UserInterface;
 
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.List;
 
 import databaseSupport.DatabaseSupport;
@@ -43,8 +44,10 @@ public class EbookSystem {
 	
 	
 	
-	public List<BookInterface> findBookWithTag(String uid, String tag){
-		return null;
+	public Collection<BookInterface> getBookWithTag(String uid, String tag){
+		DatabaseSupport db = new DatabaseSupport();
+		UserInterface user = db.getUser(uid);
+		return user.getBooksWithTag(tag);
 	}
 	
 	

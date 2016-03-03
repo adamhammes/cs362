@@ -1,6 +1,7 @@
 package interfaces;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public interface UserInterface {
@@ -11,4 +12,5 @@ public interface UserInterface {
 	public boolean removeTag(String bookTitle, String tag);
 	public ArrayList<TagInterface> getTags();
 	public boolean addVersion(String bid, String path, String type);
+	public Collection<BookInterface> getBooksWithTag(String tag);
 }

@@ -1,4 +1,5 @@
 import java.sql.SQLException;
+import java.util.Collection;
 
 import databaseSupport.DatabaseSupport;
 import interfaces.BookInterface;
@@ -26,8 +27,12 @@ public class TagTests {
 	
 	public static void main(String[] args) throws SQLException{
 		EbookSystem system = new EbookSystem();
-		//System.out.println(system.addTag("nick", "Worm", "awesome"));
-		System.out.println(system.removeTag("nick", "Worm", "awesome"));
+//		System.out.println(system.addTag("nick", "Worm", "awesome"));
+//		System.out.println(system.removeTag("nick", "Worm", "awesome"));
+		
+		Collection<BookInterface> books = system.getBookWithTag("nick", "awesome");
+		for (BookInterface book : books){
+			System.out.println(book.getTitle());
+		}
 	}
-	
 }

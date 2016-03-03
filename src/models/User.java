@@ -5,6 +5,7 @@ import interfaces.TagInterface;
 import interfaces.UserInterface;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -77,6 +78,13 @@ public class User implements UserInterface {
 		return true;
 	}
 	
+	
+	@Override
+	public Collection<BookInterface> getBooksWithTag(String tag) {
+		return getTag(tag).getBooks();
+	}
+	
+	
 	/**
 	 * Retrieves the users tag specified by the tagname. If no tag by that name exists, 
 	 * one will be created.
@@ -146,4 +154,6 @@ public class User implements UserInterface {
 		BookInterface book = getBook(bid);
 		return book.addVersion(path, type);
 	}
+
+
 }
