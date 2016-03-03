@@ -193,7 +193,12 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 
 	@Override
 	public boolean addVersion(String uid, String bid, String path, String type) {
-		return false;
+		UserInterface user = getUser(uid);
+		if (null == user){
+			return false;
+		}
+		
+		return user.addVersion(bid, path, type);
 	}
 
 	@Override
@@ -241,6 +246,7 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 			return false;
 		}
 		
-		return user.removeTag(bookTitle, tag);
+		boolean toReturn = user.removeTag(bookTitle, tag);
+		return toReturn && putUser(user);
 	}
 }

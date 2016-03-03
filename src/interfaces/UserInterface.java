@@ -10,4 +10,5 @@ public interface UserInterface {
 	public List<BookInterface> getAllBooks();
 	public boolean removeTag(String bookTitle, String tag);
 	public ArrayList<TagInterface> getTags();
+	public boolean addVersion(String bid, String path, String type);
 }

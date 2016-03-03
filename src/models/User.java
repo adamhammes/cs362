@@ -123,4 +123,11 @@ public class User implements UserInterface {
 	public ArrayList<TagInterface> getTags() {
 		return new ArrayList<>(userTags.values());
 	}
+
+
+	@Override
+	public boolean addVersion(String bid, String path, String type) {
+		BookInterface book = getBook(bid);
+		return book.addVersion(path, type);
+	}
 }

@@ -9,4 +9,5 @@ public interface BookInterface extends Comparable<BookInterface> {
 	public boolean addTag(TagInterface t);
 	public ArrayList<TagInterface> getTags();
 	public Double averageRating();
+	public boolean addVersion(String path, String type);
 }

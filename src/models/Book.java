@@ -3,14 +3,17 @@ package models;
 import java.util.ArrayList;
 
 import interfaces.BookInterface;
+import interfaces.ReviewInterface;
 import interfaces.TagInterface;
+import interfaces.VersionInterface;
 
 public class Book implements BookInterface, Comparable<BookInterface> {
     private String id;
     private String title;
-    private Review review;
+    private ReviewInterface review;
     private ArrayList<Integer> ratings = new ArrayList<Integer>();
     private ArrayList<TagInterface> tags = new ArrayList<TagInterface>();
+    private ArrayList<VersionInterface> versions = new ArrayList<VersionInterface>();
 
     public Book(String id, String title) {
         this.id = id;
@@ -61,4 +64,8 @@ public class Book implements BookInterface, Comparable<BookInterface> {
 		return new Double(average);
 	}
 	
+	@Override
+	public boolean addVersion(String path, String type) {
+		return this.versions.add(new Version(path, type));
+	}
 }
