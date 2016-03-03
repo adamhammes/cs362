@@ -130,17 +130,15 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 		return true;
 	}
 	
-	
-	
-	
+
 	private boolean putTags(Connection conn, UserInterface u) throws SQLException{
-		
-		//Build prepared statement for removeing uneeded tags
+		//Build prepared statement for removing unneeded tags
 		int size = 0;
 		for (TagInterface tag : u.getTags()) size+= tag.getBooks().size();
 		
-		StringBuffer rmsql = new StringBuffer("DELETE FROM book_tag WHERE (account_name, book_id, tag) NOT IN "
-				+ "(SELECT account_name, book_id, tag FROM book_tag WHERE account_name != ? OR (");
+		StringBuffer rmsql = new StringBuffer(
+				"DELETE FROM book_tag WHERE (account_name, book_id, tag) NOT IN "
+			  + "(SELECT account_name, book_id, tag FROM book_tag WHERE account_name != ? OR (");
 		
 		for (int i = 0; i < size - 1; i++){
 			rmsql.append("(book_id = ? AND tag = ?) OR ");
@@ -182,9 +180,6 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 		}
 		return true;
 	}
-	
-		
-		
 	
 	public Connection openConnection() throws SQLException, ClassNotFoundException {
 		Class.forName("org.postgresql.Driver");
