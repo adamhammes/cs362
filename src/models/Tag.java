@@ -36,4 +36,19 @@ public class Tag implements TagInterface {
 	public Collection<BookInterface> getBooks() {
 		return books;
 	}
+
+	@Override
+	public BookInterface getBook(String bookTitle) {
+		for (BookInterface book : books){
+			if (book.getTitle().equals(bookTitle))
+				return book;
+		}
+		return null;
+	}
+
+	@Override
+	public boolean removeBook(BookInterface book) {
+		return books.remove(book);
+	}
+	
 }

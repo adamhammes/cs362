@@ -20,10 +20,12 @@ public class Book implements BookInterface, Comparable<BookInterface> {
         this.title = title;
     }
 
+    @Override
     public String getId() {
         return id;
     }
 
+    @Override
     public String getTitle() {
         return title;
     }
@@ -68,4 +70,10 @@ public class Book implements BookInterface, Comparable<BookInterface> {
 	public boolean addVersion(String path, String type) {
 		return this.versions.add(new Version(path, type));
 	}
+
+	@Override
+	public boolean removeTag(TagInterface t) {
+		return tags.remove(t);
+	}
+	
 }

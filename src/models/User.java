@@ -51,6 +51,32 @@ public class User implements UserInterface {
 	}
 	
 	
+	@Override
+	public boolean removeTag(String bookTitle, String tag) {
+		if (!userTags.containsKey(tag)) {
+			return false;
+		}
+		
+		TagInterface t = userTags.get(tag);
+		if (t == null)
+			return false;
+		
+		BookInterface book = t.getBook(bookTitle);
+		if (book == null)
+			return false;
+		
+		if (book.removeTag(t) == false)
+			return false;
+		
+		if (t.removeBook(book) == false)
+			return false;
+			
+		if (t.getBooks().size() == 0)
+			return userTags.remove(tag) != null;
+		
+		return true;
+	}
+	
 	/**
 	 * Retrieves the users tag specified by the tagname. If no tag by that name exists, 
 	 * one will be created.
@@ -106,16 +132,6 @@ public class User implements UserInterface {
 	@Override
 	public List<BookInterface> getAllBooks() {
 		return new ArrayList<BookInterface>(userBooks.values());
-	}
-
-
-	@Override
-	public boolean removeTag(String bookTitle, String tag) {
-		if (!userTags.containsKey(tag)) {
-			return false;
-		}
-		userTags.remove(tag);
-		return true;
 	}
 
 
