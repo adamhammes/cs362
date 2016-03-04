@@ -275,8 +275,43 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 
 	@Override
 	public boolean putBook(BookInterface book) {
-		// TODO Auto-generated method stub
-		return false;
+		Connection conn = null;
+		
+		try {
+			conn = openConnection();
+			// put User
+			PreparedStatement stmt = conn.prepareStatement(
+					"INSERT INTO book (book_id, title) VALUES (?, ?) "
+				  + "ON CONFLICT (book_id) DO NOTHING;");
+			
+			stmt.setString(1, book.getId());
+			stmt.setString(2, book.getTitle());
+			stmt.executeUpdate();
+			
+			// put Reviews
+			for (ReviewInterface review: book.getReviews()) {
+				stmt = conn.prepareStatement(
+						  "INSERT INTO book_review (book_id, review_id, rating, review)"
+						+ "VALUES (?, ?, ?, ?) "
+						+ "ON CONFLICT (review_id) DO NOTHING");
+				stmt.setString(1, book.getId());
+				stmt.setInt(2,  review.getId());
+				stmt.setInt(3, review.getRating());
+				stmt.setString(4, review.getReview());
+				stmt.executeUpdate();
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				conn.close();
+			} catch (Exception e2) {
+				// do nothing
+			}
+		}
+		return true;
 	}
 
 	@Override
