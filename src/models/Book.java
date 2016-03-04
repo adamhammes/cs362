@@ -1,6 +1,7 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import interfaces.BookInterface;
 import interfaces.ReviewInterface;
@@ -10,8 +11,8 @@ import interfaces.VersionInterface;
 public class Book implements BookInterface, Comparable<BookInterface> {
     private String id;
     private String title;
-    private ReviewInterface review;
-    private ArrayList<Integer> ratings = new ArrayList<Integer>();
+
+    private ArrayList<ReviewInterface> reviews = new ArrayList<>();
     private ArrayList<TagInterface> tags = new ArrayList<TagInterface>();
     private ArrayList<VersionInterface> versions = new ArrayList<VersionInterface>();
 
@@ -35,11 +36,6 @@ public class Book implements BookInterface, Comparable<BookInterface> {
     }
 
 	@Override
-	public boolean addRating(int rating) {
-		return ratings.add(rating);
-	}
-
-	@Override
 	public boolean addTag(TagInterface t) {
 		return tags.add(t);
 	}
@@ -59,10 +55,10 @@ public class Book implements BookInterface, Comparable<BookInterface> {
 	@Override
 	public Double averageRating() {
 		double total = 0.;
-		for (Integer i: ratings) {
-			total += i;
+		for (ReviewInterface r: reviews) {
+			total += r.getRating();
 		}
-		double average = total/ratings.size();
+		double average = total/reviews.size();
 		return new Double(average);
 	}
 	
@@ -74,6 +70,16 @@ public class Book implements BookInterface, Comparable<BookInterface> {
 	@Override
 	public boolean removeTag(TagInterface t) {
 		return tags.remove(t);
+	}
+
+	@Override
+	public boolean addReview(ReviewInterface review) {
+		return reviews.add(review);
+	}
+
+	@Override
+	public Collection<ReviewInterface> getReviews() {
+		return reviews;
 	}
 	
 }

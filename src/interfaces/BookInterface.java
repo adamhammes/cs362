@@ -1,12 +1,16 @@
 package interfaces;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 
 public interface BookInterface extends Comparable<BookInterface> {
 	public String getTitle();
 	public String getId();
-	public boolean addRating(int rating);
+	
+	public boolean addReview(ReviewInterface review);
+	public Collection<ReviewInterface> getReviews();
+	
 	public boolean addTag(TagInterface t);
 	public ArrayList<TagInterface> getTags();
 	public Double averageRating();
