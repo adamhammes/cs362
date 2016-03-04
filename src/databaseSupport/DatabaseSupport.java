@@ -258,6 +258,22 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 				stmt.executeUpdate();
 			}
 			
+			//Author Information
+			stmt = conn.prepareStatement("INSERT INTO author VALUES (?, ?) ON CONFLICT (author_id) DO UPDATE SET author_name = ?;");
+			PreparedStatement joinstmt = conn.prepareStatement("INSERT INTO book_author VALUES (?, ?) ON CONFLICT (book_id, author_id) DO NOTHING;");
+			joinstmt.setString(1, book.getId());
+			
+			for (AuthorInterface auth : book.getAuthors()){
+				stmt.setString(1, auth.getId());
+				stmt.setString(2, auth.getName());
+				stmt.setString(3, auth.getName());
+				stmt.executeUpdate();
+				
+				joinstmt.setString(2, auth.getId());
+				joinstmt.executeUpdate();
+			}
+			
+			
 			
 		}
 		catch(Exception e){

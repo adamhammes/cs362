@@ -2,6 +2,7 @@ package models;
 
 import java.util.ArrayList;
 
+import interfaces.AuthorInterface;
 import interfaces.BookInterface;
 import interfaces.ReviewInterface;
 import interfaces.TagInterface;
@@ -14,6 +15,7 @@ public class Book implements BookInterface, Comparable<BookInterface> {
     private ArrayList<Integer> ratings = new ArrayList<Integer>();
     private ArrayList<TagInterface> tags = new ArrayList<TagInterface>();
     private ArrayList<VersionInterface> versions = new ArrayList<VersionInterface>();
+    private ArrayList<AuthorInterface> authors = new ArrayList<AuthorInterface>();
 
     public Book(String id, String title) {
         this.id = id;
@@ -78,8 +80,17 @@ public class Book implements BookInterface, Comparable<BookInterface> {
 
 	@Override
 	public ArrayList<VersionInterface> getVersions() {
-		// TODO Auto-generated method stub
 		return versions;
+	}
+
+	@Override
+	public boolean addAuthor(AuthorInterface author){
+		return authors.add(author);
+	}
+	
+	@Override
+	public ArrayList<AuthorInterface> getAuthors() {
+		return authors;
 	}
 	
 }

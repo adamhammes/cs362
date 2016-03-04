@@ -11,14 +11,17 @@ public class Author implements AuthorInterface {
         this.name = name;
     }
 
+    @Override
     public String getId() {
         return id;
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    
     public void setName(String name) {
         this.name = name;
     }

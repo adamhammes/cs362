@@ -13,4 +13,6 @@ public interface BookInterface extends Comparable<BookInterface> {
 	public boolean addVersion(String path, String type);
 	public boolean removeTag(TagInterface t);
 	public ArrayList<VersionInterface> getVersions();
+	public boolean addAuthor(AuthorInterface author);
+	public ArrayList<AuthorInterface> getAuthors();
 }

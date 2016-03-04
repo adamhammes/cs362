@@ -4,9 +4,8 @@ import java.util.Collection;
 import databaseSupport.DatabaseSupport;
 import interfaces.BookInterface;
 import interfaces.TagInterface;
-import models.Book;
-import models.EbookSystem;
-import models.User;
+import models.*;
+
 
 public class TagTests {
 //	public static void main(String[] args) throws SQLException{
@@ -26,13 +25,23 @@ public class TagTests {
 //	}
 	
 	public static void main(String[] args) throws SQLException{
-		EbookSystem system = new EbookSystem();
+//		EbookSystem system = new EbookSystem();
 //		System.out.println(system.addTag("nick", "Worm", "awesome"));
 //		System.out.println(system.removeTag("nick", "Worm", "awesome"));
 		
-		Collection<BookInterface> books = system.getBookWithTag("nick", "awesome");
-		for (BookInterface book : books){
-			System.out.println(book.getTitle());
-		}
+//		Collection<BookInterface> books = system.getBookWithTag("nick", "awesome");
+//		for (BookInterface book : books){
+//			System.out.println(book.getTitle());
+//		}
+		
+		DatabaseSupport db = new DatabaseSupport();
+		Book b = new Book("bk1", "The Most Awesome Book Ever");
+		b.addVersion("books/awesome/thebook.pdf", ".pdf");
+		Author a = new Author("njriesen", "Nicholas Riesen");
+		b.addAuthor(a);
+		
+		db.putBook(b);
 	}
+	
+	
 }
