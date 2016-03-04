@@ -10,8 +10,8 @@ import interfaces.*;
 public class DatabaseSupport implements DatabaseSupportInterface {
 	Connection connection;
 
-	private static final String USERNAME = "Nicholas";
-	private static final String PASSWORD = ""; // no password needed
+	private static final String USERNAME = "postgres";
+	private static final String PASSWORD = "a"; // no password needed
 	private static final String CONN_STRING = "jdbc:postgresql://localhost:5432/System";
 
 	public static void main(String[] args) throws SQLException, ClassNotFoundException {
@@ -225,7 +225,52 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 
 	@Override
 	public BookInterface getBook(String bid) {
-		return null;
+		Connection conn = null;
+		BookInterface book = null;
+		try {
+			conn = openConnection();
+			
+			// get book
+			PreparedStatement stmt = makeBookStatement(bid, conn);
+			ResultSet results = stmt.executeQuery();
+			results.next();
+			book = new Book(results.getString("book_id"), results.getString("title"));
+			
+			// get ratings
+			stmt = makeRatingStatement(bid, conn);
+			results = stmt.executeQuery();
+			
+			while(results.next()){
+				ReviewInterface toAdd = new Review(results.getInt(2), results.getInt(3), results.getString(4));
+				book.addReview(toAdd);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			return null;
+		} finally {
+			try {
+				conn.close();
+			} catch (Exception e2) {
+				// do nothing
+			}
+		}
+		return book;
+	}
+
+	private PreparedStatement makeRatingStatement(String bid, Connection conn) throws SQLException {
+		PreparedStatement stmt;
+		stmt = conn.prepareStatement(
+				"SELECT *"
+		      + "FROM book_review WHERE book_id = ?;");
+		stmt.setString(1, bid);
+		return stmt;
+	}
+
+	private PreparedStatement makeBookStatement(String bid, Connection conn) throws SQLException {
+		PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Book WHERE book_id = ?;");
+		stmt.setString(1, bid);
+		return stmt;
 	}
 
 	@Override
