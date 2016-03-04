@@ -81,5 +81,10 @@ public class Book implements BookInterface, Comparable<BookInterface> {
 	public Collection<ReviewInterface> getReviews() {
 		return reviews;
 	}
+
+	@Override
+	public Collection<VersionInterface> getVersion() {
+		return versions;
+	}
 	
 }

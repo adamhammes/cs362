@@ -114,6 +114,7 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 				stmt.setString(1, u.getName());
 				stmt.setString(2, book.getId());
 				stmt.executeUpdate();
+				
 			}
 			
 			putTags(conn, u);
