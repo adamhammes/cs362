@@ -2,8 +2,10 @@ package models;
 
 import interfaces.ReviewInterface;
 
+
 public class Review implements ReviewInterface {
-	private int id;
+	
+	private int id = -1;
 	private int rating;
 	private String review;
 	
@@ -14,8 +16,8 @@ public class Review implements ReviewInterface {
 	}
 
 	@Override
-	public int getId() {
-		return id;
+	public int getRating() {
+		return rating;
 	}
 
 	@Override
@@ -24,9 +26,23 @@ public class Review implements ReviewInterface {
 	}
 
 	@Override
-	public int getRating() {
-		return rating;
+	public int getId() {
+		return id;
 	}
-	
-	
+
+	@Override
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
+
+	@Override
+	public void setReview(String review) {
+		this.review = review;
+	}
+
+	@Override
+	public void setId(int id) {
+		this.id = id;
+	}
+
 }

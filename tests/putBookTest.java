@@ -19,7 +19,7 @@ public class putBookTest {
 	@Test
 	public void test() {
 		BookInterface book = new Book("hp3", "Harry Potter and the Prisoner of Azkaban");
-		book.addReview(new Review(4, 0, "asdf"));
+		book.addReview(new Review(-1, 0, "asdf"));
 		db.putBook(book);
 		
 		BookInterface dbBook = db.getBook("hp3");

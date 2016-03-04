@@ -16,29 +16,29 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 	private static final String PASSWORD = "a"; // no password needed
 	private static final String CONN_STRING = "jdbc:postgresql://localhost:5432/System";
 
-	public static void main(String[] args) throws SQLException, ClassNotFoundException {
-		User user = new User("Anthony");
-		DatabaseSupport db = new DatabaseSupport();
-		db.putUser(user);
-		
-		Class.forName("org.postgresql.Driver");
-
-		try (Connection conn = DriverManager.getConnection(CONN_STRING, USERNAME, PASSWORD);
-
-				Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-				ResultSet results = stmt.executeQuery("SELECT * FROM Account");) {
-
-			System.out.println("Connected!");
-
-			while (results.next()) {
-
-				System.out.println(results.getString("account_name"));
-			}
-
-		} catch (SQLException e) {
-			System.err.println(e);
-		}
-	}
+//	public static void main(String[] args) throws SQLException, ClassNotFoundException {
+//		User user = new User("Anthony");
+//		DatabaseSupport db = new DatabaseSupport();
+//		db.putUser(user);
+//		
+//		Class.forName("org.postgresql.Driver");
+//
+//		try (Connection conn = DriverManager.getConnection(CONN_STRING, USERNAME, PASSWORD);
+//
+//				Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+//				ResultSet results = stmt.executeQuery("SELECT * FROM Account");) {
+//
+//			System.out.println("Connected!");
+//
+//			while (results.next()) {
+//
+//				System.out.println(results.getString("account_name"));
+//			}
+//
+//		} catch (SQLException e) {
+//			System.err.println(e);
+//		}
+//	}
 	
 	public UserInterface getUser(String uid) {
 		User user = null;
@@ -118,7 +118,7 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 				stmt.setString(2, book.getId());
 				stmt.executeUpdate();
 				
-				for (VersionInterface version: book.getVersion()) {
+				for (VersionInterface version: book.getVersions()) {
 					stmt = conn.prepareStatement(
 							  "INSERT INTO book_version (book_id, account_name, format, location)"
 							+ "VALUES (?, ?, ?, ?)"
@@ -298,41 +298,90 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 	public boolean putBook(BookInterface book) {
 		Connection conn = null;
 		
-		try {
+
+		try{
 			conn = openConnection();
-			// put User
-			PreparedStatement stmt = conn.prepareStatement(
-					"INSERT INTO book (book_id, title) VALUES (?, ?) "
-				  + "ON CONFLICT (book_id) DO NOTHING;");
 			
+			//Book id and title information
+			PreparedStatement stmt = conn.prepareStatement("INSERT INTO book VALUES (?, ?) ON CONFLICT (book_id) DO UPDATE SET title = ?;");
 			stmt.setString(1, book.getId());
 			stmt.setString(2, book.getTitle());
+			stmt.setString(3, book.getTitle());
+			System.out.println(stmt);
 			stmt.executeUpdate();
 			
-			// put Reviews
-			for (ReviewInterface review: book.getReviews()) {
-				stmt = conn.prepareStatement(
-						  "INSERT INTO book_review (book_id, review_id, rating, review)"
-						+ "VALUES (?, ?, ?, ?) "
-						+ "ON CONFLICT (review_id) DO NOTHING");
+			
+			//Version Information
+			stmt = conn.prepareStatement("INSERT INTO book_version VALUES (?, ?, ?, ?) ON CONFLICT"
+											+ "(book_id, account_name, format) DO UPDATE SET location=?;");
+			
+			for (VersionInterface ver : book.getVersions()){
 				stmt.setString(1, book.getId());
-				stmt.setInt(2,  review.getId());
-				stmt.setInt(3, review.getRating());
-				stmt.setString(4, review.getReview());
+				stmt.setString(2, "nick");
+				stmt.setString(3, ver.getType());
+				stmt.setString(4, ver.getPath());
+				stmt.setString(5, ver.getPath());
+				System.out.println(stmt);
 				stmt.executeUpdate();
 			}
-		} catch (Exception e) {
+			
+			//Author Information
+			stmt = conn.prepareStatement("INSERT INTO author VALUES (?, ?) ON CONFLICT (author_id) DO UPDATE SET author_name = ?;");
+			PreparedStatement joinstmt = conn.prepareStatement("INSERT INTO book_author VALUES (?, ?) ON CONFLICT (book_id, author_id) DO NOTHING;");
+			joinstmt.setString(1, book.getId());
+			
+			for (AuthorInterface auth : book.getAuthors()){
+				stmt.setString(1, auth.getId());
+				stmt.setString(2, auth.getName());
+				stmt.setString(3, auth.getName());
+				System.out.println(stmt);
+				stmt.executeUpdate();
+				
+				joinstmt.setString(2, auth.getId());
+				System.out.println(joinstmt);
+				joinstmt.executeUpdate();
+			}
+			
+			
+			//Review Information
+			PreparedStatement insertstmt = conn.prepareStatement("INSERT INTO book_review (book_id, rating, review) VALUES (?, ?, ?);");
+			insertstmt.setString(1, book.getId());
+			PreparedStatement updatestmt = conn.prepareStatement("UPDATE book_review SET book_id=?, rating=?, review=? WHERE review_id=?;");
+			updatestmt.setString(1, book.getId());
+			
+			for (ReviewInterface rev : book.getReviews()){
+				if (rev.getId() == -1){
+					
+					insertstmt.setInt(2, rev.getRating());
+					insertstmt.setString(3, rev.getReview());
+					System.out.println(insertstmt);
+					insertstmt.executeUpdate();
+				}
+				else{
+					
+					updatestmt.setInt(2, rev.getRating());
+					updatestmt.setString(3, rev.getReview());
+					updatestmt.setInt(4, rev.getId());
+					System.out.println(updatestmt);
+					insertstmt.executeUpdate();
+				}
+			}			
+			
+		}
+		catch(Exception e){
 			System.out.println(e.getMessage());
 			e.printStackTrace();
-			return false;
-		} finally {
-			try {
+		}
+		finally{
+			try{
 				conn.close();
-			} catch (Exception e2) {
-				// do nothing
+			}
+			catch(Exception e2){
+				//do nothing
 			}
 		}
-		return true;
+		return false;
+
 	}
 
 	@Override
