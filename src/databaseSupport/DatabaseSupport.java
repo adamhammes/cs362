@@ -52,8 +52,11 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 			stmt.setString(1, uid);
 			ResultSet results = stmt.executeQuery();
 			
-			results.next();
-			user = new User(results.getString("account_name"));
+			if (results.next()) {
+				user = new User(results.getString("account_name"));
+			} else {
+				return null;
+			}
 			
 			//Get Books
 			stmt = conn.prepareStatement("SELECT book.book_id, book.title FROM account_book join book on account_book.book_id=book.book_id where account_book.account_name=?;");
@@ -115,6 +118,17 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 				stmt.setString(2, book.getId());
 				stmt.executeUpdate();
 				
+				for (VersionInterface version: book.getVersion()) {
+					stmt = conn.prepareStatement(
+							  "INSERT INTO book_version (book_id, account_name, format, location)"
+							+ "VALUES (?, ?, ?, ?)"
+							+ "ON CONFLICT (book_id, account_name, format) DO NOTHING");
+					stmt.setString(1, book.getId());
+					stmt.setString(2, u.getName());
+					stmt.setString(3, version.getType());
+					stmt.setString(4, version.getPath());
+					stmt.executeUpdate();
+				}
 			}
 			
 			putTags(conn, u);
