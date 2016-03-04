@@ -15,4 +15,6 @@ public interface BookInterface extends Comparable<BookInterface> {
 	public ArrayList<VersionInterface> getVersions();
 	public boolean addAuthor(AuthorInterface author);
 	public ArrayList<AuthorInterface> getAuthors();
+	public boolean addReview(ReviewInterface rev);
+	public ArrayList<ReviewInterface> getReviews();
 }

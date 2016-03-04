@@ -35,10 +35,15 @@ public class TagTests {
 //		}
 		
 		DatabaseSupport db = new DatabaseSupport();
-		Book b = new Book("bk1", "The Most Awesome Book Ever");
-		b.addVersion("books/awesome/thebook.pdf", ".pdf");
-		Author a = new Author("njriesen", "Nicholas Riesen");
+		Book b = new Book("bk2", "An alright book");
+		b.addVersion("books/awesome/thatOtherBook.pdf", ".pdf");
+		Author a = new Author("amriesen", "Anthony Riesen");
 		b.addAuthor(a);
+		
+		Review r = new Review(2);
+		r.setReview("This book was ok.");
+		
+		b.addReview(r);
 		
 		db.putBook(b);
 	}

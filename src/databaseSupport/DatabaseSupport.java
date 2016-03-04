@@ -267,13 +267,36 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 				stmt.setString(1, auth.getId());
 				stmt.setString(2, auth.getName());
 				stmt.setString(3, auth.getName());
+				System.out.println(stmt);
 				stmt.executeUpdate();
 				
 				joinstmt.setString(2, auth.getId());
+				System.out.println(joinstmt);
 				joinstmt.executeUpdate();
 			}
 			
 			
+			//Review Information
+			PreparedStatement insertstmt = conn.prepareStatement("INSERT INTO book_review (book_id, rating, review) VALUES (?, ?, ?);");
+			insertstmt.setString(1, book.getId());
+			PreparedStatement updatestmt = conn.prepareStatement("UPDATE book_review SET book_id=?, rating=?, review=? WHERE review_id=?;");
+			updatestmt.setString(1, book.getId());
+			
+			for (ReviewInterface rev : book.getReviews()){
+				if (rev.getId() == -1){
+					insertstmt.setInt(2, rev.getRating());
+					insertstmt.setString(3, rev.getReview());
+					System.out.println(insertstmt);
+					insertstmt.executeUpdate();
+				}
+				else{
+					updatestmt.setInt(2, rev.getRating());
+					updatestmt.setString(3, rev.getReview());
+					updatestmt.setInt(4, rev.getId());
+					System.out.println(updatestmt);
+					insertstmt.executeUpdate();
+				}
+			}			
 			
 		}
 		catch(Exception e){

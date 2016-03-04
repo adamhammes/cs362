@@ -16,6 +16,7 @@ public class Book implements BookInterface, Comparable<BookInterface> {
     private ArrayList<TagInterface> tags = new ArrayList<TagInterface>();
     private ArrayList<VersionInterface> versions = new ArrayList<VersionInterface>();
     private ArrayList<AuthorInterface> authors = new ArrayList<AuthorInterface>();
+    private ArrayList<ReviewInterface> reviews = new ArrayList<ReviewInterface>();
 
     public Book(String id, String title) {
         this.id = id;
@@ -91,6 +92,16 @@ public class Book implements BookInterface, Comparable<BookInterface> {
 	@Override
 	public ArrayList<AuthorInterface> getAuthors() {
 		return authors;
+	}
+
+	@Override
+	public boolean addReview(ReviewInterface rev) {
+		return reviews.add(rev);
+	}
+	
+	@Override
+	public ArrayList<ReviewInterface> getReviews() {
+		return reviews;
 	}
 	
 }
