@@ -75,5 +75,11 @@ public class Book implements BookInterface, Comparable<BookInterface> {
 	public boolean removeTag(TagInterface t) {
 		return tags.remove(t);
 	}
+
+	@Override
+	public ArrayList<VersionInterface> getVersions() {
+		// TODO Auto-generated method stub
+		return versions;
+	}
 	
 }

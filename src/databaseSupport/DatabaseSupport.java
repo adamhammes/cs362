@@ -14,29 +14,29 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 	private static final String PASSWORD = ""; // no password needed
 	private static final String CONN_STRING = "jdbc:postgresql://localhost:5432/System";
 
-	public static void main(String[] args) throws SQLException, ClassNotFoundException {
-		User user = new User("Anthony");
-		DatabaseSupport db = new DatabaseSupport();
-		db.putUser(user);
-		
-		Class.forName("org.postgresql.Driver");
-
-		try (Connection conn = DriverManager.getConnection(CONN_STRING, USERNAME, PASSWORD);
-
-				Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-				ResultSet results = stmt.executeQuery("SELECT * FROM Account");) {
-
-			System.out.println("Connected!");
-
-			while (results.next()) {
-
-				System.out.println(results.getString("account_name"));
-			}
-
-		} catch (SQLException e) {
-			System.err.println(e);
-		}
-	}
+//	public static void main(String[] args) throws SQLException, ClassNotFoundException {
+//		User user = new User("Anthony");
+//		DatabaseSupport db = new DatabaseSupport();
+//		db.putUser(user);
+//		
+//		Class.forName("org.postgresql.Driver");
+//
+//		try (Connection conn = DriverManager.getConnection(CONN_STRING, USERNAME, PASSWORD);
+//
+//				Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+//				ResultSet results = stmt.executeQuery("SELECT * FROM Account");) {
+//
+//			System.out.println("Connected!");
+//
+//			while (results.next()) {
+//
+//				System.out.println(results.getString("account_name"));
+//			}
+//
+//		} catch (SQLException e) {
+//			System.err.println(e);
+//		}
+//	}
 	
 	public UserInterface getUser(String uid) {
 		User user = null;
@@ -234,12 +234,31 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 		
 		try{
 			conn = openConnection();
+			
+			//Book id and title information
 			PreparedStatement stmt = conn.prepareStatement("INSERT INTO book VALUES (?, ?) ON CONFLICT (book_id) DO UPDATE SET title = ?;");
 			stmt.setString(1, book.getId());
 			stmt.setString(2, book.getTitle());
 			stmt.setString(3, book.getTitle());
 			System.out.println(stmt);
 			stmt.executeUpdate();
+			
+			
+			//Version Information
+			stmt = conn.prepareStatement("INSERT INTO book_version VALUES (?, ?, ?, ?) ON CONFLICT"
+											+ "(book_id, account_name, format) DO UPDATE SET location=?;");
+			
+			for (VersionInterface ver : book.getVersions()){
+				stmt.setString(1, book.getId());
+				stmt.setString(2, "nick");
+				stmt.setString(3, ver.getType());
+				stmt.setString(4, ver.getPath());
+				stmt.setString(5, ver.getPath());
+				System.out.println(stmt);
+				stmt.executeUpdate();
+			}
+			
+			
 		}
 		catch(Exception e){
 			System.out.println(e.getMessage());
