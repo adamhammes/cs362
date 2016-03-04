@@ -1,6 +1,8 @@
 package databaseSupport;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -197,9 +199,13 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 	}
 
 	@Override
-	public List<String> getBooksWithTag(String uid, String tid) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<BookInterface> getBooksWithTag(String uid, String tid) {
+		UserInterface user = getUser(uid);
+		if (null == user) {
+			return null;
+		}
+		
+		return new ArrayList<>(user.getBooksWithTag(tid));
 	}
 
 	@Override
