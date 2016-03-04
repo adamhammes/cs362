@@ -230,7 +230,29 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 
 	@Override
 	public boolean putBook(BookInterface book) {
-		// TODO Auto-generated method stub
+		Connection conn = null;
+		
+		try{
+			conn = openConnection();
+			PreparedStatement stmt = conn.prepareStatement("INSERT INTO book VALUES (?, ?) ON CONFLICT (book_id) DO UPDATE SET title = ?;");
+			stmt.setString(1, book.getId());
+			stmt.setString(2, book.getTitle());
+			stmt.setString(3, book.getTitle());
+			System.out.println(stmt);
+			stmt.executeUpdate();
+		}
+		catch(Exception e){
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+		finally{
+			try{
+				conn.close();
+			}
+			catch(Exception e2){
+				//do nothing
+			}
+		}
 		return false;
 	}
 
