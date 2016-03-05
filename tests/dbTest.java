@@ -125,6 +125,24 @@ public class dbTest {
 		assertEquals(r.getReview(), "meh");
 	}
 	
+	
+	@Test
+	public void Book_updateBook_RemoveReview(){
+		BookInterface b = db.getBook("mobydick");
+		assertNotNull(b);
+		assertFalse(b.getReviews().isEmpty());
+		int numOfReviews = b.getReviews().size();
+		
+		//Remove 
+		b.getReviews().remove(b.getReviews().iterator().next());
+		assertTrue(db.putBook(b));
+		
+		b = db.getBook("mobydick");
+		assertNotNull(b);
+		assertEquals(b.getReviews().size(), numOfReviews - 1);
+	}
+	
+	
 	@Test
 	public void User_updateUser_AddBook(){
 		UserInterface u = db.getUser("nick");

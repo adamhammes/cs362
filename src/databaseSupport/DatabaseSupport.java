@@ -242,6 +242,7 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 			
 			// get ratings
 			stmt = makeRatingStatement(bid, conn);
+			System.out.println(stmt);
 			results = stmt.executeQuery();
 			
 			
@@ -390,31 +391,58 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 		}
 	}
 	
+	
+	
 	private void putReviews(Connection conn, BookInterface book) throws SQLException {
 		
-		PreparedStatement insertstmt = conn.prepareStatement("INSERT INTO book_review (book_id, rating, review) VALUES (?, ?, ?);");
+		PreparedStatement insertstmt = conn.prepareStatement("INSERT INTO book_review (book_id, rating, review) VALUES (?, ?, ?);", new String[]{"review_id"});
 		insertstmt.setString(1, book.getId());
 		PreparedStatement updatestmt = conn.prepareStatement("UPDATE book_review SET book_id=?, rating=?, review=? WHERE review_id=?;");
 		updatestmt.setString(1, book.getId());
 		
+		//Setup for remove
+		StringBuffer rmSQL = new StringBuffer("DELETE FROM book_review WHERE (review_id) NOT IN "
+				+ "(SELECT review_id FROM book_review WHERE book_id != ? OR (");
+		
+		for (int i = 0; i < book.getReviews().size() - 1; i++)
+			rmSQL.append("(review_id = ?) OR");
+		rmSQL.append("(review_id = ?)));");
+		PreparedStatement rmstmt = conn.prepareStatement(rmSQL.toString());
+		rmstmt.setString(1, book.getId());
+		
+		int index = 2;
 		for (ReviewInterface rev : book.getReviews()){
 			if (rev.getId() == -1){
-				
 				insertstmt.setInt(2, rev.getRating());
 				insertstmt.setString(3, rev.getReview());
-				System.out.println(insertstmt);
 				insertstmt.executeUpdate();
+				
+				//Retrieve generated key from query so that the -1 doesn't conflict with the remove statement
+				insertstmt.getGeneratedKeys().next();
+				rev.setId(insertstmt.getGeneratedKeys().getInt("review_id"));
 			}
 			else{
-				
 				updatestmt.setInt(2, rev.getRating());
 				updatestmt.setString(3, rev.getReview());
 				updatestmt.setInt(4, rev.getId());
 				System.out.println(updatestmt);
-				insertstmt.executeUpdate();
+				updatestmt.executeUpdate();
 			}
+			rmstmt.setInt(index++, rev.getId());
+		}
+		System.out.println(rmstmt.toString());
+		if (book.getReviews().size() > 0) {
+			System.out.println(rmstmt);
+			rmstmt.executeUpdate();
+		}
+		else{
+			rmstmt = conn.prepareStatement("DELETE FROM book_review WHERE book_id = ?;");
+			rmstmt.setString(1, book.getId());
+			rmstmt.executeUpdate();
 		}			
 	}
+
+	
 	
 	
 	@Override
