@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import databaseSupport.DatabaseSupport;
-import interfaces.BookInterface;
 import models.User;
 
 
@@ -26,6 +25,5 @@ public class TagTests {
 		u = (User) db.getUser("nick");
 		
 		assertTrue(u.getTags().get(0).getName().equals("fantacy"));
-	}
-	
+	}	
 }

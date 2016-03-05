@@ -18,29 +18,6 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 	private static final String PASSWORD = "a"; // no password needed
 	private static final String CONN_STRING = "jdbc:postgresql://localhost:5432/System";
 
-//	public static void main(String[] args) throws SQLException, ClassNotFoundException {
-//		User user = new User("Anthony");
-//		DatabaseSupport db = new DatabaseSupport();
-//		db.putUser(user);
-//		
-//		Class.forName("org.postgresql.Driver");
-//
-//		try (Connection conn = DriverManager.getConnection(CONN_STRING, USERNAME, PASSWORD);
-//
-//				Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-//				ResultSet results = stmt.executeQuery("SELECT * FROM Account");) {
-//
-//			System.out.println("Connected!");
-//
-//			while (results.next()) {
-//
-//				System.out.println(results.getString("account_name"));
-//			}
-//
-//		} catch (SQLException e) {
-//			System.err.println(e);
-//		}
-//	}
 	
 	public UserInterface getUser(String uid) {
 		User user = null;
@@ -256,17 +233,21 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 			// get book
 			PreparedStatement stmt = makeBookStatement(bid, conn);
 			ResultSet results = stmt.executeQuery();
-			results.next();
-			book = new Book(results.getString("book_id"), results.getString("title"));
+			if (results.next())
+				book = new Book(results.getString("book_id"), results.getString("title"));
+			else
+				return null;
 			
 			// get ratings
 			stmt = makeRatingStatement(bid, conn);
 			results = stmt.executeQuery();
 			
+			
 			while(results.next()){
 				ReviewInterface toAdd = new Review(results.getInt(2), results.getInt(3), results.getString(4));
 				book.addReview(toAdd);
 			}
+			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
@@ -373,6 +354,7 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 		catch(Exception e){
 			System.out.println(e.getMessage());
 			e.printStackTrace();
+			return false;
 		}
 		finally{
 			try{
@@ -382,8 +364,7 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 				//do nothing
 			}
 		}
-		return false;
-
+		return true;
 	}
 
 	@Override
