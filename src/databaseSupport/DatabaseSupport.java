@@ -230,7 +230,7 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 		try {
 			conn = openConnection();
 			
-			// get book
+			//get book
 			PreparedStatement stmt = makeBookStatement(bid, conn);
 			ResultSet results = stmt.executeQuery();
 			if (results.next())
@@ -246,6 +246,17 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 			while(results.next()){
 				ReviewInterface toAdd = new Review(results.getInt(2), results.getInt(3), results.getString(4));
 				book.addReview(toAdd);
+			}
+			
+			//Get Authors
+			stmt = conn.prepareStatement("SELECT author.author_id, author_name FROM author JOIN book_author "
+					+ "ON author.author_id = book_author.author_id WHERE book_id = ?;");
+			stmt.setString(1, book.getId());
+			results = stmt.executeQuery();
+			
+			while(results.next()){
+				Author author = new Author(results.getString("author_id"), results.getString("author_name"));
+				book.addAuthor(author);
 			}
 			
 		} catch (Exception e) {
@@ -313,16 +324,38 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 			PreparedStatement joinstmt = conn.prepareStatement("INSERT INTO book_author VALUES (?, ?) ON CONFLICT (book_id, author_id) DO NOTHING;");
 			joinstmt.setString(1, book.getId());
 			
+			StringBuffer rmSQL = new StringBuffer("DELETE FROM book_author WHERE (book_id, author_id) NOT IN "
+					+ "(SELECT * FROM book_author WHERE book_id != ? OR (");
+			for (int i = 0; i < book.getAuthors().size() - 1; i++)
+				rmSQL.append("(author_id = ?) OR");
+			rmSQL.append("(author_id = ?)));");
+			PreparedStatement rmstmt = conn.prepareStatement(rmSQL.toString());
+			rmstmt.setString(1, book.getId());
+			
+			int index = 2;
 			for (AuthorInterface auth : book.getAuthors()){
+				//Create/update Author Entry
 				stmt.setString(1, auth.getId());
 				stmt.setString(2, auth.getName());
 				stmt.setString(3, auth.getName());
 				System.out.println(stmt);
 				stmt.executeUpdate();
 				
+				//Create/update Joining table
 				joinstmt.setString(2, auth.getId());
 				System.out.println(joinstmt);
 				joinstmt.executeUpdate();
+				
+				//Add to remove statement
+				rmstmt.setString(index++, auth.getId());
+			}
+			if (book.getAuthors().size() > 0){
+				rmstmt.executeUpdate();
+			}
+			else{
+				rmstmt = conn.prepareStatement("DELETE FROM book_author WHERE book_id =?");
+				rmstmt.setString(1, book.getId());
+				rmstmt.executeUpdate();
 			}
 			
 			

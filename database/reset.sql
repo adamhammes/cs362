@@ -100,3 +100,5 @@ INSERT INTO Book_Tag VALUES
 	('adam', 'hp2', 'fantasy');
 
 
+INSERT INTO book_author VALUES
+	('hp2', 'jkr');
