@@ -91,23 +91,25 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 			
 			//put all of the users books
 			for (BookInterface book: u.getAllBooks()){
+				putBook(book);
+				
 				stmt = conn.prepareStatement("INSERT INTO account_book (account_name, book_id) VALUES (?, ?) "
 												+ "ON CONFLICT (account_name, book_id) DO NOTHING;");
 				stmt.setString(1, u.getName());
 				stmt.setString(2, book.getId());
 				stmt.executeUpdate();
-				
-				for (VersionInterface version: book.getVersions()) {
-					stmt = conn.prepareStatement(
-							  "INSERT INTO book_version (book_id, account_name, format, location)"
-							+ "VALUES (?, ?, ?, ?)"
-							+ "ON CONFLICT (book_id, account_name, format) DO NOTHING");
-					stmt.setString(1, book.getId());
-					stmt.setString(2, u.getName());
-					stmt.setString(3, version.getType());
-					stmt.setString(4, version.getPath());
-					stmt.executeUpdate();
-				}
+//				
+//				for (VersionInterface version: book.getVersions()) {
+//					stmt = conn.prepareStatement(
+//							  "INSERT INTO book_version (book_id, account_name, format, location)"
+//							+ "VALUES (?, ?, ?, ?)"
+//							+ "ON CONFLICT (book_id, account_name, format) DO NOTHING");
+//					stmt.setString(1, book.getId());
+//					stmt.setString(2, u.getName());
+//					stmt.setString(3, version.getType());
+//					stmt.setString(4, version.getPath());
+//					stmt.executeUpdate();
+//				}
 			}
 			
 			putTags(conn, u);
@@ -304,85 +306,14 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 			System.out.println(stmt);
 			stmt.executeUpdate();
 			
-			
 			//Version Information
-			stmt = conn.prepareStatement("INSERT INTO book_version VALUES (?, ?, ?, ?) ON CONFLICT"
-											+ "(book_id, account_name, format) DO UPDATE SET location=?;");
-			
-			for (VersionInterface ver : book.getVersions()){
-				stmt.setString(1, book.getId());
-				stmt.setString(2, "nick");
-				stmt.setString(3, ver.getType());
-				stmt.setString(4, ver.getPath());
-				stmt.setString(5, ver.getPath());
-				System.out.println(stmt);
-				stmt.executeUpdate();
-			}
+			putVersions(conn, book);
 			
 			//Author Information
-			stmt = conn.prepareStatement("INSERT INTO author VALUES (?, ?) ON CONFLICT (author_id) DO UPDATE SET author_name = ?;");
-			PreparedStatement joinstmt = conn.prepareStatement("INSERT INTO book_author VALUES (?, ?) ON CONFLICT (book_id, author_id) DO NOTHING;");
-			joinstmt.setString(1, book.getId());
-			
-			StringBuffer rmSQL = new StringBuffer("DELETE FROM book_author WHERE (book_id, author_id) NOT IN "
-					+ "(SELECT * FROM book_author WHERE book_id != ? OR (");
-			for (int i = 0; i < book.getAuthors().size() - 1; i++)
-				rmSQL.append("(author_id = ?) OR");
-			rmSQL.append("(author_id = ?)));");
-			PreparedStatement rmstmt = conn.prepareStatement(rmSQL.toString());
-			rmstmt.setString(1, book.getId());
-			
-			int index = 2;
-			for (AuthorInterface auth : book.getAuthors()){
-				//Create/update Author Entry
-				stmt.setString(1, auth.getId());
-				stmt.setString(2, auth.getName());
-				stmt.setString(3, auth.getName());
-				System.out.println(stmt);
-				stmt.executeUpdate();
-				
-				//Create/update Joining table
-				joinstmt.setString(2, auth.getId());
-				System.out.println(joinstmt);
-				joinstmt.executeUpdate();
-				
-				//Add to remove statement
-				rmstmt.setString(index++, auth.getId());
-			}
-			if (book.getAuthors().size() > 0){
-				rmstmt.executeUpdate();
-			}
-			else{
-				rmstmt = conn.prepareStatement("DELETE FROM book_author WHERE book_id =?");
-				rmstmt.setString(1, book.getId());
-				rmstmt.executeUpdate();
-			}
-			
+			putAuthors(conn, book);
 			
 			//Review Information
-			PreparedStatement insertstmt = conn.prepareStatement("INSERT INTO book_review (book_id, rating, review) VALUES (?, ?, ?);");
-			insertstmt.setString(1, book.getId());
-			PreparedStatement updatestmt = conn.prepareStatement("UPDATE book_review SET book_id=?, rating=?, review=? WHERE review_id=?;");
-			updatestmt.setString(1, book.getId());
-			
-			for (ReviewInterface rev : book.getReviews()){
-				if (rev.getId() == -1){
-					
-					insertstmt.setInt(2, rev.getRating());
-					insertstmt.setString(3, rev.getReview());
-					System.out.println(insertstmt);
-					insertstmt.executeUpdate();
-				}
-				else{
-					
-					updatestmt.setInt(2, rev.getRating());
-					updatestmt.setString(3, rev.getReview());
-					updatestmt.setInt(4, rev.getId());
-					System.out.println(updatestmt);
-					insertstmt.executeUpdate();
-				}
-			}			
-			
+			putReviews(conn, book);			
 		}
 		catch(Exception e){
 			System.out.println(e.getMessage());
@@ -400,6 +331,92 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 		return true;
 	}
 
+	
+	
+	private void putVersions(Connection conn, BookInterface book) throws SQLException{
+
+		PreparedStatement stmt = conn.prepareStatement("INSERT INTO book_version (book_id, account_name, format, location)"
+										+ "VALUES (?, ?, ?, ?) ON CONFLICT (book_id, account_name, format) DO NOTHING");
+		
+		for (VersionInterface version: book.getVersions()) {
+			stmt.setString(1, book.getId());
+			stmt.setString(2, "nick");
+			stmt.setString(3, version.getType());
+			stmt.setString(4, version.getPath());
+			stmt.executeUpdate();
+		}
+	}
+	
+	
+	
+	private void putAuthors(Connection conn, BookInterface book) throws SQLException {
+		
+		PreparedStatement stmt = conn.prepareStatement("INSERT INTO author VALUES (?, ?) ON CONFLICT (author_id) DO UPDATE SET author_name = ?;");
+		PreparedStatement joinstmt = conn.prepareStatement("INSERT INTO book_author VALUES (?, ?) ON CONFLICT (book_id, author_id) DO NOTHING;");
+		joinstmt.setString(1, book.getId());
+		
+		StringBuffer rmSQL = new StringBuffer("DELETE FROM book_author WHERE (book_id, author_id) NOT IN "
+				+ "(SELECT * FROM book_author WHERE book_id != ? OR (");
+		for (int i = 0; i < book.getAuthors().size() - 1; i++)
+			rmSQL.append("(author_id = ?) OR");
+		rmSQL.append("(author_id = ?)));");
+		PreparedStatement rmstmt = conn.prepareStatement(rmSQL.toString());
+		rmstmt.setString(1, book.getId());
+		
+		int index = 2;
+		for (AuthorInterface auth : book.getAuthors()){
+			//Create/update Author Entry
+			stmt.setString(1, auth.getId());
+			stmt.setString(2, auth.getName());
+			stmt.setString(3, auth.getName());
+			System.out.println(stmt);
+			stmt.executeUpdate();
+			
+			//Create/update Joining table
+			joinstmt.setString(2, auth.getId());
+			System.out.println(joinstmt);
+			joinstmt.executeUpdate();
+			
+			//Add to remove statement
+			rmstmt.setString(index++, auth.getId());
+		}
+		if (book.getAuthors().size() > 0){
+			rmstmt.executeUpdate();
+		}
+		else{
+			rmstmt = conn.prepareStatement("DELETE FROM book_author WHERE book_id =?");
+			rmstmt.setString(1, book.getId());
+			rmstmt.executeUpdate();
+		}
+	}
+	
+	private void putReviews(Connection conn, BookInterface book) throws SQLException {
+		
+		PreparedStatement insertstmt = conn.prepareStatement("INSERT INTO book_review (book_id, rating, review) VALUES (?, ?, ?);");
+		insertstmt.setString(1, book.getId());
+		PreparedStatement updatestmt = conn.prepareStatement("UPDATE book_review SET book_id=?, rating=?, review=? WHERE review_id=?;");
+		updatestmt.setString(1, book.getId());
+		
+		for (ReviewInterface rev : book.getReviews()){
+			if (rev.getId() == -1){
+				
+				insertstmt.setInt(2, rev.getRating());
+				insertstmt.setString(3, rev.getReview());
+				System.out.println(insertstmt);
+				insertstmt.executeUpdate();
+			}
+			else{
+				
+				updatestmt.setInt(2, rev.getRating());
+				updatestmt.setString(3, rev.getReview());
+				updatestmt.setInt(4, rev.getId());
+				System.out.println(updatestmt);
+				insertstmt.executeUpdate();
+			}
+		}			
+	}
+	
+	
 	@Override
 	public boolean removeTag(String uid, String bookTitle, String tag) {
 		UserInterface user = getUser(uid);
