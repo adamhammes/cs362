@@ -1,4 +1,4 @@
-﻿DROP SCHEMA public CASCADE;
+DROP SCHEMA public CASCADE;
 CREATE SCHEMA public;
 
 CREATE TABLE Account (

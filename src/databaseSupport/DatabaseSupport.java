@@ -1,10 +1,12 @@
 package databaseSupport;
 
+import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 
 import models.*;
 import interfaces.*;
@@ -393,5 +395,34 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 		
 		boolean toReturn = user.removeTag(bookTitle, tag);
 		return toReturn && putUser(user);
+	}
+	
+	public void reset(){
+		Connection conn = null;
+		Scanner resetSQL = null;
+		try{
+			conn = openConnection();
+			resetSQL = new Scanner(new File("database/reset.sql"));
+			resetSQL.useDelimiter(";");
+			Statement stmt = conn.createStatement();
+			
+			while(resetSQL.hasNext()){
+				stmt.execute(resetSQL.next());
+			}
+			
+		}
+		catch(Exception e){
+			System.err.println("Failed to reset database");
+			e.printStackTrace();
+		}
+		finally{
+			try{
+				if (conn != null) conn.close();
+				if (resetSQL != null) resetSQL.close();
+			}
+			catch(Exception e){
+				System.err.println("Failed to close resorces");
+			}
+		}
 	}
 }
