@@ -11,28 +11,28 @@
 
 \section*{Use Case}
 \begin{tabular}{l l}
-Use Case:     & Add Image\\
-Actor:        & \\
-Precondition: & \\
+Use Case:     & Add Image                           \\
+Actor:        & Photographer                        \\
+Precondition: & Photographer has been authenticated \\
 \end{tabular}
 
 
 \section*{Main Success Scenario:}
 
 \begin{enumerate}
-    \item 
+    \item Photographer provides photo and caption
+    \item System reports successfully added
 
 \end{enumerate}
 
 \section*{Extensions}
 
 \begin{itemize}
-    \item [1a.]
-                            
+    \item [1a.]Invalid photograph provided (corrupt, absent, etc)
+        - System reports failed to add photo
 \end{itemize}
 
-
 \section*{Information Expert}
-
+There are two information experts involved in this use case: System and photographer. The system has the ability to retrieve and manipulate the photographer. The photographer has access to all the photos he owns (his portfolio), and the ability to add photos. 
 
 \end{document}
