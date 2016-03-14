@@ -1,9 +1,11 @@
 \documentclass{article}
-
+\usepackage[margin=1in]{geometry}
 \usepackage{stmaryrd}
 \usepackage{amssymb}
 \usepackage{tikz}
+\usepackage{ stmaryrd }
 \usetikzlibrary{positioning}
+
 
 \title{Interaction Diagram - Add Image}
 \author{ Nick Riesen }
@@ -34,13 +36,36 @@
   }
 ]
 \node[] (start)  {};
+\node[block, below=2cm of start] (cntr) {\underline{:Controler}};
+\node[block, below=2cm of cntr] (system) {\underline{:System}};
+\node[block, left=2cm of system] (activeUser) {\texttt{<<Singleton>>} \\ ActiveUser};
+\node[block, below left=2cm of system] (db)  {\underline{:DatabaseSupport}};
+\node[block, below right = 2cm of system] (photographer) {\underline{p:photographer}};
+\node[block, below = 2cm of photographer] (image) {\underline{:Image}};
+
+\draw (start) -- (cntr) node[midway]{$\shortdownarrow$ 1};
+\draw (cntr) -- (system) node[midway]{$\shortdownarrow$} 2;
+\draw (system)--(activeUser) node[midway]{$\shortleftarrow$ 3};
+\draw (system) -- (db) node[midway]{$\shortleftarrow$ 4 9};
+\draw (system) -- (photographer) node[midway]{$\shortrightarrow$ 5};
+\draw (photographer) -- (image) node[midway]{$\shortdownarrow$ 6 7 8};
+
 
 \end{tikzpicture}
 
 \vspace{0.5cm}
 
 \begin{enumerate}
-  \item 
+  \item b:=addImage(img:ImageFile, caption:string):boolean
+  \item b:=addImage(img:ImageFile, caption:string):boolean
+  \item au:=getActiveUserId():string
+  \item p:=getPhotographer(au:string):photographer
+  \item b:=addImage(img:ImageFile, caption:string):boolean
+  \item create()
+  \item b:=setImage(img: ImageFile):boolean
+  \item b:=setCaption(caption:string):b
+  \item b:=putPhotographer(p:photographer):boolean
+  
 \end{enumerate}
 \end{center}
 
