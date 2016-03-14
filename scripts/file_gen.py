@@ -1,3 +1,4 @@
+import os
 from jinja2 import Environment, FileSystemLoader
 import yaml
 import sys
@@ -14,6 +15,9 @@ def write_files(template_path, data_path):
 
     env = Environment(loader=FileSystemLoader('./'))
     template = env.get_template(template_path)
+
+    if not os.path.exists('output'):
+        os.makedirs(directory)
 
     for author, cases in data.items():
         for case in cases:
