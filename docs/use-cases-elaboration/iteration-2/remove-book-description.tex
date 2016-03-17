@@ -12,27 +12,30 @@
 \section*{Use Case}
 \begin{tabular}{l l}
 Use Case:     & Remove Book Description\\
-Actor:        & \\
-Precondition: & \\
+Actor:        & User\\
+Precondition: & User Logged in\\
 \end{tabular}
 
 
 \section*{Main Success Scenario:}
 
 \begin{enumerate}
-    \item 
-
+    \item User provides a book id to remove the description of
+    \item System acknowledges that the description has been removed
+    
 \end{enumerate}
 
 \section*{Extensions}
 
 \begin{itemize}
-    \item [1a.]
+    \item [1a.] Book id is not valid
+    
+        - System notifies the operation is invalid
                             
 \end{itemize}
 
 
 \section*{Information Expert}
-
+The information expert is System because it knows Book. 
 
 \end{document}
