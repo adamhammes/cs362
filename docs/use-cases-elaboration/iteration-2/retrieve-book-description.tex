@@ -12,27 +12,30 @@
 \section*{Use Case}
 \begin{tabular}{l l}
 Use Case:     & Retrieve Book Description\\
-Actor:        & \\
-Precondition: & \\
+Actor:        & User\\
+Precondition: & User Logged in\\
 \end{tabular}
 
 
 \section*{Main Success Scenario:}
 
 \begin{enumerate}
-    \item 
-
+    \item User provides a book id to retrieve the description of
+    \item System returns the description stored for the book
+    
 \end{enumerate}
 
 \section*{Extensions}
 
 \begin{itemize}
-    \item [1a.]
+    \item [1a.] Book id is not valid
+    
+        - System notifies the operation is invalid
                             
 \end{itemize}
 
 
 \section*{Information Expert}
-
+The information expert is System because it knows Book. 
 
 \end{document}
