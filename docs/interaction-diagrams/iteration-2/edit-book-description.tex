@@ -35,12 +35,29 @@
 ]
 \node[] (start)  {};
 
+\node[block, below = 2cm of start]      (controller) {\underline{: SystemController}};
+\node[block, below = 2cm of controller] (system)     {\underline{: System}}; 
+\node[block, below = 2cm of system]     (database)   {\underline{: DatabaseSupport}};
+\node[block, right = 2cm of system]       (book)       {\underline{book: Book}};
+
+\draw (start)      -- (controller) node[midway] {1. $\blacktriangledown$};
+\draw (controller) -- (system)     node[midway] {2. $\blacktriangledown$};
+\draw ([xshift=-1cm]system.south) -- ([xshift=-1cm]database.north)
+      node[midway] {3. $\blacktriangledown$};
+\draw (system)     -- (book)       node[midway] {4. $\blacktriangleright$};
+\draw ([xshift=0.8cm]system.south) -- ([xshift=0.8cm]database.north)
+      node[midway] {5. $\blacktriangledown$};
+
 \end{tikzpicture}
 
 \vspace{0.5cm}
 
 \begin{enumerate}
-  \item 
+  \item \textttt{b:= editDescription(bid:String, desc:String):boolean}
+  \item \textttt{b:= editDescription(bid:String, desc:String):boolean}
+  \item \textttt{book:= getBook(bid:String):Book}
+  \item \textttt{b:= editDescription(desc:String):boolean}
+  \item \textttt{b:= putBook(book:Book):boolean}
 \end{enumerate}
 \end{center}
 
