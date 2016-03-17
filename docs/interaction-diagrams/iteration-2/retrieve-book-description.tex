@@ -35,12 +35,26 @@
 ]
 \node[] (start)  {};
 
+\node[block, below = 2cm of start]      (controller) {\underline{: SystemController}};
+\node[block, below = 2cm of controller] (system)     {\underline{: System}}; 
+\node[block, below = 2cm of system]     (database)   {\underline{: DatabaseSupport}};
+\node[block, right = 2cm of system]       (book)       {\underline{book: Book}};
+
+\draw (start)      -- (controller) node[midway] {1. $\blacktriangledown$};
+\draw (controller) -- (system)     node[midway] {2. $\blacktriangledown$};
+\draw (system.south) -- (database.north)
+      node[midway] {3. $\blacktriangledown$};
+\draw (system)     -- (book)       node[midway] {4. $\blacktriangleright$};
+
 \end{tikzpicture}
 
 \vspace{0.5cm}
 
 \begin{enumerate}
-  \item 
+  \item \textttt{s:= retrieveDescription(bid:String):String}
+  \item \textttt{s:= retrieveDescription(bid:String):String}
+  \item \textttt{book:= getBook(bid:String):Book}
+  \item \textttt{s:= retrieveDescription():String}
 \end{enumerate}
 \end{center}
 
