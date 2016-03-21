@@ -35,12 +35,25 @@
 ]
 \node[] (start)  {};
 
+\node[block, below = 2cm of start] (controller) {\underline{:controller}};
+\node[block, below = 2cm of controller] (system) {\underline{:system}};
+\node[block, below left=2 cm of system] (dbSupport) {\underline{:dbSupport}};
+\node[block, below right=2 cm of system] (photographer) {\underline{p:photographer}};
+
+\draw (controller) -- (system) node[midway]{$\shortdownarrow$ 1};
+\draw (system) -- (dbSupport) node[midway]{$\shortleftarrow$ 2, 4};
+\draw (system) -- (photographer) node[midway]{3 $\shortrightarrow$};
+
+
 \end{tikzpicture}
 
 \vspace{0.5cm}
 
 \begin{enumerate}
-  \item 
+  \item b:=signUpPhotographer(name:string, userName:string, password:string):Boolean
+  \item b:=addUser(name:string, userName:string, password:string);
+  \item create(name:string, userName:string, password:string)
+  \item b:=putPhotographer(p:photographer):Boolean
 \end{enumerate}
 \end{center}
 
