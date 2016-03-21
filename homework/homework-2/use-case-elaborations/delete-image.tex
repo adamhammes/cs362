@@ -11,28 +11,30 @@
 
 \section*{Use Case}
 \begin{tabular}{l l}
-Use Case:     & Delete Image\\
-Actor:        & \\
-Precondition: & \\
+Use Case:     & Delete Image                  \\
+Actor:        & Photographer                  \\
+Precondition: & Photographer is authenticated \\
 \end{tabular}
 
 
 \section*{Main Success Scenario:}
 
 \begin{enumerate}
-    \item 
+    \item Photographer provides image name of the file to delete
+    \item System acknowledges the removal of the file
 
 \end{enumerate}
 
 \section*{Extensions}
 
 \begin{itemize}
-    \item [1a.]
+    \item [1a.] Image does not exist \\
+        -System reports no images found with that name
                             
 \end{itemize}
 
 
 \section*{Information Expert}
-
+The information expert for this operation is the System. The System has the ability to get photographer. Photographer has access to the images, and therefore photographer has the ability to remove the images.
 
 \end{document}
