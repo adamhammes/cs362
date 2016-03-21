@@ -36,31 +36,24 @@
 ]
 
 \node[block] (system) {System};
-\node[block, below right = 2cm of system] (rep) {Rep};
-\node[block, below left = 2cm of system] (photographer) {Photographer};
-\node[block, below = 3cm of photographer] (image) {Image};
-\node[block, below = 3cm of rep] (message) {Message};
-
-\draw (system) -- (rep) node[midway] {$\shortdownarrow$ contains}
-                        node[pos=0.25, distance=1mm] {1}
-                        node[pos=0.95, distance=0mm] {*};
+\node[block, below = 3cm of system] (photographer) {Photographer};
+\node[block, below left = 3cm of photographer] (image) {Image};
+\node[block, below right= 3cm of photographer] (message) {Message};
                         
 \draw (photographer) -- (system)
             node[midway] {contains $\shortdownarrow$}
-            node[pos=0.75, distance=1mm] {1}
+            node[pos=0.90, distance=1mm] {1}
             node[pos=0.05, distance=0mm] {*};
             
 \draw (image) -- (photographer)
-    node[pos=0.85] {1}
-    node[midway] {owns $\shortdownarrow$}
-    node[pos=0.1] {*};
-
-\draw (rep) -- (message)
-    node[pos=0.15] {1}
-    node[midway] {$\shortdownarrow$ uploads}
-    node[pos=0.9] {*};
+    node[pos=0.8] {1}
+    node[midway] {$\shortdownarrow$ owns}
+    node[pos=0.05] {*};
     
-    
+\draw (photographer) -- (message)
+    node[pos=0.2] {1}
+    node[midway] {receives $\shortrightarrow$}
+    node[pos=0.95] {*};
 
 \end{tikzpicture}
 \end{center}
