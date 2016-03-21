@@ -12,27 +12,30 @@
 \section*{Use Case}
 \begin{tabular}{l l}
 Use Case:     & Create Portfolio\\
-Actor:        & \\
-Precondition: & \\
+Actor:        & Photographer \\
+Precondition: & Photographer is logged in\\
 \end{tabular}
 
 
 \section*{Main Success Scenario:}
 
 \begin{enumerate}
-    \item 
+    \item Photographer indicates that they wish to create a portfolio
+    \item System indicates that the operation succeeded
 
 \end{enumerate}
 
 \section*{Extensions}
 
 \begin{itemize}
-    \item [1a.]
-                            
+    \item [1a.] Photographer already has a portfolio
+    
+    - System indicates that operation failed
 \end{itemize}
 
 
 \section*{Information Expert}
 
+The information expert for Create Portfolio is Photographer, as it is the only class that knows if Photographer has a portfolio or not.
 
 \end{document}
