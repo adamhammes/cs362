@@ -1,12 +1,14 @@
 \documentclass{article}
-
+\usepackage[margin=1in]{geometry}
 \usepackage{stmaryrd}
 \usepackage{amssymb}
 \usepackage{tikz}
+\usepackage{ stmaryrd }
 \usetikzlibrary{positioning}
 
+
 \title{Interaction Diagram - Retrieve Messages}
-\author{ Steve Monson }
+\author{ Steven Monson }
 
 % no page number at bottom
 \pagenumbering{gobble}
@@ -34,13 +36,30 @@
   }
 ]
 \node[] (start)  {};
+\node[block, below=2cm of start] (cntr) {\underline{:Controler}};
+\node[block, below=2cm of cntr] (system) {\underline{:System}};
+\node[block, left=2cm of system] (activeUser) {\texttt{<<Singleton>>} \\ ActiveUser};
+\node[block, below left=2cm of system] (db)  {\underline{:DatabaseSupport}};
+\node[block, below right = 2cm of system] (photographer) {\underline{p:photographer}};
+
+\draw (start) -- (cntr) node[midway]{$\shortdownarrow$ 1};
+\draw (cntr) -- (system) node[midway]{$\shortdownarrow$ 2};
+\draw (system)--(activeUser) node[midway]{$\shortleftarrow$ 3};
+\draw (system) -- (db) node[midway]{$\shortleftarrow$ 4};
+\draw (system) -- (photographer) node[midway]{$\shortrightarrow$ 5};
+
 
 \end{tikzpicture}
 
 \vspace{0.5cm}
 
 \begin{enumerate}
-  \item 
+  \item \texttt{l:=retrieveMessages():List<Message>}
+  \item \texttt{l:=retrieveMessages():List<Message>}
+  \item \texttt{au:=getActiveUserId():string}
+  \item \texttt{p:=getPhotographer(au:string):photographer}
+  \item \texttt{l:=retrieveMessages():List<Message>}
+  
 \end{enumerate}
 \end{center}
 
