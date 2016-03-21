@@ -35,12 +35,28 @@
 ]
 \node[] (start)  {};
 
+\node[block, below = 2cm of start] (controller) {\underline{:controller}};
+\node[block, below = 2cm of controller] (system) {\underline{:system}};
+\node[block, left = 2cm of system] (user) {\texttt{<<Singleton>>} \\ ActiveUser)};
+\node[block, below left=2 cm of system] (dbSupport) {\underline{:dbSupport}};
+\node[block, below right=2 cm of system] (photographer) {\underline{p:photographer}};
+
+\draw (controller) -- (system) node[midway]{$\shortdownarrow$ 1};
+\draw (system) -- (user) node[midway]{$\shortleftarrow$ 2};
+\draw (system) -- (dbSupport) node[midway]{$\shortleftarrow$ 3, 5};
+\draw (system) -- (photographer) node[midway]{4 $\shortrightarrow$};
+
+
 \end{tikzpicture}
 
 \vspace{0.5cm}
 
 \begin{enumerate}
-  \item 
+  \item b:=deleteImage(imageName:string):Boolean
+  \item uname:=getActiveUserName():string
+  \item p:=getPhotographer(uname:string):photographer
+  \item b:=deleteImage(imageName:string):Boolean
+  \item b:=putPhotographer(p:photographer):Boolean
 \end{enumerate}
 \end{center}
 
