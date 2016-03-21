@@ -12,27 +12,31 @@
 \section*{Use Case}
 \begin{tabular}{l l}
 Use Case:     & Get Portfolio\\
-Actor:        & \\
-Precondition: & \\
+Actor:        & Representative\\
+Precondition: & User is Logged In\\
 \end{tabular}
 
 
 \section*{Main Success Scenario:}
 
 \begin{enumerate}
-    \item 
-
+    \item Representative provides a name of the photographer
+    \item System returns the photos in the given photographer's portfolio
 \end{enumerate}
 
 \section*{Extensions}
 
 \begin{itemize}
-    \item [1a.]
+    \item [1a.] No photographer with the given name exists
+    
+    - System indicates that the operation failed.
                             
 \end{itemize}
 
 
 \section*{Information Expert}
+
+The information expert for Get Portfolio is System, as it knows photographers/portfolios.
 
 
 \end{document}
