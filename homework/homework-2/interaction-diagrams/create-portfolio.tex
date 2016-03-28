@@ -1,9 +1,11 @@
 \documentclass{article}
-
+\usepackage[margin=1in]{geometry}
 \usepackage{stmaryrd}
 \usepackage{amssymb}
 \usepackage{tikz}
+\usepackage{ stmaryrd }
 \usetikzlibrary{positioning}
+
 
 \title{Interaction Diagram - Create Portfolio}
 \author{ Adam Hammes }
@@ -34,13 +36,31 @@
   }
 ]
 \node[] (start)  {};
+\node[block, below=2cm of start] (cntr) {\underline{:Controller}};
+\node[block, below=2cm of cntr] (system) {\underline{:System}};
+\node[block, left=2cm of system] (activeUser) {\texttt{<<Singleton>>} \\ ActiveUser};
+\node[block, below left=2cm of system] (db)  {\underline{:DatabaseSupport}};
+\node[block, below right = 2cm of system] (photographer) {\underline{p:photographer}};
+
+\draw (start) -- (cntr) node[midway]{$\shortdownarrow$ 1};
+\draw (cntr) -- (system) node[midway]{$\shortdownarrow$ 2};
+\draw (system)--(activeUser) node[midway]{$\shortleftarrow$ 3};
+\draw (system) -- (db) node[midway]{$\shortleftarrow$ 4 7};
+\draw (system) -- (photographer) node[midway]{$\shortrightarrow$ 5};
+
 
 \end{tikzpicture}
 
 \vspace{0.5cm}
 
 \begin{enumerate}
-  \item 
+  \item \texttt{b:=createPortfolio():boolean}
+  \item \texttt{b:=createPortfolio():boolean}
+  \item \texttt{au:=getActiveUserId():string}
+  \item \texttt{p:=getPhotographer(au:string):Photographer}
+  \item \texttt{b:=createPortfolio():boolean}
+  \item \texttt{b:=putPhotographer(p:Photographer):boolean}
+  
 \end{enumerate}
 \end{center}
 
