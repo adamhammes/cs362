@@ -12,27 +12,33 @@
 \section*{Use Case}
 \begin{tabular}{l l}
 Use Case:     & Search By Series\\
-Actor:        & \\
-Precondition: & \\
+Actor:        & User \\
+Precondition: & None \\
 \end{tabular}
 
 
 \section*{Main Success Scenario:}
 
 \begin{enumerate}
-    \item 
+   \item User provides id for series to search
+   \item System returns a list of books belonging to that series
 
 \end{enumerate}
 
 \section*{Extensions}
 
 \begin{itemize}
-    \item [1a.]
+    \item [1a.] No series exists with the given id
+
+    - System indicates that the operation failed
                             
 \end{itemize}
 
 
 \section*{Information Expert}
 
+The information expert for Search By Series is System, as it knows Books and
+Series.
+The searchBySeries method on System will call getBooksBySeries on DatabaseSupport.
 
 \end{document}
