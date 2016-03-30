@@ -7,7 +7,7 @@
 \usetikzlibrary{positioning}
 
 
-\title{Interaction Diagram - Add Image Extension 1a}
+\title{Interaction Diagram - Add Image Extension 1A}
 \author{ Nick Riesen }
 
 % no page number at bottom
@@ -44,7 +44,7 @@
 \node[block, below = 2cm of photographer] (image) {\underline{:Image}};
 
 \draw (start) -- (cntr) node[midway]{$\shortdownarrow$ 1};
-\draw (cntr) -- (system) node[midway]{$\shortdownarrow$} 2;
+\draw (cntr) -- (system) node[midway]{$\shortdownarrow$ 2};
 \draw (system)--(activeUser) node[midway]{$\shortleftarrow$ 3};
 \draw (system) -- (db) node[midway]{$\shortleftarrow$ 4};
 \draw (system) -- (photographer) node[midway]{$\shortrightarrow$ 5};
