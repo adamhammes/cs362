@@ -40,9 +40,10 @@
 \node[block, below left=2 cm of system] (dbSupport) {\underline{:dbSupport}};
 \node[block, below right=2 cm of system] (photographer) {\underline{p:photographer}};
 
-\draw (controller) -- (system) node[midway]{$\shortdownarrow$ 1};
-\draw (system) -- (dbSupport) node[midway]{$\shortleftarrow$ 2, 4};
-\draw (system) -- (photographer) node[midway]{3 $\shortrightarrow$};
+\draw (start) -- (controller) node[midway]{$\shortdownarrow$ 1};
+\draw (controller) -- (system) node[midway]{$\shortdownarrow$ 2};
+\draw (system) -- (dbSupport) node[midway]{$\shortleftarrow$ 3, 5};
+\draw (system) -- (photographer) node[midway]{4 $\shortrightarrow$};
 
 
 \end{tikzpicture}
