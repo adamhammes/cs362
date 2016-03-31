@@ -1,0 +1,37 @@
+\documentclass{article}
+
+\title{Use Case Elaboration: Report Damage}
+\author{ Nick Riesen }
+
+\pagenumbering{gobble}
+
+\begin{document}
+\maketitle
+
+
+\section*{Use Case}
+\begin{tabular}{l l}
+Use Case:     & Report Damage                \\
+Actor:        & Baggage Employee              \\
+Precondition: & Baggage Employee is logged in \\
+\end{tabular}
+
+
+\section*{Main Success Scenario:}
+
+\begin{enumerate}
+    \item  User provides invoice id and description of damage
+    \item System acknowledges damage recorded
+
+\end{enumerate}
+
+\section*{Extensions}
+
+\begin{itemize}
+    \item [1a.] User enters invalid invoice id \\
+        -System reports unable to find invoice
+
+\end{itemize}
+
+
+\end{document}
