@@ -1,0 +1,40 @@
+\documentclass{article}
+
+\title{Use Case Elaboration: Update Location}
+\author{ Nick Riesen }
+
+\pagenumbering{gobble}
+
+\begin{document}
+\maketitle
+
+
+\section*{Use Case}
+\begin{tabular}{l l}
+Use Case:     & Update Location               \\
+Actor:        & Baggage Employee              \\
+Precondition: & Baggage Employee is logged in \\
+\end{tabular}
+
+
+\section*{Main Success Scenario:}
+
+\begin{enumerate}
+    \item  User provides invoice id and new location 
+    \item System acknowledges location updated
+
+\end{enumerate}
+
+\section*{Extensions}
+
+\begin{itemize}
+    \item [1a.] User enters invalid invoice id \\
+        -System reports unable to find invoice
+             
+    \item [1.b] User enters invalid location \\  
+        -System reports invalid location entered
+        
+\end{itemize}
+
+
+\end{document}
