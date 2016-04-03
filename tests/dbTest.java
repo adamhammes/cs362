@@ -12,7 +12,6 @@ import interfaces.VersionInterface;
 import models.Author;
 import models.Book;
 import models.Review;
-import models.User;
 
 public class dbTest {
 
