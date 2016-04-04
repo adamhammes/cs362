@@ -1,0 +1,62 @@
+\documentclass{article}
+
+\usepackage{stmaryrd}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+
+\title{Interaction Diagram - Update Location}
+\author{ Nick Riesen }
+
+% no page number at bottom
+\pagenumbering{gobble}
+
+\begin{document}
+\maketitle
+
+\begin{center}
+
+\begin{tikzpicture}[
+  auto,
+  block/.style = {
+    rectangle,
+    draw=black,
+    align=center,
+    rounded corners
+  },
+  multiple/.style = {
+    rectangle, draw, rounded corners, fill= white,
+    text width=9em, align= center,
+    copy shadow = {
+      ,fill=white, draw=black,
+      shadow xshift=0.5mm, shadow yshift=-0.5mm
+    }
+  }
+]
+\node[] (start)  {};
+
+\node[block, below = 2cm of start] (controller) {\underline{:Controller}};
+\node[block, below = 2cm of controller] (system) {\underline{:System}};
+\node[block, below left=2 cm of system] (DbSupport) {\underline{:DbSupport}};
+\node[block, below right=2 cm of system] (invoice) {\underline{i:Invoice}};
+
+\draw (start) -- (controller) node[midway]{$\shortdownarrow$ 1};
+\draw (controller) -- (system) node[midway]{$\shortdownarrow$ 2};
+\draw (system) -- (DbSupport) node[midway]{$\shortleftarrow$ 3, 5};
+\draw (system) -- (invoice) node[midway]{4 $\shortrightarrow$};
+
+
+\end{tikzpicture}
+
+\vspace{0.5cm}
+
+\begin{enumerate}
+  \item 1:b:=updateLocation(invoiceId:int, location:string):boolean
+  \item 2:b:=updateLocation(invoiceId:int, location:string):boolean
+  \item 3: i:=getInvoice(invoiceId: int):invoice
+  \item 4: b:=setLocation(location:string):boolean
+  \item 5: b:=putInvoice(i:invoice):boolean
+\end{enumerate}
+\end{center}
+
+\end{document}
