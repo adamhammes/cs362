@@ -1,0 +1,37 @@
+\documentclass{article}
+
+\title{Use Case Elaboration: Change Rating}
+\author{ Nick Riesen }
+
+\pagenumbering{gobble}
+
+\begin{document}
+\maketitle
+
+
+\section*{Use Case}
+\begin{tabular}{l l}
+Use Case:     & Change Rating                 \\
+Actor:        & User                          \\
+Precondition: & None                          \\
+\end{tabular}
+
+
+\section*{Main Success Scenario:}
+
+\begin{enumerate}
+    \item  User provides review id, a new rating, and a new review
+    \item System acknowledges update to review
+
+\end{enumerate}
+
+\section*{Extensions}
+
+\begin{itemize}
+    \item [1a.] User enters invalid review id \\
+        -System reports unable to find invoice
+
+\end{itemize}
+
+
+\end{document}
