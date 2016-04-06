@@ -96,13 +96,11 @@ public class dbTest {
 		assertTrue(b.getVersions().isEmpty());
 		
 		assertTrue(b.addVersion("/books/fantacy/Harry_Potter/hp-1", ".pdf"));
-		assertTrue(db.putBook(b));
+		assertTrue(db.putBook(b, "nick"));
 		
-		b = db.getBook("hp1");
+		b = db.getBook("hp1", "nick");
 		assertNotNull(b);
 		VersionInterface v = b.getVersions().iterator().next();  //getBook does not populate versions yet
-		System.out.println(v.getPath());
-		System.out.println(v.getType());
 		
 		assertEquals(v.getPath(), "/books/fantacy/Harry_Potter/hp-1");
 		assertEquals(v.getType(), ".pdf");
