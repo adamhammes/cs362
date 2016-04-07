@@ -1,0 +1,44 @@
+public interface iSystem {
+	public boolean addImage(Image img, String caption);
+	public boolean createProtfolio();
+	public boolean deleteImage(String imageName);
+	public boolean deletePortfolio();
+	public List<Image> getPortfolio(String name);
+	public boolean logIn(String uID, String pw);
+	public boolean logOff();
+	public List<Message> retrieveMessages();
+	public boolean signUpPhotographer(String name, String userName, String password);
+	public boolean signUpRep(String name, string userName, String password);
+	public boolean uploadMessage(String to, String text);
+}
+
+
+public interface iPhotographer {
+	public boolean addImage(Image img, String caption);
+	public boolean createProtfolio();
+	public boolean deleteImage(String imageName);
+	public boolean deletePortfolio();
+	public List<Image> getImages();
+	public List<Message> retrieveMessages();
+	public boolean uploadMessage(String to, String text);
+}
+
+
+public interface iImage {
+	public boolean setImage(Image img);
+	public boolean setCaption(String caption);
+}
+
+
+public interface iMessage {
+	
+}
+
+
+public interface iDatabaseSupport {
+	public Photographer getPhotographer(String au);
+	public boolean putPhotographer(Photographer p);
+	public boolean checkCredential(String uID, String pw);
+	public boolean addUser(String name, String userName, String password);
+	public boolean signUpRep(String name, string userName, String password);
+}

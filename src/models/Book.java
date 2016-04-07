@@ -99,5 +99,28 @@ public class Book implements BookInterface, Comparable<BookInterface> {
 	public ArrayList<AuthorInterface> getAuthors() {
 		return authors;
 	}
+
+	@Override
+	public boolean removeReview(int reviewId) {
+		for (int i = 0; i < reviews.size(); i++){
+			if (reviews.get(i).getId() == reviewId){
+				reviews.remove(i);
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public boolean updateReview(int reviewId, int newRateing, String newReview) {
+		for (ReviewInterface review : reviews){
+			if (review.getId() == reviewId){
+				review.setRating(newRateing);
+				review.setReview(newReview);
+				return true;
+			}
+		}
+		return false;
+	}
 	
 }

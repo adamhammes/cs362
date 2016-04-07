@@ -1,0 +1,40 @@
+\documentclass{article}
+
+\title{Use Case Elaboration: Change Rating}
+\author{ Nick Riesen }
+
+\pagenumbering{gobble}
+
+\begin{document}
+\maketitle
+
+
+\section*{Use Case}
+\begin{tabular}{l l}
+Use Case:     & Change Rating                 \\
+Actor:        & User                          \\
+Precondition: & None                          \\
+\end{tabular}
+
+
+\section*{Main Success Scenario:}
+
+\begin{enumerate}
+    \item  User provides a book id, a review id, a new rating, and a new review
+    \item System acknowledges update to review
+
+\end{enumerate}
+
+\section*{Extensions}
+
+\begin{itemize}
+    \item [1a.] User enters invalid review id \\
+        -System reports unable to find invoice
+
+\end{itemize}
+
+\section*{Information Expert}
+
+The information experts for this usecase are system and book. System can retrieve book from the database, and book can manipulate the reviews it owns. 
+
+\end{document}

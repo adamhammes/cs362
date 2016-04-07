@@ -1,0 +1,71 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{stmaryrd}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{ stmaryrd }
+\usetikzlibrary{positioning}
+
+
+\title{Interaction Diagram - Add Image Extension 1A}
+\author{ Nick Riesen }
+
+% no page number at bottom
+\pagenumbering{gobble}
+
+\begin{document}
+\maketitle
+
+\begin{center}
+
+\begin{tikzpicture}[
+  auto,
+  block/.style = {
+    rectangle,
+    draw=black,
+    align=center,
+    rounded corners
+  },
+  multiple/.style = {
+    rectangle, draw, rounded corners, fill= white,
+    text width=9em, align= center,
+    copy shadow = {
+      ,fill=white, draw=black,
+      shadow xshift=0.5mm, shadow yshift=-0.5mm
+    }
+  }
+]
+\node[] (start)  {};
+\node[block, below=2cm of start] (cntr) {\underline{:Controler}};
+\node[block, below=2cm of cntr] (system) {\underline{:System}};
+\node[block, left=2cm of system] (activeUser) {\texttt{<<Singleton>>} \\ ActiveUser};
+\node[block, below left=2cm of system] (db)  {\underline{:DatabaseSupport}};
+\node[block, below right = 2cm of system] (photographer) {\underline{p:photographer}};
+\node[block, below = 2cm of photographer] (image) {\underline{:Image}};
+
+\draw (start) -- (cntr) node[midway]{$\shortdownarrow$ 1};
+\draw (cntr) -- (system) node[midway]{$\shortdownarrow$ 2};
+\draw (system)--(activeUser) node[midway]{$\shortleftarrow$ 3};
+\draw (system) -- (db) node[midway]{$\shortleftarrow$ 4};
+\draw (system) -- (photographer) node[midway]{$\shortrightarrow$ 5};
+\draw (photographer) -- (image) node[midway]{$\shortdownarrow$ 6 7};
+
+
+\end{tikzpicture}
+
+\vspace{0.5cm}
+
+\begin{enumerate}
+  \item b:=addImage(img:ImageFile, caption:string):false
+  \item b:=addImage(img:ImageFile, caption:string):false
+  \item au:=getActiveUserId():string
+  \item p:=getPhotographer(au:string):photographer
+  \item b:=addImage(img:ImageFile, caption:string):false
+  \item create()
+  \item b:=setImage(img: ImageFile):false
+ 
+  
+\end{enumerate}
+\end{center}
+
+\end{document}

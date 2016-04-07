@@ -3,7 +3,6 @@ package databaseSupport;
 import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
@@ -226,7 +225,9 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 	}
 
 	@Override
-	public BookInterface getBook(String bid) {
+	public BookInterface getBook(String bid){return getBook(bid, null);}
+	
+	public BookInterface getBook(String bid, String username) {
 		Connection conn = null;
 		BookInterface book = null;
 		try {
@@ -262,6 +263,19 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 				book.addAuthor(author);
 			}
 			
+			//Get Versions
+			if (username != null){
+				stmt = conn.prepareStatement("SELECT format, location FROM book_version WHERE book_id = ? AND account_name = ?;");
+				stmt.setString(1, book.getId());
+				stmt.setString(2, username);
+				results = stmt.executeQuery();
+				
+				while(results.next()){
+//					Version ver = new Version(results.getString("format"), results.getString("location"));
+					book.addVersion(results.getString("location"), results.getString("format"));
+				}
+			}
+			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
@@ -292,7 +306,10 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 	}
 
 	@Override
-	public boolean putBook(BookInterface book) {
+	public boolean putBook(BookInterface book){ return putBook(book, null); }
+	
+	
+	public boolean putBook(BookInterface book, String username) {
 		Connection conn = null;
 		
 
@@ -308,7 +325,8 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 			stmt.executeUpdate();
 			
 			//Version Information
-			putVersions(conn, book);
+			if (username != null)
+				putVersions(conn, book, username);
 			
 			//Author Information
 			putAuthors(conn, book);
@@ -334,14 +352,14 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 
 	
 	
-	private void putVersions(Connection conn, BookInterface book) throws SQLException{
+	private void putVersions(Connection conn, BookInterface book, String username) throws SQLException{
 
 		PreparedStatement stmt = conn.prepareStatement("INSERT INTO book_version (book_id, account_name, format, location)"
 										+ "VALUES (?, ?, ?, ?) ON CONFLICT (book_id, account_name, format) DO NOTHING");
 		
 		for (VersionInterface version: book.getVersions()) {
 			stmt.setString(1, book.getId());
-			stmt.setString(2, "nick");
+			stmt.setString(2, username);
 			stmt.setString(3, version.getType());
 			stmt.setString(4, version.getPath());
 			stmt.executeUpdate();

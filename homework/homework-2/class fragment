@@ -1,0 +1,67 @@
+\documentclass[12pt]{article}
+
+\usepackage[margin=0.5in]{geometry}
+
+\title{\vspace{1in}Interaction Diagram - Class Diagram Fragments}
+\author{Steven Monson}
+
+% no page number at bottom
+\pagenumbering{gobble}
+
+\begin{document}
+\maketitle
+
+\begin{tabular}{| l |}
+    \hline
+    Photographer\\
+    \hline\\
+    \hline
+    \texttt{b:=addImage(img:Image, caption:String):boolean}\\
+    \texttt{b:=createPortfolio():boolean}\\
+    \texttt{b:=deleteImage(imageName:String):boolean}\\
+    \texttt{b:=deletePortfolio():boolean}\\
+    \texttt{l:=getImages():List<Image>}\\
+    \texttt{l:=retrieveMessages():List<Message>}\\
+    \texttt{b:=uploadMessage(to:String, text:String}\\
+    \hline
+\end{tabular}
+
+\vspace{1cm}
+
+\begin{tabular}{| l |}
+    \hline
+    Image\\
+    \hline\\
+    \hline
+    \texttt{b:=setImage(img:Image):boolean}\\
+    \texttt{b:=setCaption(caption:String):boolean}\\
+    \hline
+\end{tabular}
+
+\vspace{1cm}
+
+\begin{tabular}{| l |}
+    \hline
+    Message\\
+    \hline\\
+    \hline\\
+    \hline
+    
+\end{tabular}
+
+\vspace{1cm}
+
+\begin{tabular}{| l |}
+    \hline
+    DatabaseSupport\\
+    \hline\\
+    \hline
+    \texttt{p:=getPhotographer(au:String):Photographer}\\
+    \texttt{b:=putPhotographer(p:Photographer):boolean}\\
+    \texttt{b:=checkCredential(uID:String, pw:String):boolean}\\
+    \texttt{b:=addUser(name:String, userName:String, password:String):boolean}\\
+    \texttt{b:=signUpRep(name:String, userName:String, password:String):boolean}\\
+    \hline
+\end{tabular}
+
+\end{document}

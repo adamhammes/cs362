@@ -1,0 +1,35 @@
+\documentclass{article}
+
+\title{Use Case Elaboration: Search By Flight Missed}
+\author{ Nick Riesen }
+
+\pagenumbering{gobble}
+
+\begin{document}
+\maketitle
+
+
+\section*{Use Case}
+\begin{tabular}{l l}
+Use Case:     & Search By Flight Missed       \\
+Actor:        & Baggage Employee              \\
+Precondition: & Baggage Employee is logged in \\
+\end{tabular}
+
+
+\section*{Main Success Scenario:}
+
+\begin{enumerate}
+    \item  User provides time and date of missed flight
+    \item System returns a list of invoices with related missed flight time and dates
+
+\end{enumerate}
+
+\section*{Extensions}
+None
+
+\section*{Information Expert}
+
+The information expert for this operation is system. System has access to the database and can request the database to search invoices based on Flight Missed.
+
+\end{document}

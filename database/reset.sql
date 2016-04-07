@@ -7,7 +7,8 @@ CREATE TABLE Account (
 
 CREATE TABLE Book (
     book_id VARCHAR(40) PRIMARY KEY,
-    title VARCHAR (60) NOT NULL
+    title VARCHAR (60) NOT NULL,
+    description TEXT
 );
 
 CREATE TABLE Author (

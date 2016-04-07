@@ -5,7 +5,7 @@
 \usepackage{tikz}
 \usetikzlibrary{positioning}
 
-\title{Interaction Diagram - Sign Up Photographer}
+\title{Interaction Diagram - Sign Up Rep Extension 1A}
 \author{ Nick Riesen }
 
 % no page number at bottom
@@ -37,13 +37,11 @@
 
 \node[block, below = 2cm of start] (controller) {\underline{:controller}};
 \node[block, below = 2cm of controller] (system) {\underline{:system}};
-\node[block, below left=2 cm of system] (dbSupport) {\underline{:dbSupport}};
-\node[block, below right=2 cm of system] (photographer) {\underline{p:photographer}};
+\node[block, below = 2 cm of system] (dbSupport) {\underline{:dbSupport}};
 
 \draw (start) -- (controller) node[midway]{$\shortdownarrow$ 1};
 \draw (controller) -- (system) node[midway]{$\shortdownarrow$ 2};
-\draw (system) -- (dbSupport) node[midway]{$\shortleftarrow$ 3, 5};
-\draw (system) -- (photographer) node[midway]{4 $\shortrightarrow$};
+\draw (system) -- (dbSupport) node[midway]{$\shortdownarrow$ 3};
 
 
 \end{tikzpicture}
@@ -51,10 +49,10 @@
 \vspace{0.5cm}
 
 \begin{enumerate}
-  \item b:=signUpPhotographer(name:string, userName:string, password:string):Boolean
-  \item b:=addUser(name:string, userName:string, password:string):Boolean
-  \item create(name:string, userName:string, password:string)
-  \item b:=putPhotographer(p:photographer):Boolean
+  \item b:=signUpRep(name:string, userName:string, password:string):false
+  \item b:=signUpRep(name:string, userName:string, password:string):false
+  \item b:=addUser(name:string, userName:string, password:string):false
+
 \end{enumerate}
 \end{center}
 

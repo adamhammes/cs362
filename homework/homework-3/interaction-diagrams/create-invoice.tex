@@ -5,7 +5,7 @@
 \usepackage{tikz}
 \usetikzlibrary{positioning}
 
-\title{Interaction Diagram - Sign Up Photographer}
+\title{Interaction Diagram - Create Invoice}
 \author{ Nick Riesen }
 
 % no page number at bottom
@@ -35,15 +35,15 @@
 ]
 \node[] (start)  {};
 
-\node[block, below = 2cm of start] (controller) {\underline{:controller}};
-\node[block, below = 2cm of controller] (system) {\underline{:system}};
-\node[block, below left=2 cm of system] (dbSupport) {\underline{:dbSupport}};
-\node[block, below right=2 cm of system] (photographer) {\underline{p:photographer}};
+\node[block, below = 2cm of start] (controller) {\underline{:Controller}};
+\node[block, below = 2cm of controller] (system) {\underline{:System}};
+\node[block, below left=2 cm of system] (DbSupport) {\underline{:DbSupport}};
+\node[block, below right=2 cm of system] (invoice) {\underline{i:Invoice}};
 
 \draw (start) -- (controller) node[midway]{$\shortdownarrow$ 1};
 \draw (controller) -- (system) node[midway]{$\shortdownarrow$ 2};
-\draw (system) -- (dbSupport) node[midway]{$\shortleftarrow$ 3, 5};
-\draw (system) -- (photographer) node[midway]{4 $\shortrightarrow$};
+\draw (system) -- (DbSupport) node[midway]{$\shortleftarrow$ 4};
+\draw (system) -- (invoice) node[midway]{5 $\shortrightarrow$};
 
 
 \end{tikzpicture}
@@ -51,10 +51,10 @@
 \vspace{0.5cm}
 
 \begin{enumerate}
-  \item b:=signUpPhotographer(name:string, userName:string, password:string):Boolean
-  \item b:=addUser(name:string, userName:string, password:string):Boolean
-  \item create(name:string, userName:string, password:string)
-  \item b:=putPhotographer(p:photographer):Boolean
+  \item 1:b:=createInvoice(description:string, location:string, airline:string, flightItme:DateTime):boolean
+  \item 2:b:=createInvoice():boolean
+  \item 3: create()
+  \item 4: b:=putInvoice(i:invoice):boolean
 \end{enumerate}
 \end{center}
 
