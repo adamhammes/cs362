@@ -237,7 +237,7 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 			PreparedStatement stmt = makeBookStatement(bid, conn);
 			ResultSet results = stmt.executeQuery();
 			if (results.next())
-				book = new Book(results.getString("book_id"), results.getString("title"));
+				book = new Book(results.getString("book_id"), results.getString("title"), results.getString("description"));
 			else
 				return null;
 			
@@ -317,10 +317,13 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 			conn = openConnection();
 			
 			//Book id and title information
-			PreparedStatement stmt = conn.prepareStatement("INSERT INTO book VALUES (?, ?) ON CONFLICT (book_id) DO UPDATE SET title = ?;");
+			PreparedStatement stmt = conn.prepareStatement("INSERT INTO book VALUES (?, ?, ?) ON CONFLICT (book_id) DO UPDATE SET title = ?, description = ?;");
 			stmt.setString(1, book.getId());
 			stmt.setString(2, book.getTitle());
-			stmt.setString(3, book.getTitle());
+			stmt.setString(3, book.getDescription());
+			
+			stmt.setString(4, book.getTitle());
+			stmt.setString(5, book.getDescription());
 			System.out.println(stmt);
 			stmt.executeUpdate();
 			

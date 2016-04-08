@@ -35,6 +35,22 @@ public class dbTest {
 		assertTrue(b.getTitle().equals("Nick's Book on Testing"));
 	}
 	
+	@Test
+	public void Book_updateBook_Basic(){
+		Book b = (Book) db.getBook("hp1");
+		assertNull(b.getDescription());
+		
+		b.setTitle("Harry Potter 1");
+		b.setDescription("You're a wizard, Harry!");
+		assertTrue(db.putBook(b));
+		
+		b = null;
+		b = (Book) db.getBook("hp1");
+		
+		assertEquals("Harry Potter 1", b.getTitle());
+		assertEquals("You're a wizard, Harry!", b.getDescription());
+	}
+	
 	
 	@Test
 	public void Book_addBook_NewAuthor(){

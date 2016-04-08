@@ -12,7 +12,7 @@ import interfaces.VersionInterface;
 public class Book implements BookInterface, Comparable<BookInterface> {
     private String id;
     private String title;
-
+    private String description;
 
     private ArrayList<TagInterface> tags = new ArrayList<TagInterface>();
     private ArrayList<VersionInterface> versions = new ArrayList<VersionInterface>();
@@ -22,8 +22,15 @@ public class Book implements BookInterface, Comparable<BookInterface> {
     public Book(String id, String title) {
         this.id = id;
         this.title = title;
+        this.description = null;
     }
 
+    public Book(String id, String title, String description){
+    	this.id = id;
+    	this.title = title;
+    	this.description = description;
+    }
+    
     @Override
     public String getId() {
         return id;
@@ -38,6 +45,16 @@ public class Book implements BookInterface, Comparable<BookInterface> {
         this.title = title;
     }
 
+    @Override
+    public String getDescription(){
+    	return description;
+    }
+    
+    @Override
+    public void setDescription(String description){
+    	this.description = description;
+    }
+    
 	@Override
 	public boolean addTag(TagInterface t) {
 		return tags.add(t);
