@@ -28,11 +28,12 @@ public class dbTest {
 	public void Book_addBook_Basic(){
 		assertEquals(null, db.getBook("nckb"));
 		
-		Book b = new Book("nckb", "Nick's Book on Testing");
+		Book b = new Book("nckb", "Nick's Book on Testing", "This is a pretty Awesome Book");
 		assertTrue(db.putBook(b));
 		
 		b = (Book) db.getBook("nckb");
-		assertTrue(b.getTitle().equals("Nick's Book on Testing"));
+		assertEquals("Nick's Book on Testing", b.getTitle());
+		assertEquals("This is a pretty Awesome Book", b.getDescription());
 	}
 	
 	@Test

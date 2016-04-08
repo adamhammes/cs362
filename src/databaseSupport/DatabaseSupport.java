@@ -97,18 +97,7 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 				stmt.setString(1, u.getName());
 				stmt.setString(2, book.getId());
 				stmt.executeUpdate();
-//				
-//				for (VersionInterface version: book.getVersions()) {
-//					stmt = conn.prepareStatement(
-//							  "INSERT INTO book_version (book_id, account_name, format, location)"
-//							+ "VALUES (?, ?, ?, ?)"
-//							+ "ON CONFLICT (book_id, account_name, format) DO NOTHING");
-//					stmt.setString(1, book.getId());
-//					stmt.setString(2, u.getName());
-//					stmt.setString(3, version.getType());
-//					stmt.setString(4, version.getPath());
-//					stmt.executeUpdate();
-//				}
+
 			}
 			
 			putTags(conn, u);
