@@ -76,97 +76,6 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 		return user;
 	}
 	
-	public boolean putUser(UserInterface u) {
-		Connection conn = null;
-
-		try {
-			conn = openConnection();
-			
-			//put user
-			PreparedStatement stmt = conn.prepareStatement("INSERT INTO account (account_name) VALUES (?) "
-															+ "ON CONFLICT (account_name) DO NOTHING;");
-			stmt.setString(1, u.getName());
-			stmt.executeUpdate();
-			
-			//put all of the users books
-			for (BookInterface book: u.getAllBooks()){
-				putBook(book);
-				
-				stmt = conn.prepareStatement("INSERT INTO account_book (account_name, book_id) VALUES (?, ?) "
-												+ "ON CONFLICT (account_name, book_id) DO NOTHING;");
-				stmt.setString(1, u.getName());
-				stmt.setString(2, book.getId());
-				stmt.executeUpdate();
-
-			}
-			
-			putTags(conn, u);
-			
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-			return false;
-		} finally {
-			try {
-				conn.close();
-			} catch (Exception e2) {
-				// do nothing
-			}
-		}
-		return true;
-	}
-	
-
-	private boolean putTags(Connection conn, UserInterface u) throws SQLException{
-		//Build prepared statement for removing unneeded tags
-		int size = 0;
-		for (TagInterface tag : u.getTags()) size+= tag.getBooks().size();
-		
-		StringBuffer rmsql = new StringBuffer(
-				"DELETE FROM book_tag WHERE (account_name, book_id, tag) NOT IN "
-			  + "(SELECT account_name, book_id, tag FROM book_tag WHERE account_name != ? OR (");
-		
-		for (int i = 0; i < size - 1; i++){
-			rmsql.append("(book_id = ? AND tag = ?) OR ");
-		}
-		rmsql.append("(book_id = ? AND tag = ?)));");
-		PreparedStatement rmstmt = conn.prepareStatement(rmsql.toString());
-		rmstmt.setString(1, u.getName());
-		int index = 2;
-		
-		PreparedStatement mkstmt = conn.prepareStatement("INSERT INTO book_tag (account_name, book_id, tag) VALUES (?, ?, ?) "
-				+ "ON CONFLICT (account_name, book_id, tag) DO NOTHING;");
-		
-		//put all tags for this user
-		for (TagInterface tag : u.getTags()){
-			for (BookInterface book : tag.getBooks()){
-				
-				//create and execute sql command for upsert tag
-				mkstmt.setString(1, u.getName());
-				mkstmt.setString(2, book.getId());
-				mkstmt.setString(3, tag.getName());
-				System.out.println(mkstmt);
-				mkstmt.executeUpdate();
-				
-				//insert values into remove statement
-				rmstmt.setString(index++, book.getId());
-				rmstmt.setString(index++, tag.getName());	
-			}
-		}
-		//The constructed rmstmt is good only if least one tag exists
-		if (size > 0){
-			System.out.println(rmstmt);
-			rmstmt.executeUpdate();
-		}
-		else{
-			rmstmt = conn.prepareStatement("DELETE FROM book_tag WHERE account_name = ?;");
-			rmstmt.setString(1, u.getName());
-			System.out.println(rmstmt);
-			rmstmt.executeUpdate();
-		}
-		return true;
-	}
-	
 	public Connection openConnection() throws SQLException, ClassNotFoundException {
 		Class.forName("org.postgresql.Driver");
 		return DriverManager.getConnection(CONN_STRING, USERNAME, PASSWORD);
@@ -297,163 +206,50 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 	@Override
 	public boolean putBook(BookInterface book){ return putBook(book, null); }
 	
-	
 	public boolean putBook(BookInterface book, String username) {
+		
 		Connection conn = null;
 		
-
-		try{
+		try {
 			conn = openConnection();
-			
-			//Book id and title information
-			PreparedStatement stmt = conn.prepareStatement("INSERT INTO book VALUES (?, ?, ?) ON CONFLICT (book_id) DO UPDATE SET title = ?, description = ?;");
-			stmt.setString(1, book.getId());
-			stmt.setString(2, book.getTitle());
-			stmt.setString(3, book.getDescription());
-			
-			stmt.setString(4, book.getTitle());
-			stmt.setString(5, book.getDescription());
-			System.out.println(stmt);
-			stmt.executeUpdate();
-			
-			//Version Information
-			if (username != null)
-				putVersions(conn, book, username);
-			
-			//Author Information
-			putAuthors(conn, book);
-			
-			//Review Information
-			putReviews(conn, book);			
+			PutBook.putBook(conn, book, username);
 		}
-		catch(Exception e){
-			System.out.println(e.getMessage());
-			e.printStackTrace();
+		catch(SQLException | ClassNotFoundException e) {
 			return false;
 		}
-		finally{
-			try{
+		finally {
+			try {
 				conn.close();
+			} catch (SQLException e) {
+				//Nothing here?
 			}
-			catch(Exception e2){
-				//do nothing
+		}
+		return true;
+	}
+	
+	
+	@Override
+	public boolean putUser(UserInterface user) {
+		
+		Connection conn = null;
+		
+		try {
+			conn = openConnection();
+			PutUser.putUser(conn, user);
+		}
+		catch(SQLException | ClassNotFoundException e) {
+			return false;
+		}
+		finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				//Nothing here?
 			}
 		}
 		return true;
 	}
 
-	
-	
-	private void putVersions(Connection conn, BookInterface book, String username) throws SQLException{
-
-		PreparedStatement stmt = conn.prepareStatement("INSERT INTO book_version (book_id, account_name, format, location)"
-										+ "VALUES (?, ?, ?, ?) ON CONFLICT (book_id, account_name, format) DO NOTHING");
-		
-		for (VersionInterface version: book.getVersions()) {
-			stmt.setString(1, book.getId());
-			stmt.setString(2, username);
-			stmt.setString(3, version.getType());
-			stmt.setString(4, version.getPath());
-			stmt.executeUpdate();
-		}
-	}
-	
-	
-	
-	private void putAuthors(Connection conn, BookInterface book) throws SQLException {
-		
-		PreparedStatement stmt = conn.prepareStatement("INSERT INTO author VALUES (?, ?) ON CONFLICT (author_id) DO UPDATE SET author_name = ?;");
-		PreparedStatement joinstmt = conn.prepareStatement("INSERT INTO book_author VALUES (?, ?) ON CONFLICT (book_id, author_id) DO NOTHING;");
-		joinstmt.setString(1, book.getId());
-		
-		StringBuffer rmSQL = new StringBuffer("DELETE FROM book_author WHERE (book_id, author_id) NOT IN "
-				+ "(SELECT * FROM book_author WHERE book_id != ? OR (");
-		for (int i = 0; i < book.getAuthors().size() - 1; i++)
-			rmSQL.append("(author_id = ?) OR");
-		rmSQL.append("(author_id = ?)));");
-		PreparedStatement rmstmt = conn.prepareStatement(rmSQL.toString());
-		rmstmt.setString(1, book.getId());
-		
-		int index = 2;
-		for (AuthorInterface auth : book.getAuthors()){
-			//Create/update Author Entry
-			stmt.setString(1, auth.getId());
-			stmt.setString(2, auth.getName());
-			stmt.setString(3, auth.getName());
-			System.out.println(stmt);
-			stmt.executeUpdate();
-			
-			//Create/update Joining table
-			joinstmt.setString(2, auth.getId());
-			System.out.println(joinstmt);
-			joinstmt.executeUpdate();
-			
-			//Add to remove statement
-			rmstmt.setString(index++, auth.getId());
-		}
-		if (book.getAuthors().size() > 0){
-			rmstmt.executeUpdate();
-		}
-		else{
-			rmstmt = conn.prepareStatement("DELETE FROM book_author WHERE book_id =?");
-			rmstmt.setString(1, book.getId());
-			rmstmt.executeUpdate();
-		}
-	}
-	
-	
-	
-	private void putReviews(Connection conn, BookInterface book) throws SQLException {
-		
-		PreparedStatement insertstmt = conn.prepareStatement("INSERT INTO book_review (book_id, rating, review) VALUES (?, ?, ?);", new String[]{"review_id"});
-		insertstmt.setString(1, book.getId());
-		PreparedStatement updatestmt = conn.prepareStatement("UPDATE book_review SET book_id=?, rating=?, review=? WHERE review_id=?;");
-		updatestmt.setString(1, book.getId());
-		
-		//Setup for remove
-		StringBuffer rmSQL = new StringBuffer("DELETE FROM book_review WHERE (review_id) NOT IN "
-				+ "(SELECT review_id FROM book_review WHERE book_id != ? OR (");
-		
-		for (int i = 0; i < book.getReviews().size() - 1; i++)
-			rmSQL.append("(review_id = ?) OR");
-		rmSQL.append("(review_id = ?)));");
-		PreparedStatement rmstmt = conn.prepareStatement(rmSQL.toString());
-		rmstmt.setString(1, book.getId());
-		
-		int index = 2;
-		for (ReviewInterface rev : book.getReviews()){
-			if (rev.getId() == -1){
-				insertstmt.setInt(2, rev.getRating());
-				insertstmt.setString(3, rev.getReview());
-				insertstmt.executeUpdate();
-				
-				//Retrieve generated key from query so that the -1 doesn't conflict with the remove statement
-				insertstmt.getGeneratedKeys().next();
-				rev.setId(insertstmt.getGeneratedKeys().getInt("review_id"));
-			}
-			else{
-				updatestmt.setInt(2, rev.getRating());
-				updatestmt.setString(3, rev.getReview());
-				updatestmt.setInt(4, rev.getId());
-				System.out.println(updatestmt);
-				updatestmt.executeUpdate();
-			}
-			rmstmt.setInt(index++, rev.getId());
-		}
-		System.out.println(rmstmt.toString());
-		if (book.getReviews().size() > 0) {
-			System.out.println(rmstmt);
-			rmstmt.executeUpdate();
-		}
-		else{
-			rmstmt = conn.prepareStatement("DELETE FROM book_review WHERE book_id = ?;");
-			rmstmt.setString(1, book.getId());
-			rmstmt.executeUpdate();
-		}			
-	}
-
-	
-	
 	
 	@Override
 	public boolean removeTag(String uid, String bookTitle, String tag) {
@@ -465,6 +261,7 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 		boolean toReturn = user.removeTag(bookTitle, tag);
 		return toReturn && putUser(user);
 	}
+	
 	
 	public void reset(){
 		Connection conn = null;
