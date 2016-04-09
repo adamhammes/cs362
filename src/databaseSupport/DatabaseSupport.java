@@ -7,22 +7,42 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
-import models.*;
 import interfaces.*;
 
+/**
+ * DatabaseSupport provides an easy way to retrive and store books and users in
+ * the database. Objects such as reviews, tags, authors, and versions can be stored
+ * if they are attached to a user or a book.
+ */
 public class DatabaseSupport implements DatabaseSupportInterface {
-	Connection connection;
-
+	
 	private static final String USERNAME = "postgres";
 	private static final String PASSWORD = "a"; // no password needed
 	private static final String CONN_STRING = "jdbc:postgresql://localhost:5432/System";
 
 	
+	/**
+	 * Opens a connection to the postgres database and returns the connection.
+	 * 
+	 * @return connection to database
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	private Connection openConnection() throws SQLException, ClassNotFoundException {
 		Class.forName("org.postgresql.Driver");
 		return DriverManager.getConnection(CONN_STRING, USERNAME, PASSWORD);
 	}
 
+	
+	/**
+	 * Requests the the user identified by the userid from the database, and populate
+	 * all books and tags owned by this user. If the user does not exist in the database
+	 * this method returns null.
+	 * 
+	 * @param uid 	userid to uniquely identify this user
+	 * @return requested user or null
+	 */
+	@Override
 	public UserInterface getUser(String uid) {
 		UserInterface user = null;
 		Connection conn = null;
@@ -45,50 +65,58 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 		return user;
 	}
 	
+	
+	/**
+	 * Commits this user and all of the books and tags that they own to the database.
+	 * If no user by this id exists, a new entry into the database will be created for
+	 * them. If the user exists, all changed feilds will be updated.
+	 * 
+	 * @param user The user to commit to the database
+	 * @return true on successfuly added to database, false on failure to add to database
+	 */
 	@Override
-	public boolean addVersion(String uid, String bid, String path, String type) {
-		UserInterface user = getUser(uid);
-		if (null == user){
+	public boolean putUser(UserInterface user) {
+		
+		Connection conn = null;
+		
+		try {
+			conn = openConnection();
+			PutUser.putUser(conn, user);
+		}
+		catch(SQLException | ClassNotFoundException e) {
 			return false;
 		}
-		
-		return user.addVersion(bid, path, type);
-	}
-
-	@Override
-	public List<BookInterface> getBooksWithTag(String uid, String tid) {
-		UserInterface user = getUser(uid);
-		if (null == user) {
-			return null;
+		finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				//Nothing here?
+			}
 		}
-		
-		return new ArrayList<>(user.getBooksWithTag(tid));
+		return true;
 	}
-
-	@Override
-	public List<BookInterface> getAllBooks(String uid) {
-		UserInterface user = getUser(uid);
-		if (null == user) {
-			return null;
-		}
-		return user.getAllBooks();
-	}
-
-	@Override
-	public List<BookInterface> getBooksByRating(String uid) {
-		UserInterface user = getUser(uid);
-		if (null == user) {
-			return null;
-		}
-		List<BookInterface> books = user.getAllBooks();
-		Collections.sort(books);
-		Collections.reverse(books);
-		return books;
-	}
-
-	@Override
-	public BookInterface getBook(String bid){return getBook(bid, null);}
 	
+	
+	/**
+	 * Requests a book from the database and populates any rateings and authors that belong 
+	 * to the book. If no book by this identifier is found, this method returns null.
+	 * 
+	 * @param bid the book identifier of the requested book
+	 * @return the requested book or null
+	 */
+	@Override
+	public BookInterface getBook(String bid){ return getBook(bid, null); }
+	
+	
+	/**
+	 * Requests a book from the database and populates any rateings, authors and versions that
+	 * belong to the book. If no book by this identifier is found, this method returns null.
+	 * 
+	 * @param bid the book identifier of the requested book
+	 * @param username the username of the owner of the book (used for retreving versions)
+	 * @return the requested book or null
+	 */
+	@Override
 	public BookInterface getBook(String bid, String username) {
 		Connection conn = null;
 		BookInterface book = null;
@@ -107,12 +135,31 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 		}
 		return book;
 	}
-
-
+	
+	
+	/**
+	 * Commits a book to the database as well as any authors and reviews for the book.
+	 * If the book already exists in the database, the entry will be updated. If there
+	 * is no entry, one will be created.
+	 * 
+	 * @param book the book to commit to the database
+	 * @return true of the operation was successful, false if the operation failed
+	 */
 
 	@Override
 	public boolean putBook(BookInterface book){ return putBook(book, null); }
 	
+	
+	/**
+	 * Commits a book to the database as well as any authors, reviews, and versions for the
+	 *  book. If the book already exists in the database, the entry will be updated. If there
+	 * is no entry, one will be created.
+	 * 
+	 * @param book the book to commit to the database
+	 * @param username the username of the owner of the book (used for storing versions)
+	 * @return true of the operation was successful, false if the operation failed
+	 */
+	@Override
 	public boolean putBook(BookInterface book, String username) {
 		
 		Connection conn = null;
@@ -135,26 +182,49 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 	}
 	
 	
+
 	@Override
-	public boolean putUser(UserInterface user) {
-		
-		Connection conn = null;
-		
-		try {
-			conn = openConnection();
-			PutUser.putUser(conn, user);
-		}
-		catch(SQLException | ClassNotFoundException e) {
+	public boolean addVersion(String uid, String bid, String path, String type) {
+		UserInterface user = getUser(uid);
+		if (null == user){
 			return false;
 		}
-		finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				//Nothing here?
-			}
+		
+		return user.addVersion(bid, path, type); ///!!!!!! This doesn't commit changes to the db
+	}
+
+	
+	@Override
+	public List<BookInterface> getBooksWithTag(String uid, String tid) {
+		UserInterface user = getUser(uid);
+		if (null == user) {
+			return null;
 		}
-		return true;
+		
+		return new ArrayList<>(user.getBooksWithTag(tid));
+	}
+
+	
+	@Override
+	public List<BookInterface> getAllBooks(String uid) {
+		UserInterface user = getUser(uid);
+		if (null == user) {
+			return null;
+		}
+		return user.getAllBooks();
+	}
+
+	
+	@Override
+	public List<BookInterface> getBooksByRating(String uid) {
+		UserInterface user = getUser(uid);
+		if (null == user) {
+			return null;
+		}
+		List<BookInterface> books = user.getAllBooks();
+		Collections.sort(books);
+		Collections.reverse(books);
+		return books;
 	}
 
 	
@@ -170,6 +240,10 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 	}
 	
 	
+	/**
+	 * Resets the database to a known starting state to make testing easier. This method will run the 
+	 * database/reset.sql script.
+	 */
 	public void reset(){
 		Connection conn = null;
 		Scanner resetSQL = null;
