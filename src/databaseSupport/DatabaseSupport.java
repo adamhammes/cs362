@@ -44,6 +44,8 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 	 */
 	@Override
 	public UserInterface getUser(String uid) {
+		if (uid == null || uid.equals("")) return null;
+		
 		UserInterface user = null;
 		Connection conn = null;
 		
@@ -76,6 +78,7 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 	 */
 	@Override
 	public boolean putUser(UserInterface user) {
+		if (user == null) return false;
 		
 		Connection conn = null;
 		
@@ -118,6 +121,8 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 	 */
 	@Override
 	public BookInterface getBook(String bid, String username) {
+		if (bid == null || bid.equals("")) return null;
+		
 		Connection conn = null;
 		BookInterface book = null;
 		try {
@@ -161,6 +166,7 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 	 */
 	@Override
 	public boolean putBook(BookInterface book, String username) {
+		if (book == null) return false;
 		
 		Connection conn = null;
 		

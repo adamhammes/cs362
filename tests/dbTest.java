@@ -171,4 +171,37 @@ public class dbTest {
 		assertEquals(b.getId(), "nckb");
 		assertEquals(b.getTitle(), "Nick's Book on Testing");
 	}
+	
+	
+	//////////////////////////////////// Null Value Tests/////////////////////////////////////////////
+	
+	@Test
+	public void Book_getBook_Null(){
+		assertNull(db.getBook(null));
+	}
+	
+	@Test
+	public void Book_getBook_EmptyString(){
+		assertNull(db.getBook(""));
+	}
+	
+	@Test
+	public void Book_putBook_Null(){
+		assertFalse(db.putBook(null));
+	}
+	
+	@Test
+	public void User_getUser_Null(){
+		assertNull(db.getUser(null));
+	}
+	
+	@Test
+	public void User_getUser_EmptyString(){
+		assertNull(db.getUser(""));
+	}
+	
+	@Test
+	public void User_putUser_Null(){
+		assertFalse(db.putUser(null));
+	}
 }

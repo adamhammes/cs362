@@ -11,8 +11,26 @@ import models.Author;
 import models.Book;
 import models.Review;
 
+/**
+ * 
+ * @author Nicholas
+ *
+ */
 class GetBook {
 
+	/**
+	 * Retrives the requested book from the database as well as all of the authors, 
+	 * and reviews for the book. If a username is specified, the versions of the book
+	 * owned by the user will also be retreived. 
+	 * 
+	 * If the book does not exist in the database, this method returns null.
+	 * 
+	 * @param conn connection to the database
+	 * @param bid book id of the bookt to retrive
+	 * @param username username of whom the book belongs too
+	 * @return requested book or null
+	 * @throws SQLException
+	 */
 	public static BookInterface getBook(Connection conn, String bid, String username) throws SQLException{
 
 		BookInterface book = null;
@@ -29,6 +47,15 @@ class GetBook {
 	}
 	
 	
+	/**
+	 * Retrieves only the book object from the database. Nothing else is populated.
+	 * Returns null if the book does not exist
+	 * 
+	 * @param conn connection to the database
+	 * @param bid book id of the book to retreve
+	 * @return requested book
+	 * @throws SQLException
+	 */
 	private static Book retrieveBook(Connection conn, String bid) throws SQLException {
 		PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Book WHERE book_id = ?;");
 		stmt.setString(1, bid);
@@ -41,6 +68,15 @@ class GetBook {
 	}
 	
 
+	/**
+	 * Retreives ratings from the database for a specific book and attaches them
+	 * to the book object. 
+	 * 
+	 * @param conn connection to the database
+	 * @param book book on which to addRateings
+	 * @param bid book id of the book
+	 * @throws SQLException
+	 */
 	private static void retrieveRateings(Connection conn, BookInterface book, String bid) throws SQLException {
 		PreparedStatement stmt = makeRatingStatement(bid, conn);
 		System.out.println(stmt);
@@ -54,6 +90,15 @@ class GetBook {
 	}
 	
 	
+	/**
+	 * Generates the required SQL prepared statement for retreving Ratings for the provided
+	 * book.
+	 * 
+	 * @param bid
+	 * @param conn connection to the database
+	 * @return
+	 * @throws SQLException
+	 */
 	private static PreparedStatement makeRatingStatement(String bid, Connection conn) throws SQLException {
 		PreparedStatement stmt;
 		stmt = conn.prepareStatement(
@@ -64,6 +109,13 @@ class GetBook {
 	}
 	
 	
+	/**
+	 * 
+	 * @param conn connection to the database
+	 * @param book
+	 * @param bid
+	 * @throws SQLException
+	 */
 	private static void retrieveAuthors(Connection conn, BookInterface book, String bid) throws SQLException {
 		PreparedStatement stmt = conn.prepareStatement("SELECT author.author_id, author_name FROM author JOIN book_author "
 				+ "ON author.author_id = book_author.author_id WHERE book_id = ?;");
@@ -77,6 +129,17 @@ class GetBook {
 	}
 	
 	
+	/**
+	 * Retreves all versions of the specified book owned by a user and attaches 
+	 * them to the provided book instance. If the username specified is null,
+	 * no items will be retreved.
+	 * 
+	 * @param conn connection to the database
+	 * @param book
+	 * @param bid
+	 * @param username
+	 * @throws SQLException
+	 */
 	private static void retrieveVersions (Connection conn, BookInterface book, String bid, String username) throws SQLException {
 		if (username != null){
 			PreparedStatement stmt = conn.prepareStatement("SELECT format, location FROM book_version WHERE book_id = ? AND account_name = ?;");
