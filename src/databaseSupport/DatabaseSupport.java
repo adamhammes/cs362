@@ -34,6 +34,26 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 	}
 
 	
+	private Object get(Gettable get) {	
+		Connection conn = null;
+		
+		try {
+			conn = openConnection();
+			
+			return get.get(conn);
+		} catch (SQLException | ClassNotFoundException e) {
+			return null;
+		}
+		finally{
+			try {
+				conn.close();
+			} catch (Exception e2) {
+				// do nothing
+			}
+		}
+	}
+
+
 	/**
 	 * Requests the the user identified by the userid from the database, and populate
 	 * all books and tags owned by this user. If the user does not exist in the database
@@ -46,25 +66,7 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 	public UserInterface getUser(String uid) {
 		if (uid == null || uid.equals("")) return null;
 		
-		UserInterface user = null;
-		Connection conn = null;
-		
-		try {
-			conn = openConnection();
-			
-			user = GetUser.getUser(conn, uid);
-		} catch (SQLException | ClassNotFoundException e) {
-			return null;
-		}
-		finally{
-			try {
-				conn.close();
-			} catch (Exception e2) {
-				// do nothing
-			}
-		}
-		
-		return user;
+		return (UserInterface) get(new GetUser(uid));
 	}
 	
 	
@@ -123,22 +125,7 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 	public BookInterface getBook(String bid, String username) {
 		if (bid == null || bid.equals("")) return null;
 		
-		Connection conn = null;
-		BookInterface book = null;
-		try {
-			conn = openConnection();
-			
-			book = GetBook.getBook(conn, bid,  username);
-		} catch (SQLException | ClassNotFoundException e) {
-			return null;
-		} finally {
-			try {
-				conn.close();
-			} catch (Exception e2) {
-				// do nothing
-			}
-		}
-		return book;
+		return (BookInterface) get(new GetBook(bid, username));
 	}
 	
 	

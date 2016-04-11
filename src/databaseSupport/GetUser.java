@@ -12,9 +12,15 @@ import models.Book;
 import models.Tag;
 import models.User;
 
-class GetUser {
+class GetUser implements Gettable{
 
-	static public UserInterface getUser(Connection conn, String uid) throws SQLException {
+	private String uid;
+	
+	public GetUser(String uid){
+		this.uid = uid;
+	}
+	
+	public UserInterface get(Connection conn) throws SQLException {
 		
 		User user = null;
 		
@@ -68,6 +74,5 @@ class GetUser {
 			tag.addBook(book);
 			book.addTag(tag);
 		}
-	}
-	
+	}	
 }

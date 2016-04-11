@@ -16,8 +16,16 @@ import models.Review;
  * @author Nicholas
  *
  */
-class GetBook {
+class GetBook implements Gettable{
 
+	private String bid;
+	private String username;
+	
+	public GetBook(String bid, String username){
+		this.bid = bid;
+		this.username = username;
+	}
+	
 	/**
 	 * Retrives the requested book from the database as well as all of the authors, 
 	 * and reviews for the book. If a username is specified, the versions of the book
@@ -31,7 +39,7 @@ class GetBook {
 	 * @return requested book or null
 	 * @throws SQLException
 	 */
-	public static BookInterface getBook(Connection conn, String bid, String username) throws SQLException{
+	public BookInterface get(Connection conn) throws SQLException{
 
 		BookInterface book = null;
 		
