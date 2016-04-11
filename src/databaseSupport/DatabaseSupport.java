@@ -34,7 +34,7 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 	}
 
 	
-	private Object get(Gettable get) {	
+	private Object get(Getable get) {	
 		Connection conn = null;
 		
 		try {
@@ -53,6 +53,26 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 		}
 	}
 
+	
+	private boolean put(Putable put) {
+		Connection conn = null;
+		
+		try {
+			conn = openConnection();
+//			PutUser.putUser(conn, user);
+			return put.put(conn);
+		}
+		catch(SQLException | ClassNotFoundException e) {
+			return false;
+		}
+		finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				//Nothing here?
+			}
+		}
+	}
 
 	/**
 	 * Requests the the user identified by the userid from the database, and populate
@@ -82,23 +102,7 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 	public boolean putUser(UserInterface user) {
 		if (user == null) return false;
 		
-		Connection conn = null;
-		
-		try {
-			conn = openConnection();
-			PutUser.putUser(conn, user);
-		}
-		catch(SQLException | ClassNotFoundException e) {
-			return false;
-		}
-		finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				//Nothing here?
-			}
-		}
-		return true;
+		return put(new PutUser(user));
 	}
 	
 	
@@ -155,23 +159,7 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 	public boolean putBook(BookInterface book, String username) {
 		if (book == null) return false;
 		
-		Connection conn = null;
-		
-		try {
-			conn = openConnection();
-			PutBook.putBook(conn, book, username);
-		}
-		catch(SQLException | ClassNotFoundException e) {
-			return false;
-		}
-		finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				//Nothing here?
-			}
-		}
-		return true;
+		return put(new PutBook(book, username));
 	}
 	
 	

@@ -16,7 +16,7 @@ import models.Review;
  * @author Nicholas
  *
  */
-class GetBook implements Gettable{
+class GetBook implements Getable{
 
 	private String bid;
 	private String username;
@@ -39,6 +39,7 @@ class GetBook implements Gettable{
 	 * @return requested book or null
 	 * @throws SQLException
 	 */
+	@Override
 	public BookInterface get(Connection conn) throws SQLException{
 
 		BookInterface book = null;

@@ -12,7 +12,7 @@ import models.Book;
 import models.Tag;
 import models.User;
 
-class GetUser implements Gettable{
+class GetUser implements Getable{
 
 	private String uid;
 	
@@ -20,6 +20,7 @@ class GetUser implements Gettable{
 		this.uid = uid;
 	}
 	
+	@Override
 	public UserInterface get(Connection conn) throws SQLException {
 		
 		User user = null;

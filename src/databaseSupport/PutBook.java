@@ -9,10 +9,18 @@ import interfaces.BookInterface;
 import interfaces.ReviewInterface;
 import interfaces.VersionInterface;
 
-class PutBook {
+class PutBook implements Putable{
 
+	private BookInterface book;
+	private String username;
 	
-	static public boolean putBook(Connection conn, BookInterface book, String username) throws SQLException {
+	public PutBook(BookInterface book, String username) {
+		this.book = book;
+		this.username = username;
+	}
+	
+	@Override
+	public boolean put(Connection conn) throws SQLException {
 			
 		//Book id and title information
 		PreparedStatement stmt = conn.prepareStatement("INSERT INTO book VALUES (?, ?, ?) ON CONFLICT (book_id) DO UPDATE SET title = ?, description = ?;");

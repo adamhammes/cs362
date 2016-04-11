@@ -8,29 +8,38 @@ import interfaces.BookInterface;
 import interfaces.TagInterface;
 import interfaces.UserInterface;
 
-class PutUser {
+class PutUser implements Putable{
 
-	static public boolean putUser(Connection conn, UserInterface u) throws SQLException {
+	private UserInterface user;
+	
+	public PutUser(UserInterface user){
+		this.user = user;
+	}
+	
+	@Override
+	public boolean put(Connection conn) throws SQLException {
 				
 		//put user
 		PreparedStatement stmt = conn.prepareStatement("INSERT INTO account (account_name) VALUES (?) "
 														+ "ON CONFLICT (account_name) DO NOTHING;");
-		stmt.setString(1, u.getName());
+		stmt.setString(1, user.getName());
 		stmt.executeUpdate();
 		
 		//put all of the users books
-		for (BookInterface book: u.getAllBooks()){
-			PutBook.putBook(conn, book, null);
+		for (BookInterface book: user.getAllBooks()){
+//			PutBook.putBook(conn, book, null);
+			new PutBook(book, user.getName()).put(conn);
+			
 			
 			stmt = conn.prepareStatement("INSERT INTO account_book (account_name, book_id) VALUES (?, ?) "
 											+ "ON CONFLICT (account_name, book_id) DO NOTHING;");
-			stmt.setString(1, u.getName());
+			stmt.setString(1, user.getName());
 			stmt.setString(2, book.getId());
 			stmt.executeUpdate();
 	
 		}
 		
-		putTags(conn, u);
+		putTags(conn, user);
 			
 		return true;
 	}
