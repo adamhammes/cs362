@@ -34,6 +34,14 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 	}
 
 	
+	/**
+	 * Helper function to encapsulate the try catch code that is common to all 
+	 * get methods. The get parameter contains the information and type of
+	 * object to retrieve from the database
+	 * 
+	 * @param getable get object containing all information for the db request
+	 * @return requested object or null
+	 */
 	private Object get(Getable get) {	
 		Connection conn = null;
 		
@@ -54,6 +62,14 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 	}
 
 	
+	/**
+	 * Helper function to encapsulate the try catch code that is common to all 
+	 * put methods. The put parameter contains the information required to 
+	 * execute the put request. 
+	 * 
+	 * @param put putable object containing all information for the db request
+	 * @return true on successfully updated, false on failure.
+	 */
 	private boolean put(Putable put) {
 		Connection conn = null;
 		

@@ -12,45 +12,51 @@ import models.Book;
 import models.Review;
 
 /**
- * 
- * @author Nicholas
- *
+ * This object encapsulates a get user request making it easy for the
+ * db to execute.
  */
 class GetBook implements Getable{
 
 	private String bid;
 	private String username;
 	
+	private BookInterface book = null;
+	
+	/**
+	 * Creates a new instance of a GetBook request. The request can be
+	 * executed by calling the get method.
+	 * 
+	 * @param bid book id of the book to retrieve
+	 * @param username username of the owner of this book, or null if 
+	 * 				not available
+	 */
 	public GetBook(String bid, String username){
 		this.bid = bid;
 		this.username = username;
 	}
 	
+	
 	/**
-	 * Retrives the requested book from the database as well as all of the authors, 
+	 * Retrieves the requested book from the database as well as all of the authors, 
 	 * and reviews for the book. If a username is specified, the versions of the book
-	 * owned by the user will also be retreived. 
+	 * owned by the user will also be retrieved. 
 	 * 
 	 * If the book does not exist in the database, this method returns null.
 	 * 
 	 * @param conn connection to the database
-	 * @param bid book id of the bookt to retrive
-	 * @param username username of whom the book belongs too
 	 * @return requested book or null
 	 * @throws SQLException
 	 */
 	@Override
 	public BookInterface get(Connection conn) throws SQLException{
-
-		BookInterface book = null;
-		
-		book = retrieveBook(conn, bid);
+	
+		book = retrieveBook(conn);
 		if (book == null)
 			return null;
 		
-		retrieveRateings(conn, book, bid);
-		retrieveAuthors(conn, book, bid);		
-		retrieveVersions(conn, book, bid, username);
+		retrieveRateings(conn);
+		retrieveAuthors(conn);		
+		retrieveVersions(conn);
 			
 		return book;
 	}
@@ -61,11 +67,10 @@ class GetBook implements Getable{
 	 * Returns null if the book does not exist
 	 * 
 	 * @param conn connection to the database
-	 * @param bid book id of the book to retreve
 	 * @return requested book
 	 * @throws SQLException
 	 */
-	private static Book retrieveBook(Connection conn, String bid) throws SQLException {
+	private Book retrieveBook(Connection conn) throws SQLException {
 		PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Book WHERE book_id = ?;");
 		stmt.setString(1, bid);
 		ResultSet results = stmt.executeQuery();
@@ -78,16 +83,14 @@ class GetBook implements Getable{
 	
 
 	/**
-	 * Retreives ratings from the database for a specific book and attaches them
+	 * Retrieves ratings from the database for a specific book and attaches them
 	 * to the book object. 
 	 * 
 	 * @param conn connection to the database
-	 * @param book book on which to addRateings
-	 * @param bid book id of the book
 	 * @throws SQLException
 	 */
-	private static void retrieveRateings(Connection conn, BookInterface book, String bid) throws SQLException {
-		PreparedStatement stmt = makeRatingStatement(bid, conn);
+	private void retrieveRateings(Connection conn) throws SQLException {
+		PreparedStatement stmt = makeRatingStatement(conn);
 		System.out.println(stmt);
 		ResultSet results = stmt.executeQuery();
 		
@@ -103,12 +106,11 @@ class GetBook implements Getable{
 	 * Generates the required SQL prepared statement for retreving Ratings for the provided
 	 * book.
 	 * 
-	 * @param bid
 	 * @param conn connection to the database
 	 * @return
 	 * @throws SQLException
 	 */
-	private static PreparedStatement makeRatingStatement(String bid, Connection conn) throws SQLException {
+	private PreparedStatement makeRatingStatement(Connection conn) throws SQLException {
 		PreparedStatement stmt;
 		stmt = conn.prepareStatement(
 				"SELECT *"
@@ -121,11 +123,9 @@ class GetBook implements Getable{
 	/**
 	 * 
 	 * @param conn connection to the database
-	 * @param book
-	 * @param bid
 	 * @throws SQLException
 	 */
-	private static void retrieveAuthors(Connection conn, BookInterface book, String bid) throws SQLException {
+	private void retrieveAuthors(Connection conn) throws SQLException {
 		PreparedStatement stmt = conn.prepareStatement("SELECT author.author_id, author_name FROM author JOIN book_author "
 				+ "ON author.author_id = book_author.author_id WHERE book_id = ?;");
 		stmt.setString(1, book.getId());
@@ -139,17 +139,14 @@ class GetBook implements Getable{
 	
 	
 	/**
-	 * Retreves all versions of the specified book owned by a user and attaches 
+	 * Retrieves all versions of the specified book owned by a user and attaches 
 	 * them to the provided book instance. If the username specified is null,
-	 * no items will be retreved.
+	 * no items will be retrieved.
 	 * 
 	 * @param conn connection to the database
-	 * @param book
-	 * @param bid
-	 * @param username
 	 * @throws SQLException
 	 */
-	private static void retrieveVersions (Connection conn, BookInterface book, String bid, String username) throws SQLException {
+	private void retrieveVersions (Connection conn) throws SQLException {
 		if (username != null){
 			PreparedStatement stmt = conn.prepareStatement("SELECT format, location FROM book_version WHERE book_id = ? AND account_name = ?;");
 			stmt.setString(1, book.getId());

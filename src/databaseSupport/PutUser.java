@@ -39,16 +39,16 @@ class PutUser implements Putable{
 	
 		}
 		
-		putTags(conn, user);
+		putTags(conn);
 			
 		return true;
 	}
 	
 
-	private static boolean putTags(Connection conn, UserInterface u) throws SQLException{
+	private boolean putTags(Connection conn) throws SQLException{
 		//Build prepared statement for removing unneeded tags
 		int size = 0;
-		for (TagInterface tag : u.getTags()) size+= tag.getBooks().size();
+		for (TagInterface tag : user.getTags()) size+= tag.getBooks().size();
 		
 		StringBuffer rmsql = new StringBuffer(
 				"DELETE FROM book_tag WHERE (account_name, book_id, tag) NOT IN "
@@ -59,18 +59,18 @@ class PutUser implements Putable{
 		}
 		rmsql.append("(book_id = ? AND tag = ?)));");
 		PreparedStatement rmstmt = conn.prepareStatement(rmsql.toString());
-		rmstmt.setString(1, u.getName());
+		rmstmt.setString(1, user.getName());
 		int index = 2;
 		
 		PreparedStatement mkstmt = conn.prepareStatement("INSERT INTO book_tag (account_name, book_id, tag) VALUES (?, ?, ?) "
 				+ "ON CONFLICT (account_name, book_id, tag) DO NOTHING;");
 		
 		//put all tags for this user
-		for (TagInterface tag : u.getTags()){
+		for (TagInterface tag : user.getTags()){
 			for (BookInterface book : tag.getBooks()){
 				
 				//create and execute sql command for upsert tag
-				mkstmt.setString(1, u.getName());
+				mkstmt.setString(1, user.getName());
 				mkstmt.setString(2, book.getId());
 				mkstmt.setString(3, tag.getName());
 				System.out.println(mkstmt);
@@ -88,7 +88,7 @@ class PutUser implements Putable{
 		}
 		else{
 			rmstmt = conn.prepareStatement("DELETE FROM book_tag WHERE account_name = ?;");
-			rmstmt.setString(1, u.getName());
+			rmstmt.setString(1, user.getName());
 			System.out.println(rmstmt);
 			rmstmt.executeUpdate();
 		}

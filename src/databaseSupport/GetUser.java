@@ -16,24 +16,49 @@ class GetUser implements Getable{
 
 	private String uid;
 	
+	private User user = null;
+	
+	
+	/**
+	 * Creates a new instance of a GetUser request. The request can be 
+	 * Executed by calling the get method.
+	 * 
+	 * @param uid user id of the user to retrieve
+	 */
 	public GetUser(String uid){
 		this.uid = uid;
 	}
 	
+	
+	/**
+	 * Retrieves the requested user from the database along with all books,
+	 * versions, and tags owned by the user.
+	 * 
+	 * If the user does not exist in the database, this method returns null.
+	 * 
+	 * @param conn connection to the database
+	 * @return requested user or null
+	 */
 	@Override
 	public UserInterface get(Connection conn) throws SQLException {
 		
-		User user = null;
-		
-		user = retreiveUser(conn, uid);
-		retreiveBooks(conn, user, uid);
-		retreiveTags(conn, user, uid);
-				
+		user = retreiveUser(conn);
+		retreiveBooks(conn);
+		retreiveTags(conn); //requires that retreiveBooks was executed first
+
 		return user;
 	}
 	
 	
-	private static User retreiveUser(Connection conn, String uid) throws SQLException{
+	/**
+	 * Retrieves User object from the database. All books/tags owned by the user
+	 * are un-populated.
+	 * 
+	 * @param conn connection to the database
+	 * @return user without any owned objects
+	 * @throws SQLException
+	 */
+	private User retreiveUser(Connection conn) throws SQLException{
 		//Get User
 		PreparedStatement stmt = conn.prepareStatement("SELECT * FROM account WHERE account_name = ?;");
 		stmt.setString(1, uid);
@@ -48,7 +73,13 @@ class GetUser implements Getable{
 	}
 	
 	
-	private static void retreiveBooks(Connection conn, User user, String uid) throws SQLException{
+	/**
+	 * Retrieves all books owned by the specified user id and attaches them to the provided user.
+	 * 
+	 * @param conn database connection
+	 * @throws SQLException
+	 */
+	private void retreiveBooks(Connection conn) throws SQLException{
 			PreparedStatement stmt = conn.prepareStatement("SELECT book.book_id, book.title FROM account_book join book on account_book.book_id=book.book_id where account_book.account_name=?;");
 			stmt.setString(1, uid);
 			ResultSet results = stmt.executeQuery();
@@ -60,7 +91,14 @@ class GetUser implements Getable{
 	}
 	
 	
-	private static void retreiveTags(Connection conn, User user, String uid) throws SQLException{
+	/**
+	 * Retrieves all tags owned by the user and links them with the books owned by the user.
+	 * retreiveBooks MUST be executed first for this method to work properly.
+	 * 
+	 * @param conn database connection
+	 * @throws SQLException
+	 */
+	private void retreiveTags(Connection conn) throws SQLException{
 		PreparedStatement stmt = conn.prepareStatement("SELECT Book_tag.book_id, tag, title FROM Book_tag inner join book on Book_tag.book_id=book.book_id WHERE account_name = ?;");
 		stmt.setString(1, uid);
 		ResultSet results = stmt.executeQuery();

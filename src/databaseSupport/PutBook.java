@@ -22,6 +22,23 @@ class PutBook implements Putable{
 	@Override
 	public boolean put(Connection conn) throws SQLException {
 			
+		putBook(conn);
+		
+		//Version Information
+		if (username != null)
+			putVersions(conn);
+		
+		//Author Information
+		putAuthors(conn);
+		
+		//Review Information
+		putReviews(conn);			
+
+		
+		return true;
+	}
+
+	private void putBook(Connection conn) throws SQLException {
 		//Book id and title information
 		PreparedStatement stmt = conn.prepareStatement("INSERT INTO book VALUES (?, ?, ?) ON CONFLICT (book_id) DO UPDATE SET title = ?, description = ?;");
 		stmt.setString(1, book.getId());
@@ -32,22 +49,10 @@ class PutBook implements Putable{
 		stmt.setString(5, book.getDescription());
 		System.out.println(stmt);
 		stmt.executeUpdate();
-		
-		//Version Information
-		if (username != null)
-			putVersions(conn, book, username);
-		
-		//Author Information
-		putAuthors(conn, book);
-		
-		//Review Information
-		putReviews(conn, book);			
-
-		
-		return true;
 	}
-
-	static private void putVersions(Connection conn, BookInterface book, String username) throws SQLException{
+	
+	
+	private void putVersions(Connection conn) throws SQLException{
 
 		PreparedStatement stmt = conn.prepareStatement("INSERT INTO book_version (book_id, account_name, format, location)"
 										+ "VALUES (?, ?, ?, ?) ON CONFLICT (book_id, account_name, format) DO NOTHING");
@@ -63,7 +68,7 @@ class PutBook implements Putable{
 	
 	
 	
-	static private void putAuthors(Connection conn, BookInterface book) throws SQLException {
+	private void putAuthors(Connection conn) throws SQLException {
 		
 		PreparedStatement stmt = conn.prepareStatement("INSERT INTO author VALUES (?, ?) ON CONFLICT (author_id) DO UPDATE SET author_name = ?;");
 		PreparedStatement joinstmt = conn.prepareStatement("INSERT INTO book_author VALUES (?, ?) ON CONFLICT (book_id, author_id) DO NOTHING;");
@@ -106,7 +111,7 @@ class PutBook implements Putable{
 	
 	
 	
-	static private void putReviews(Connection conn, BookInterface book) throws SQLException {
+	private void putReviews(Connection conn) throws SQLException {
 		
 		PreparedStatement insertstmt = conn.prepareStatement("INSERT INTO book_review (book_id, rating, review) VALUES (?, ?, ?);", new String[]{"review_id"});
 		insertstmt.setString(1, book.getId());
