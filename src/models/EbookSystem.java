@@ -96,4 +96,20 @@ public class EbookSystem {
 	}
 
 
+	
+	public boolean addVersion(String uid, String bid, String path, String type) {
+		DatabaseSupport db = new DatabaseSupport();
+		
+		UserInterface user = db.getUser(uid);
+		if (null == user){
+			return false;
+		}
+		
+		if (!user.addVersion(bid, path, type))
+			return false;///!!!!!! This doesn't commit changes to the db
+		
+		return db.putUser(user);
+	}	
+	
+	
 }

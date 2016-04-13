@@ -12,7 +12,7 @@ public interface DatabaseSupportInterface {
 	public boolean putBook(BookInterface book);
 	public boolean putBook(BookInterface book, String username);
 	
-	public boolean addVersion(String uid, String bid, String path, String type);
+//	public boolean addVersion(String uid, String bid, String path, String type);
 	public List<BookInterface> getBooksWithTag(String uid, String tid);
 	public List<BookInterface> getAllBooks(String uid);
 	public List<BookInterface> getBooksByRating(String uid);

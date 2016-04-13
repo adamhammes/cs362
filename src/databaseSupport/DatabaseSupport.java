@@ -178,19 +178,7 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 		return put(new PutBook(book, username));
 	}
 	
-	
-
-	@Override
-	public boolean addVersion(String uid, String bid, String path, String type) {
-		UserInterface user = getUser(uid);
-		if (null == user){
-			return false;
-		}
 		
-		return user.addVersion(bid, path, type); ///!!!!!! This doesn't commit changes to the db
-	}
-
-	
 	@Override
 	public List<BookInterface> getBooksWithTag(String uid, String tid) {
 		UserInterface user = getUser(uid);
