@@ -2,9 +2,6 @@ package databaseSupport;
 
 import java.io.File;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Scanner;
 
 import interfaces.*;
@@ -178,53 +175,8 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 		return put(new PutBook(book, username));
 	}
 	
-		
-	@Override
-	public List<BookInterface> getBooksWithTag(String uid, String tid) {
-		UserInterface user = getUser(uid);
-		if (null == user) {
-			return null;
-		}
-		
-		return new ArrayList<>(user.getBooksWithTag(tid));
-	}
 
-	
-	@Override
-	public List<BookInterface> getAllBooks(String uid) {
-		UserInterface user = getUser(uid);
-		if (null == user) {
-			return null;
-		}
-		return user.getAllBooks();
-	}
 
-	
-	@Override
-	public List<BookInterface> getBooksByRating(String uid) {
-		UserInterface user = getUser(uid);
-		if (null == user) {
-			return null;
-		}
-		List<BookInterface> books = user.getAllBooks();
-		Collections.sort(books);
-		Collections.reverse(books);
-		return books;
-	}
-
-	
-	@Override
-	public boolean removeTag(String uid, String bookTitle, String tag) {
-		UserInterface user = getUser(uid);
-		if (null == user){
-			return false;
-		}
-		
-		boolean toReturn = user.removeTag(bookTitle, tag);
-		return toReturn && putUser(user);
-	}
-	
-	
 	/**
 	 * Resets the database to a known starting state to make testing easier. This method will run the 
 	 * database/reset.sql script.

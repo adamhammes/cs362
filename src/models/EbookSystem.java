@@ -5,7 +5,9 @@ import interfaces.ReviewInterface;
 import interfaces.UserInterface;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import databaseSupport.DatabaseSupport;
@@ -112,4 +114,29 @@ public class EbookSystem {
 	}	
 	
 	
+	public Collection<BookInterface> getBooksWithTag(String uid, String tid) {
+		DatabaseSupport db = new DatabaseSupport();
+		
+		UserInterface user = db.getUser(uid);
+		if (null == user) {
+			return null;
+		}
+		
+		return user.getBooksWithTag(tid);
+	}
+	
+	
+	public List<BookInterface> getBooksByRating(String uid) {
+		DatabaseSupport db = new DatabaseSupport();
+		
+		UserInterface user = db.getUser(uid);
+		if (null == user) {
+			return null;
+		}
+		List<BookInterface> books = user.getAllBooks();
+		Collections.sort(books);
+		Collections.reverse(books);
+		return books;
+	}
+
 }
