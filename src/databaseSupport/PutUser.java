@@ -73,7 +73,6 @@ class PutUser implements Putable{
 				mkstmt.setString(1, user.getName());
 				mkstmt.setString(2, book.getId());
 				mkstmt.setString(3, tag.getName());
-				System.out.println(mkstmt);
 				mkstmt.executeUpdate();
 				
 				//insert values into remove statement
@@ -83,13 +82,11 @@ class PutUser implements Putable{
 		}
 		//The constructed rmstmt is good only if least one tag exists
 		if (size > 0){
-			System.out.println(rmstmt);
 			rmstmt.executeUpdate();
 		}
 		else{
 			rmstmt = conn.prepareStatement("DELETE FROM book_tag WHERE account_name = ?;");
 			rmstmt.setString(1, user.getName());
-			System.out.println(rmstmt);
 			rmstmt.executeUpdate();
 		}
 		return true;

@@ -91,7 +91,6 @@ class GetBook implements Getable{
 	 */
 	private void retrieveRateings(Connection conn) throws SQLException {
 		PreparedStatement stmt = makeRatingStatement(conn);
-		System.out.println(stmt);
 		ResultSet results = stmt.executeQuery();
 		
 		

@@ -47,7 +47,6 @@ class PutBook implements Putable{
 		
 		stmt.setString(4, book.getTitle());
 		stmt.setString(5, book.getDescription());
-		System.out.println(stmt);
 		stmt.executeUpdate();
 	}
 	
@@ -88,12 +87,10 @@ class PutBook implements Putable{
 			stmt.setString(1, auth.getId());
 			stmt.setString(2, auth.getName());
 			stmt.setString(3, auth.getName());
-			System.out.println(stmt);
 			stmt.executeUpdate();
 			
 			//Create/update Joining table
 			joinstmt.setString(2, auth.getId());
-			System.out.println(joinstmt);
 			joinstmt.executeUpdate();
 			
 			//Add to remove statement
@@ -143,14 +140,11 @@ class PutBook implements Putable{
 				updatestmt.setInt(2, rev.getRating());
 				updatestmt.setString(3, rev.getReview());
 				updatestmt.setInt(4, rev.getId());
-				System.out.println(updatestmt);
 				updatestmt.executeUpdate();
 			}
 			rmstmt.setInt(index++, rev.getId());
 		}
-		System.out.println(rmstmt.toString());
 		if (book.getReviews().size() > 0) {
-			System.out.println(rmstmt);
 			rmstmt.executeUpdate();
 		}
 		else{

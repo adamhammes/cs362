@@ -4,9 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Collection;
-import java.util.List;
-
-import databaseSupport.DatabaseSupport;
 import interfaces.BookInterface;
 import models.EbookSystem;
 

@@ -44,7 +44,6 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 		
 		try {
 			conn = openConnection();
-			
 			return get.get(conn);
 		} catch (SQLException | ClassNotFoundException e) {
 			return null;
@@ -72,7 +71,6 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 		
 		try {
 			conn = openConnection();
-//			PutUser.putUser(conn, user);
 			return put.put(conn);
 		}
 		catch(SQLException | ClassNotFoundException e) {

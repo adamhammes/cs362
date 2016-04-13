@@ -62,7 +62,6 @@ class GetUser implements Getable{
 		//Get User
 		PreparedStatement stmt = conn.prepareStatement("SELECT * FROM account WHERE account_name = ?;");
 		stmt.setString(1, uid);
-		System.out.println(stmt);
 		ResultSet results = stmt.executeQuery();
 		
 		if (results.next()) {
