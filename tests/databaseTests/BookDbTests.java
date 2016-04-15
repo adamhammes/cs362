@@ -1,3 +1,5 @@
+package databaseTests;
+
 import static org.junit.Assert.*;
 
 import org.junit.Before;
@@ -7,13 +9,12 @@ import databaseSupport.DatabaseSupport;
 import interfaces.AuthorInterface;
 import interfaces.BookInterface;
 import interfaces.ReviewInterface;
-import interfaces.UserInterface;
 import interfaces.VersionInterface;
 import models.Author;
 import models.Book;
 import models.Review;
 
-public class dbTest {
+public class BookDbTests {
 
 	DatabaseSupport db;
 	
@@ -23,9 +24,8 @@ public class dbTest {
 		db.reset();
 	}
 	
-	
 	@Test
-	public void Book_addBook_Basic(){
+	public void addBook_Basic(){
 		assertEquals(null, db.getBook("nckb"));
 		
 		Book b = new Book("nckb", "Nick's Book on Testing", "This is a pretty Awesome Book");
@@ -36,8 +36,52 @@ public class dbTest {
 		assertEquals("This is a pretty Awesome Book", b.getDescription());
 	}
 	
+	
 	@Test
-	public void Book_updateBook_Basic(){
+	public void addBook_NoBid(){
+		Book b = new Book(null, "Test Book");
+		
+		assertFalse(db.putBook(b));
+	}
+	
+	@Test
+	public void addBook_EmptyBid(){
+		Book b = new Book("", "Test Book");
+		
+		assertFalse(db.putBook(b));
+	}
+	
+	@Test
+	public void addBook_NoTitle(){
+		Book b = new Book("abc", null);
+		assertFalse(db.putBook(b));
+	}
+	
+	@Test
+	public void addBook_EmptyTitle(){
+		//Group decided to alow empty titles
+		Book b = new Book("abc", "");
+		assertTrue(db.putBook(b));
+	}
+	
+	@Test
+	public void addBook_NewAuthor(){
+		assertNull(db.getBook("nckb"));
+		
+		BookInterface b = new Book("nckb", "Nick's Book on Testing");
+		Author a = new Author("nck", "Nicholas Riesen");
+		assertTrue(b.addAuthor(a));
+		assertTrue(db.putBook(b));
+		
+		b = db.getBook("nckb");
+		assertTrue(b.getTitle().equals("Nick's Book on Testing"));
+		
+		assertEquals(b.getAuthors().get(0).getId(), "nck");
+		assertEquals(b.getAuthors().get(0).getName(), "Nicholas Riesen");
+	}
+
+	@Test
+	public void updateBook_Basic(){
 		Book b = (Book) db.getBook("hp1");
 		assertNull(b.getDescription());
 		
@@ -54,24 +98,7 @@ public class dbTest {
 	
 	
 	@Test
-	public void Book_addBook_NewAuthor(){
-		assertNull(db.getBook("nckb"));
-		
-		BookInterface b = new Book("nckb", "Nick's Book on Testing");
-		Author a = new Author("nck", "Nicholas Riesen");
-		assertTrue(b.addAuthor(a));
-		assertTrue(db.putBook(b));
-		
-		b = db.getBook("nckb");
-		assertTrue(b.getTitle().equals("Nick's Book on Testing"));
-		
-		assertEquals(b.getAuthors().get(0).getId(), "nck");
-		assertEquals(b.getAuthors().get(0).getName(), "Nicholas Riesen");
-	}
-	
-	
-	@Test
-	public void Book_updateBook_NewAuthor(){
+	public void updateBook_NewAuthor(){
 		BookInterface b = db.getBook("hp1");
 		assertNotNull(b);
 		assertEquals(0, b.getAuthors().size());
@@ -88,7 +115,7 @@ public class dbTest {
 	
 
 	@Test
-	public void Book_updateBook_RemoveAuthor(){
+	public void updateBook_RemoveAuthor(){
 		BookInterface b = db.getBook("hp2");
 		assertNotNull(b);
 		assertEquals(1, b.getAuthors().size());
@@ -107,7 +134,7 @@ public class dbTest {
 	
 	
 	@Test
-	public void Book_updateBook_AddVersion(){
+	public void updateBook_AddVersion(){
 		BookInterface b = db.getBook("hp1");
 		assertNotNull(b);
 		assertTrue(b.getVersions().isEmpty());
@@ -125,7 +152,7 @@ public class dbTest {
 	
 	
 	@Test
-	public void Book_updateBook_AddReview(){
+	public void updateBook_AddReview(){
 		BookInterface b = db.getBook("hp1");
 		assertNotNull(b);
 		assertTrue(b.getReviews().isEmpty());
@@ -141,7 +168,7 @@ public class dbTest {
 	
 	
 	@Test
-	public void Book_updateBook_RemoveReview(){
+	public void updateBook_RemoveReview(){
 		BookInterface b = db.getBook("mobydick");
 		assertNotNull(b);
 		assertFalse(b.getReviews().isEmpty());
@@ -158,50 +185,31 @@ public class dbTest {
 	
 	
 	@Test
-	public void User_updateUser_AddBook(){
-		UserInterface u = db.getUser("nick");
-		assertNotNull(u);
-		
-		assertTrue(u.addBook("nckb", "Nick's Book on Testing"));
-		assertTrue(db.putUser(u));
-		
-		BookInterface b = db.getBook("nckb");
-		assertNotNull(b);
-		
-		assertEquals(b.getId(), "nckb");
-		assertEquals(b.getTitle(), "Nick's Book on Testing");
-	}
-	
-	
-	//////////////////////////////////// Null Value Tests/////////////////////////////////////////////
-	
-	@Test
-	public void Book_getBook_Null(){
+	public void getBook_Null(){
 		assertNull(db.getBook(null));
 	}
 	
 	@Test
-	public void Book_getBook_EmptyString(){
+	public void getBook_EmptyString(){
 		assertNull(db.getBook(""));
 	}
 	
 	@Test
-	public void Book_putBook_Null(){
+	public void putBook_Null(){
 		assertFalse(db.putBook(null));
 	}
-	
+
 	@Test
-	public void User_getUser_Null(){
-		assertNull(db.getUser(null));
+	public void putBook_null_id(){
+		Book book = new Book(null, "some title");
+		
+		assertFalse(db.putBook(book));
 	}
 	
 	@Test
-	public void User_getUser_EmptyString(){
-		assertNull(db.getUser(""));
-	}
-	
-	@Test
-	public void User_putUser_Null(){
-		assertFalse(db.putUser(null));
+	public void putBook_empty_id(){
+		Book book = new Book("", "some title");
+		
+		assertFalse(db.putBook(book));
 	}
 }

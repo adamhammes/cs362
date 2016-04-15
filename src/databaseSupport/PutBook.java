@@ -40,12 +40,11 @@ class PutBook implements Putable{
 	 */
 	@Override
 	public boolean put(Connection conn) throws SQLException {
-			
+				
 		putBook(conn);
 		
 		//Version Information
-		if (username != null)
-			putVersions(conn);
+		if (username != null) putVersions(conn);
 		
 		//Author Information
 		putAuthors(conn);

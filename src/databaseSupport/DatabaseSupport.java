@@ -104,14 +104,14 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 	/**
 	 * Commits this user and all of the books and tags that they own to the database.
 	 * If no user by this id exists, a new entry into the database will be created for
-	 * them. If the user exists, all changed feilds will be updated.
+	 * them. If the user exists, all changed fields will be updated.
 	 * 
 	 * @param user The user to commit to the database
-	 * @return true on successfuly added to database, false on failure to add to database
+	 * @return true on successfully added to database, false on failure to add to database
 	 */
 	@Override
 	public boolean putUser(UserInterface user) {
-		if (user == null) return false;
+		if (user == null || user.getName() == null || user.getName().equals("")) return false;
 		
 		return put(new PutUser(user));
 	}
@@ -129,11 +129,11 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 	
 	
 	/**
-	 * Requests a book from the database and populates any rateings, authors and versions that
+	 * Requests a book from the database and populates any ratings, authors and versions that
 	 * belong to the book. If no book by this identifier is found, this method returns null.
 	 * 
 	 * @param bid the book identifier of the requested book
-	 * @param username the username of the owner of the book (used for retreving versions)
+	 * @param username the username of the owner of the book (used for retrieving versions)
 	 * @return the requested book or null
 	 */
 	@Override
@@ -168,7 +168,7 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 	 */
 	@Override
 	public boolean putBook(BookInterface book, String username) {
-		if (book == null) return false;
+		if (book == null || book.getId() == null || book.getId().equals("")) return false;
 		
 		return put(new PutBook(book, username));
 	}
