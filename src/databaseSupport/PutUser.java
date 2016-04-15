@@ -8,14 +8,32 @@ import interfaces.BookInterface;
 import interfaces.TagInterface;
 import interfaces.UserInterface;
 
+/**
+ * Encapsulates a put user request allowing the database class to handle
+ * put requests more easily.
+ */
 class PutUser implements Putable{
 
 	private UserInterface user;
 	
+	/**
+	 * Creates a new instance of a PutUser Request for the provided user.
+	 * 
+	 * @param user user to commit to the database
+	 */
 	public PutUser(UserInterface user){
 		this.user = user;
 	}
 	
+	
+	/**
+	 * Commits the provided user and everything owned by the user object to the
+	 * database on the provided connection.
+	 * 
+	 * @param conn database connection
+	 * @return true on success, false on failure
+	 * @throws SQLException
+	 */
 	@Override
 	public boolean put(Connection conn) throws SQLException {
 				
@@ -45,6 +63,15 @@ class PutUser implements Putable{
 	}
 	
 
+	/**
+	 * Commits the tags belonging to this user to the database using the provided connection. Any 
+	 * tag that is in the database, but does not belong to the user object will be removed from 
+	 * the database.
+	 * 
+	 * @param conn database connection
+	 * @return true on success, false on failure
+	 * @throws SQLException
+	 */
 	private boolean putTags(Connection conn) throws SQLException{
 		//Build prepared statement for removing unneeded tags
 		int size = 0;
@@ -91,6 +118,5 @@ class PutUser implements Putable{
 		}
 		return true;
 	}
-	
 	
 }
