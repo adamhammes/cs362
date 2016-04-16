@@ -53,6 +53,7 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 				conn.close();
 			} catch (Exception e2) {
 				// do nothing
+				e2.printStackTrace();
 			}
 		}
 	}
@@ -85,6 +86,7 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 		}
 	}
 
+	
 	/**
 	 * Requests the the user identified by the userid from the database, and populate
 	 * all books and tags owned by this user. If the user does not exist in the database

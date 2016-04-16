@@ -6,6 +6,7 @@ import java.util.Collection;
 import interfaces.AuthorInterface;
 import interfaces.BookInterface;
 import interfaces.ReviewInterface;
+import interfaces.SeriesInterface;
 import interfaces.TagInterface;
 import interfaces.VersionInterface;
 
@@ -13,12 +14,14 @@ public class Book implements BookInterface, Comparable<BookInterface> {
     private String id;
     private String title;
     private String description;
-
+    
     private ArrayList<TagInterface> tags = new ArrayList<TagInterface>();
     private ArrayList<VersionInterface> versions = new ArrayList<VersionInterface>();
     private ArrayList<AuthorInterface> authors = new ArrayList<AuthorInterface>();
     private ArrayList<ReviewInterface> reviews = new ArrayList<ReviewInterface>();
 
+    private SeriesInterface series = null;
+    
     public Book(String id, String title) {
         this.id = id;
         this.title = title;
@@ -138,6 +141,11 @@ public class Book implements BookInterface, Comparable<BookInterface> {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public void addSeries(SeriesInterface series) {
+		this.series = series;
 	}
 	
 }
