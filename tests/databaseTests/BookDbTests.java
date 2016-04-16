@@ -209,27 +209,32 @@ public class BookDbTests {
 		}
 	}
 	
+	
 	@Test
 	public void getBook_Null(){
 		assertNull(db.getBook(null));
 	}
+	
 	
 	@Test
 	public void getBook_EmptyString(){
 		assertNull(db.getBook(""));
 	}
 	
+	
 	@Test
 	public void putBook_Null(){
 		assertFalse(db.putBook(null));
 	}
 
+	
 	@Test
 	public void putBook_null_id(){
 		Book book = new Book(null, "some title");
 		
 		assertFalse(db.putBook(book));
 	}
+	
 	
 	@Test
 	public void putBook_empty_id(){

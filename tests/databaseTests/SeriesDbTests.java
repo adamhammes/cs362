@@ -8,6 +8,8 @@ import org.junit.Test;
 import databaseSupport.DatabaseSupport;
 import interfaces.BookInterface;
 import interfaces.SeriesInterface;
+import models.Book;
+import models.Series;
 
 public class SeriesDbTests {
 
@@ -48,5 +50,20 @@ public class SeriesDbTests {
 		assertEquals(hp2.getTitle(), "Harry Potter and the Chamber of Secrets");
 	}
 	
+	
+	@Test
+	public void addNewSeries(){
+		SeriesInterface series = new Series("lotr", "The Lord of the Rings");
+		series.addBook(new Book("lotr1", "The Fellowship of the Ring"));
+		series.addBook(new Book("lotr2", "The Two Towers"));
+		series.addBook(new Book("lotr3", "The Return of the King"));
+		
+		db.putSeries(series);
+		
+		series = db.getSeries("lotr");
+		assertNotNull(series);
+		assertEquals(series.getId(), "lotr");
+		assertEquals(series.getName(), "The Lord of the Rings");
+	}
 	
 }

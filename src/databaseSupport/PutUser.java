@@ -12,7 +12,7 @@ import interfaces.UserInterface;
  * Encapsulates a put user request allowing the database class to handle
  * put requests more easily.
  */
-class PutUser implements Putable{
+class PutUser extends Putable{
 
 	private UserInterface user;
 	

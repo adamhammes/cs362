@@ -14,7 +14,7 @@ import interfaces.VersionInterface;
  * DatabaseSupport class.
  * 
  */
-class PutBook implements Putable{
+class PutBook extends Putable{
 
 	private BookInterface book;
 	private String username;
@@ -52,6 +52,7 @@ class PutBook implements Putable{
 		//Review Information
 		putReviews(conn);			
 
+		putSeries(conn);
 		return true;
 	}
 
@@ -73,6 +74,7 @@ class PutBook implements Putable{
 		stmt.setString(4, book.getTitle());
 		stmt.setString(5, book.getDescription());
 		stmt.executeUpdate();
+		alreadyStoredBooks.add(book.getId());
 	}
 	
 	
@@ -202,4 +204,12 @@ class PutBook implements Putable{
 		}			
 	}
 
+	
+	private void putSeries(Connection conn) throws SQLException {
+		if (book.getSeries() != null && !alreadyStoredSeries.contains(book.getSeries().getId())){
+			PutSeries putSeriesRequest = new PutSeries(book.getSeries());
+			putSeriesRequest.put(conn);
+		}
+	}
+	
 }
