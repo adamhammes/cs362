@@ -174,6 +174,12 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 	}
 	
 
+	public SeriesInterface getSeries(String seriesId) {
+		if (seriesId == null || seriesId.equals("")) return null;
+		
+		return (SeriesInterface) get(new GetSeries(seriesId));
+	}
+	
 
 	/**
 	 * Resets the database to a known starting state to make testing easier. This method will run the 
