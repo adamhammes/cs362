@@ -44,6 +44,7 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 		
 		try {
 			conn = openConnection();
+			get.clear(); //Clears what has already been loaded
 			return get.get(conn);
 		} catch (SQLException | ClassNotFoundException e) {
 			return null;

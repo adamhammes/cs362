@@ -12,7 +12,7 @@ import models.Book;
 import models.Tag;
 import models.User;
 
-class GetUser implements Getable{
+class GetUser extends Getable{
 
 	private String uid;
 	

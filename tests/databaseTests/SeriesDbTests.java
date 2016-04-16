@@ -47,4 +47,6 @@ public class SeriesDbTests {
 		assertEquals(hp2.getId(), "hp2");
 		assertEquals(hp2.getTitle(), "Harry Potter and the Chamber of Secrets");
 	}
+	
+	
 }

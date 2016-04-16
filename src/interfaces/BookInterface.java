@@ -29,5 +29,6 @@ public interface BookInterface extends Comparable<BookInterface> {
 	public String getDescription();
 	public void setDescription(String description);
 	public void addSeries(SeriesInterface series);
+	SeriesInterface getSeries();
 
 }

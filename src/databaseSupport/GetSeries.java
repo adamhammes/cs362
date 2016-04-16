@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import interfaces.SeriesInterface;
 import models.Series;
 
-class GetSeries implements Getable{
+class GetSeries extends Getable{
 
 	private String seriesId;
 	private Series series = null;
@@ -18,7 +18,7 @@ class GetSeries implements Getable{
 	}
 	
 	@Override
-	public Object get(Connection conn) throws SQLException {
+	public SeriesInterface get(Connection conn) throws SQLException {
 		
 		getSeries(conn);
 		getBooks(conn);
@@ -34,6 +34,7 @@ class GetSeries implements Getable{
 		
 		if (results.next()){
 			series = new Series(results.getString("series_id"), results.getString("series_name"));
+			alreadyPopulatedSeries.add(seriesId); //mark as done
 		}
 	}
 	
@@ -43,8 +44,13 @@ class GetSeries implements Getable{
 		ResultSet results = stmt.executeQuery();
 		
 		while (results.next()) {
-			GetBook getBookRequest = new GetBook(results.getString("book_id"), null);
-			series.addBook(getBookRequest.get(conn));
+			String bookId = results.getString("book_id");
+			
+			//If the book has already been populated, don't populate again
+			if (!alreadyPopulatedBooks.contains(bookId)) {
+				GetBook getBookRequest = new GetBook(results.getString("book_id"), null);
+				series.addBook(getBookRequest.get(conn));
+			}
 		}
 	}
 }

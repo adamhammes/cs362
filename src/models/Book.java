@@ -148,4 +148,8 @@ public class Book implements BookInterface, Comparable<BookInterface> {
 		this.series = series;
 	}
 	
+	@Override
+	public SeriesInterface getSeries(){
+		return series;
+	}
 }
