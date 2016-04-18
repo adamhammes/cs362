@@ -137,5 +137,44 @@ public class EbookSystem {
 		Collections.reverse(books);
 		return books;
 	}
+	
+	public boolean addDescription(String bid, String desc){
+		DatabaseSupport db = new DatabaseSupport();
+		BookInterface b = db.getBook(bid);
+		
+		b.addDescription(desc);
+		db.putBook(b);
+		
+		return true;
+	}
+	
+	
+	public boolean editDescription(String bid, String desc){
+		DatabaseSupport db = new DatabaseSupport();
+		BookInterface b = db.getBook(bid);
+		
+		b.editDescription(desc);
+		db.putBook(b);
+		
+		return true;
+	}
+	
+	
+	public boolean removeDescription(String bid){
+		DatabaseSupport db = new DatabaseSupport();
+		BookInterface b = db.getBook(bid);
+		
+		b.removeDescription();
+		db.putBook(b);
+		
+		return true;
+	}
+	
+	public String retrieveDescription(String bid){
+		DatabaseSupport db = new DatabaseSupport();
+		BookInterface b = db.getBook(bid);
+		
+		return b.retrieveDescription();
+	}
 
 }
