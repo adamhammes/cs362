@@ -1,0 +1,42 @@
+\documentclass{article}
+ 
+\title{Use Case Elaboration: Log On}
+\author{ Steve Monson }
+
+\pagenumbering{gobble}
+
+\begin{document}
+\maketitle
+
+
+\section*{Use Case}
+\begin{tabular}{l l}
+Use Case:     & Log On\\
+Actor:        & User\\
+Precondition: & None\\
+\end{tabular}
+
+
+\section*{Main Success Scenario:}
+
+\begin{enumerate}
+    \item User enters information to log in
+    \item System acknowledges user is logged in
+
+\end{enumerate}
+
+\section*{Extensions}
+
+\begin{itemize}
+    \item [1a.] User's credentials are not valid
+                - System notifies user is not logged in
+                            
+\end{itemize}
+
+
+\section*{Information Expert}
+
+The Information Expert is System. System is the highest level class and knows the DatabaseSupport
+
+
+\end{document}
