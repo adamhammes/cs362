@@ -1,40 +1,42 @@
 \documentclass{article}
 
 \title{Use Case Elaboration: Remove Book From Series}
-\author{ Adam Hammes }
+\author{Adam Hammes}
 
 \pagenumbering{gobble}
 
 \begin{document}
 \maketitle
 
-
 \section*{Use Case}
 \begin{tabular}{l l}
-Use Case:     & Remove Book From Series\\
-Actor:        & User \\
-Precondition: & None\\
+  Use Case:     & Remove Book From Series    \\
+  Actor:        & User        \\
+  Precondition: & None \\
 \end{tabular}
 
-
 \section*{Main Success Scenario:}
-
 \begin{enumerate}
-    \item User provides unique id of series and id of book to be removed
-    \item System acknowledges that the operation succeeded
-
+  \item User provides unique ids for the book and series
+  \item System acknowledges that the book has been removed from the series
 \end{enumerate}
 
 \section*{Extensions}
-
 \begin{itemize}
-    \item [1a.] No series with the given id exists
+  \item [1a.] Book ID does not exist
 
-    - System acknowledges that the operation failed
-                            
+    - System indicates that the operation failed.
+    
+  \item [1b.] Series ID does not exist
+  
+    - System indicates that the operation failed
 \end{itemize}
 
-
 \section*{Information Expert}
+
+The information experts for removeBookFromSeries are Series and System, as the System knows
+Series which knows which book it has.
+The removeBookFromSeries method assigned to System will retrieve the proper Series, and then
+call the removeBook method assigned to Series.
 
 \end{document}
