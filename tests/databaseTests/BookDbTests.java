@@ -86,7 +86,6 @@ public class BookDbTests {
 		assertNull(b.retrieveDescription());
 		
 		b.setTitle("Harry Potter 1");
-//		b.setDescription("You're a wizard, Harry!");
 		b.editDescription("You're a wizard, Harry!");
 		assertTrue(db.putBook(b));
 		
