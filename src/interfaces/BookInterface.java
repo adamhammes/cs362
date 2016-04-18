@@ -26,9 +26,13 @@ public interface BookInterface extends Comparable<BookInterface> {
 	public boolean removeReview(int reviewId);
 	public boolean updateReview(int reviewId, int newRateing, String newReview);
 	
+
 	public boolean addDescription(String desc);
 	public boolean editDescription(String desc);
 	public boolean removeDescription();
 	public String retrieveDescription();
+
+	public void addSeries(SeriesInterface series);
+	SeriesInterface getSeries();
 
 }

@@ -44,6 +44,7 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 		
 		try {
 			conn = openConnection();
+			get.clear(); //Clears what has already been loaded
 			return get.get(conn);
 		} catch (SQLException | ClassNotFoundException e) {
 			return null;
@@ -53,6 +54,7 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 				conn.close();
 			} catch (Exception e2) {
 				// do nothing
+				e2.printStackTrace();
 			}
 		}
 	}
@@ -71,6 +73,7 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 		
 		try {
 			conn = openConnection();
+			put.clear();//Clear what has already been stored
 			return put.put(conn);
 		}
 		catch(SQLException | ClassNotFoundException e) {
@@ -80,11 +83,13 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 			try {
 				conn.close();
 			} catch (SQLException e) {
+				e.printStackTrace();
 				//Nothing here?
 			}
 		}
 	}
 
+	
 	/**
 	 * Requests the the user identified by the userid from the database, and populate
 	 * all books and tags owned by this user. If the user does not exist in the database
@@ -174,7 +179,19 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 	}
 	
 
+	public SeriesInterface getSeries(String seriesId) {
+		if (seriesId == null || seriesId.equals("")) return null;
+		
+		return (SeriesInterface) get(new GetSeries(seriesId));
+	}
+	
 
+	public boolean putSeries(SeriesInterface series){
+		if (series == null || series.getId() == null || series.getId().equals("")) return false;
+		
+		return put(new PutSeries(series));
+	}
+	
 	/**
 	 * Resets the database to a known starting state to make testing easier. This method will run the 
 	 * database/reset.sql script.

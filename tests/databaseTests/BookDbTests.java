@@ -9,6 +9,7 @@ import databaseSupport.DatabaseSupport;
 import interfaces.AuthorInterface;
 import interfaces.BookInterface;
 import interfaces.ReviewInterface;
+import interfaces.SeriesInterface;
 import interfaces.VersionInterface;
 import models.Author;
 import models.Book;
@@ -185,26 +186,55 @@ public class BookDbTests {
 	
 	
 	@Test
+	public void getBook_Series_and_Series_Books(){
+		BookInterface book = db.getBook("hp1");
+		
+		SeriesInterface series = book.getSeries();
+		assertNotNull(series);
+		assertEquals(series.getId(), "hp");
+		assertEquals(series.getName(), "Harry Potter");
+		
+		for (BookInterface b : series.getBooks()){
+			
+			if (b.getId().equals("hp1")) {
+				assertEquals(book, b); //both books should point to the same object
+			}
+			else if (b.getId().equals("hp2")) {
+				assertEquals(b.getTitle(), "Harry Potter and the Chamber of Secrets");
+			}
+			else {
+				//This will need to be changed if more harry potter books are added
+				fail();
+			}
+		}
+	}
+	
+	
+	@Test
 	public void getBook_Null(){
 		assertNull(db.getBook(null));
 	}
+	
 	
 	@Test
 	public void getBook_EmptyString(){
 		assertNull(db.getBook(""));
 	}
 	
+	
 	@Test
 	public void putBook_Null(){
 		assertFalse(db.putBook(null));
 	}
 
+	
 	@Test
 	public void putBook_null_id(){
 		Book book = new Book(null, "some title");
 		
 		assertFalse(db.putBook(book));
 	}
+	
 	
 	@Test
 	public void putBook_empty_id(){

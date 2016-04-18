@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 import interfaces.BookInterface;
 import interfaces.ReviewInterface;
+import interfaces.SeriesInterface;
 import models.Author;
 import models.Book;
 import models.Review;
@@ -15,7 +16,7 @@ import models.Review;
  * This object encapsulates a get user request making it easy for the
  * db to execute.
  */
-class GetBook implements Getable{
+class GetBook extends Getable{
 
 	private String bid;
 	private String username;
@@ -50,14 +51,15 @@ class GetBook implements Getable{
 	@Override
 	public BookInterface get(Connection conn) throws SQLException{
 	
-		book = retrieveBook(conn);
+		retrieveBook(conn);
 		if (book == null)
 			return null;
 		
 		retrieveRateings(conn);
 		retrieveAuthors(conn);		
 		retrieveVersions(conn);
-			
+		
+		retrieveSeries(conn);
 		return book;
 	}
 	
@@ -70,15 +72,15 @@ class GetBook implements Getable{
 	 * @return requested book
 	 * @throws SQLException
 	 */
-	private Book retrieveBook(Connection conn) throws SQLException {
+	private void retrieveBook(Connection conn) throws SQLException {
 		PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Book WHERE book_id = ?;");
 		stmt.setString(1, bid);
 		ResultSet results = stmt.executeQuery();
 		
-		if (results.next())
-			return new Book(results.getString("book_id"), results.getString("title"), results.getString("description"));
-		else
-			return null;
+		if (results.next()) {
+			book = new Book(results.getString("book_id"), results.getString("title"), results.getString("description"));
+			alreadyPopulatedBooks.add(bid); //Add book to list of books already retrieved
+		}
 	}
 	
 
@@ -155,6 +157,23 @@ class GetBook implements Getable{
 			while(results.next()){
 	//				Version ver = new Version(results.getString("format"), results.getString("location"));
 				book.addVersion(results.getString("location"), results.getString("format"));
+			}
+		}
+	}
+	
+	private void retrieveSeries(Connection conn) throws SQLException{
+		PreparedStatement stmt = conn.prepareStatement("SELECT series_id FROM book_series WHERE book_id = ?;");
+		stmt.setString(1, bid);
+		ResultSet results = stmt.executeQuery();
+		
+		if (results.next()){
+			String seriesId = results.getString("series_id");
+			
+			//If the series has not already been created, create it and attach this book to it
+			if(!alreadyPopulatedSeries.contains(seriesId)) {
+				GetSeries getSeriesRequest = new GetSeries(seriesId);
+				SeriesInterface series = (SeriesInterface) getSeriesRequest.get(conn);
+				series.addBook(book);
 			}
 		}
 	}

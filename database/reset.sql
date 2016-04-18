@@ -103,3 +103,8 @@ INSERT INTO Book_Tag VALUES
 
 INSERT INTO book_author VALUES
 	('hp2', 'jkr');
+	
+	
+INSERT INTO book_series VALUES
+	('hp1', 'hp', 1),
+	('hp2', 'hp', 2);

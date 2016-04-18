@@ -2,13 +2,19 @@ package databaseSupport;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Encapsulates all information relevant to a get request to the database.
  *
  * Currently implemented by GetUser and GetBook
  */
-interface Getable {
+abstract class Getable {
+	
+	protected static Set<String> alreadyPopulatedBooks = new HashSet<String>();
+	protected static Set<String> alreadyPopulatedSeries = new HashSet<String>();
+	protected static Set<String> alreadyPopulatedAuthors = new HashSet<String>();
 	
 	/**
 	 * Execute the get request on the provided database connection.
@@ -19,5 +25,12 @@ interface Getable {
 	 * @return requested object
 	 * @throws SQLException
 	 */
-	public Object get(Connection conn) throws SQLException;
+	abstract public Object get(Connection conn) throws SQLException;
+	
+	
+	public void clear(){
+		alreadyPopulatedBooks = new HashSet<String>();
+		alreadyPopulatedSeries = new HashSet<String>();
+		alreadyPopulatedAuthors = new HashSet<String>();
+	}
 }
