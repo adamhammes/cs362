@@ -142,10 +142,12 @@ public class EbookSystem {
 		DatabaseSupport db = new DatabaseSupport();
 		BookInterface b = db.getBook(bid);
 		
-		b.addDescription(desc);
-		db.putBook(b);
+		if(b == null)
+			return false;
 		
-		return true;
+		b.addDescription(desc);
+		return(db.putBook(b));
+
 	}
 	
 	
@@ -153,10 +155,12 @@ public class EbookSystem {
 		DatabaseSupport db = new DatabaseSupport();
 		BookInterface b = db.getBook(bid);
 		
-		b.editDescription(desc);
-		db.putBook(b);
+		if(b == null)
+			return false;
 		
-		return true;
+		b.editDescription(desc);
+		return(db.putBook(b));
+		
 	}
 	
 	
@@ -164,15 +168,20 @@ public class EbookSystem {
 		DatabaseSupport db = new DatabaseSupport();
 		BookInterface b = db.getBook(bid);
 		
-		b.removeDescription();
-		db.putBook(b);
+		if(b == null)
+			return false;
 		
-		return true;
+		b.removeDescription();
+		return(db.putBook(b));
+		
 	}
 	
 	public String retrieveDescription(String bid){
 		DatabaseSupport db = new DatabaseSupport();
 		BookInterface b = db.getBook(bid);
+		
+		if(b == null)
+			return null;
 		
 		return b.retrieveDescription();
 	}
