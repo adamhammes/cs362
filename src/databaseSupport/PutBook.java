@@ -68,10 +68,10 @@ class PutBook implements Putable{
 		PreparedStatement stmt = conn.prepareStatement("INSERT INTO book VALUES (?, ?, ?) ON CONFLICT (book_id) DO UPDATE SET title = ?, description = ?;");
 		stmt.setString(1, book.getId());
 		stmt.setString(2, book.getTitle());
-		stmt.setString(3, book.getDescription());
+		stmt.setString(3, book.retrieveDescription());
 		
 		stmt.setString(4, book.getTitle());
-		stmt.setString(5, book.getDescription());
+		stmt.setString(5, book.retrieveDescription());
 		stmt.executeUpdate();
 	}
 	

@@ -45,15 +45,15 @@ public class Book implements BookInterface, Comparable<BookInterface> {
         this.title = title;
     }
 
-    @Override
-    public String getDescription(){
-    	return description;
-    }
-    
-    @Override
-    public void setDescription(String description){
-    	this.description = description;
-    }
+//    @Override
+//    public String getDescription(){
+//    	return description;
+//    }
+//    
+//    @Override
+//    public void setDescription(String description){
+//    	this.description = description;
+//    }
     
 	@Override
 	public boolean addTag(TagInterface t) {
@@ -159,7 +159,7 @@ public class Book implements BookInterface, Comparable<BookInterface> {
 	}
 	
 	@Override
-	public boolean retrieveDescription(){
+	public String retrieveDescription(){
 		return this.description;
 	}
 	

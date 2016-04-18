@@ -33,7 +33,7 @@ public class BookDbTests {
 		
 		b = (Book) db.getBook("nckb");
 		assertEquals("Nick's Book on Testing", b.getTitle());
-		assertEquals("This is a pretty Awesome Book", b.getDescription());
+		assertEquals("This is a pretty Awesome Book", b.retrieveDescription());
 	}
 	
 	
@@ -83,17 +83,18 @@ public class BookDbTests {
 	@Test
 	public void updateBook_Basic(){
 		Book b = (Book) db.getBook("hp1");
-		assertNull(b.getDescription());
+		assertNull(b.retrieveDescription());
 		
 		b.setTitle("Harry Potter 1");
-		b.setDescription("You're a wizard, Harry!");
+//		b.setDescription("You're a wizard, Harry!");
+		b.editDescription("You're a wizard, Harry!");
 		assertTrue(db.putBook(b));
 		
 		b = null;
 		b = (Book) db.getBook("hp1");
 		
 		assertEquals("Harry Potter 1", b.getTitle());
-		assertEquals("You're a wizard, Harry!", b.getDescription());
+		assertEquals("You're a wizard, Harry!", b.retrieveDescription());
 	}
 	
 	

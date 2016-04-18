@@ -29,6 +29,6 @@ public interface BookInterface extends Comparable<BookInterface> {
 	public boolean addDescription(String desc);
 	public boolean editDescription(String desc);
 	public boolean removeDescription();
-	public boolean retrieveDescription();
+	public String retrieveDescription();
 
 }
