@@ -1,38 +1,42 @@
 \documentclass{article}
 
-\title{Use Case Elaboration: Add Book To Series}
-\author{ Adam Hammes }
+\title{Use Case Elaboration: Add Book}
+\author{Adam Hammes}
 
 \pagenumbering{gobble}
 
 \begin{document}
 \maketitle
 
-
 \section*{Use Case}
 \begin{tabular}{l l}
-Use Case:     & Add Book To Series\\
-Actor:        & \\
-Precondition: & \\
+  Use Case:     & Add Book To Series    \\
+  Actor:        & User        \\
+  Precondition: & None \\
 \end{tabular}
 
-
 \section*{Main Success Scenario:}
-
 \begin{enumerate}
-    \item 
-
+  \item User provides unique ids for the book and series
+  \item System acknowledges that the book has been added to the series
 \end{enumerate}
 
 \section*{Extensions}
-
 \begin{itemize}
-    \item [1a.]
-                            
-\end{itemize}
+  \item [1a.] Book ID does not exist
 
+    - System indicates that the operation failed.
+    
+  \item [1b.] Series ID does not exist
+  
+    - System indicates that the operation failed
+\end{itemize}
 
 \section*{Information Expert}
 
+The information experts for addBookToSeries are Series and System, as the System knows
+Series which knows which book it has.
+The addBookToSeries method assigned to System will retrieve the proper Series, and then
+call the addBook method assigned to Series.
 
 \end{document}
