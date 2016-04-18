@@ -3,10 +3,10 @@
 \usepackage{stmaryrd}
 \usepackage{amssymb}
 \usepackage{tikz}
-\usetikzlibrary{positioning}
+\usetikzlibrary{positioning, shadows}
 
 \title{Interaction Diagram - Remove Book From Series}
-\author{ Adam Hammes }
+\author{Adam Hammes}
 
 % no page number at bottom
 \pagenumbering{gobble}
@@ -14,18 +14,17 @@
 \begin{document}
 \maketitle
 
-\begin{center}
-
 \begin{tikzpicture}[
   auto,
   block/.style = {
+    minimum width = 9em,
     rectangle,
     draw=black,
     align=center,
     rounded corners
   },
   multiple/.style = {
-    rectangle, draw, rounded corners, fill= white,
+    rectangle, draw, rounded corners, fill= white, 
     text width=9em, align= center,
     copy shadow = {
       ,fill=white, draw=black,
@@ -33,15 +32,30 @@
     }
   }
 ]
+
 \node[] (start)  {};
+
+\node[block, below = 2cm of start]      (controller) {\underline{: SystemController}};
+\node[block, below = 2cm of controller] (system)     {\underline{: System}}; 
+\node[block, below = 2cm of system]     (database)   {\underline{: DatabaseSupport}};
+\node[block, right = 2cm of system]     (series)     {\underline{series: Series}};
+
+\draw (start) -- (controller) node[midway] {1.};
+\draw (controller) -- (system) node[midway] {2.};
+\draw (system) -- (database) node[midway] {3., 4.};
+\draw (system) -- (series) node[midway] {5.};
+
 
 \end{tikzpicture}
 
 \vspace{0.5cm}
 
 \begin{enumerate}
-  \item 
+  \item \texttt{b:=removeBookFromSeries(bid:String, sid:String):boolean}
+  \item \texttt{b:=removeBookFromSeries(bid:String, sid:String):boolean}
+  \item \texttt{book:=getBook(bid:String):Book}
+  \item \texttt{series:=getSeries(sid:String):Series}
+  \item \texttt{b:=removeBook(book):boolean}
 \end{enumerate}
-\end{center}
 
 \end{document}
