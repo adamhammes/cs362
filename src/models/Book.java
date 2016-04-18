@@ -140,4 +140,27 @@ public class Book implements BookInterface, Comparable<BookInterface> {
 		return false;
 	}
 	
+	@Override
+	public boolean addDescription(String desc){
+		this.description = desc; //TODO: check if description exists already??
+		return true;
+	}
+	
+	@Override
+	public boolean editDescription(String desc){
+		this.description = desc;
+		return true;
+	}
+	
+	@Override
+	public boolean removeDescription(){
+		this.description = new String();
+		return true;
+	}
+	
+	@Override
+	public boolean retrieveDescription(){
+		return this.description;
+	}
+	
 }
