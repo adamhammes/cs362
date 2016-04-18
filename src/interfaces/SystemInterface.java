@@ -13,6 +13,8 @@ public interface SystemInterface {
 	public List<BookInterface> displayAllBooksByRating(String uid);
 	public boolean addRating(String uid, String bid, int rating);
 	public boolean removeTag(String uid, String bookTitle, String tag);
-	
-	
+	public boolean addDescription(String bid, String desc);
+	public boolean editDescription(String bid, String desc);
+	public boolean removeDescription(String bid);
+	public String retrieveDescription(String bid);
 }
