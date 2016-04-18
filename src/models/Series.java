@@ -26,6 +26,21 @@ public class Series implements SeriesInterface{
 		return true;
 	}
 	
+	
+	@Override
+	public boolean removeBook(String bookid){
+		
+		for (int i = 0; i < books.size(); i++){
+			if (books.get(i).getId().equals(bookid)){
+				books.get(i).removeSeries();
+				
+				books.remove(i);
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	@Override
 	public ArrayList<BookInterface> getBooks(){
 		return books;

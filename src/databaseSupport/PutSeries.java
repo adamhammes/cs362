@@ -23,6 +23,8 @@ class PutSeries extends Putable{
 		
 		putBooks(conn);
 		
+		removeOldBooks(conn);
+		
 		return false;
 	}
 
@@ -52,9 +54,30 @@ class PutSeries extends Putable{
 					+ "ON CONFLICT DO NOTHING;"); //The joining table might be duplicated
 			stmt.setString(1, book.getId());
 			stmt.setString(2, series.getId());
-			System.out.println(stmt);
+//			System.out.println(stmt);
 			stmt.executeUpdate();
 		}
 		
+	}
+	
+	private void removeOldBooks(Connection conn) throws SQLException {
+		StringBuffer rmSQL = new StringBuffer("DELETE FROM book_series WHERE (book_id, series_id) NOT IN ");
+		rmSQL.append("(SELECT book_id, series_id FROM book_series WHERE series_id != ? OR ");
+		
+		//Build Query String
+		for (int i = 0; i < series.getBooks().size() - 1; i++)
+			rmSQL.append("(book_id = ?) OR ");
+		rmSQL.append("(book_id = ?));");
+		
+		PreparedStatement rmstmt = conn.prepareStatement(rmSQL.toString());
+		rmstmt.setString(1, series.getId());
+		
+		int i = 2;
+		for (BookInterface book : series.getBooks()){
+			rmstmt.setString(i++, book.getId());
+		}
+		System.out.println(rmstmt);
+		rmstmt.executeUpdate();
+					
 	}
 }

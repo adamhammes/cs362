@@ -162,8 +162,14 @@ public class Book implements BookInterface, Comparable<BookInterface> {
 		return this.description;
 	}
 	
+	@Override
 	public SeriesInterface getSeries(){
 		return series;
+	}
+	
+	@Override
+	public void removeSeries(){
+		series = null;
 	}
 
 }

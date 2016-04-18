@@ -14,4 +14,6 @@ public interface SeriesInterface {
 
 	ArrayList<BookInterface> getBooks();
 
+	boolean removeBook(String bid);
+
 }
