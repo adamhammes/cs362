@@ -5,11 +5,11 @@ import interfaces.ReviewInterface;
 import interfaces.SystemInterface;
 import interfaces.UserInterface;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+
 
 import databaseSupport.DatabaseSupport;
 
@@ -169,8 +169,10 @@ public class EbookSystem implements SystemInterface {
 
 	@Override
 	public boolean addBook(String uid, String bid, String title) {
-		// TODO Auto-generated method stub
-		return false;
+		DatabaseSupport db = new DatabaseSupport();
+		
+		UserInterface user = db.getUser(uid);
+		return user.addBook(bid, title);
 	}
 
 	@Override
