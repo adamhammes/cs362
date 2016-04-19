@@ -222,4 +222,11 @@ public class EbookSystem implements SystemInterface {
 		return series == null ? null : series.getBooks();
 	}
 
+	@Override
+	public boolean changeRating(String bid, int reviewId, int newRating, String newReview) {
+		DatabaseSupport db = new DatabaseSupport();
+		BookInterface book = db.getBook(bid);
+		
+		return book == null ? false : book.updateReview(reviewId, newRating, newReview);
+	}
 }

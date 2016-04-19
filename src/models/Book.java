@@ -143,8 +143,7 @@ public class Book implements BookInterface, Comparable<BookInterface> {
 	public boolean updateReview(int reviewId, int newRating, String newReview) {
 		for (ReviewInterface review : reviews){
 			if (review.getId() == reviewId){
-				review.setRating(newRating);
-				review.setReview(newReview);
+				review.update(newRating, newReview);
 				return true;
 			}
 		}
