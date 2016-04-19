@@ -9,5 +9,7 @@ public interface DatabaseSupportInterface {
 	public BookInterface getBook(String bid, String username);
 	public boolean putBook(BookInterface book);
 	public boolean putBook(BookInterface book, String username);
-		
+	
+	public SeriesInterface getSeries(String sid);
+	public boolean putSeries(SeriesInterface series);
 }

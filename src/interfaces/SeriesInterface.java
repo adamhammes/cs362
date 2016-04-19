@@ -10,4 +10,5 @@ public interface SeriesInterface {
 	boolean addBook(BookInterface book);
 	ArrayList<BookInterface> getBooks();
 	boolean removeBook(String bid);
+	BookInterface getBook(String bid);
 }
