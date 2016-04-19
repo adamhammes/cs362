@@ -140,10 +140,10 @@ public class Book implements BookInterface, Comparable<BookInterface> {
 	}
 
 	@Override
-	public boolean updateReview(int reviewId, int newRateing, String newReview) {
+	public boolean updateReview(int reviewId, int newRating, String newReview) {
 		for (ReviewInterface review : reviews){
 			if (review.getId() == reviewId){
-				review.setRating(newRateing);
+				review.setRating(newRating);
 				review.setReview(newReview);
 				return true;
 			}
