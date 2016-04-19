@@ -176,9 +176,10 @@ public class EbookSystem implements SystemInterface {
 	}
 
 	@Override
-	public boolean addUser(String uid, String name) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean addUser(String name) {
+		DatabaseSupport db = new DatabaseSupport();
+		UserInterface user = new User(name);
+		return db.putUser(user);
 	}
 
 	@Override
