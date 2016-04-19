@@ -7,7 +7,7 @@ import java.util.Scanner;
 import interfaces.*;
 
 /**
- * DatabaseSupport provides an easy way to retrive and store books and users in
+ * DatabaseSupport provides an easy way to retrieve and store books and users in
  * the database. Objects such as reviews, tags, authors, and versions can be stored
  * if they are attached to a user or a book.
  */
@@ -123,7 +123,7 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 	
 	
 	/**
-	 * Requests a book from the database and populates any rateings and authors that belong 
+	 * Requests a book from the database and populates any ratings and authors that belong 
 	 * to the book. If no book by this identifier is found, this method returns null.
 	 * 
 	 * @param bid the book identifier of the requested book
