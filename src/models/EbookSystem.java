@@ -33,10 +33,8 @@ public class EbookSystem implements SystemInterface {
 		DatabaseSupport db = new DatabaseSupport();
 		UserInterface user = db.getUser(uid);
 
-		if (user != null) {
-			if (user.removeTag(bookTitle, tag)) // if tag was successfully
-												// removed
-				return db.putUser(user); // if user was successfully updated
+		if (user != null && user.removeTag(bookTitle, tag)) {
+			return db.putUser(user);
 		}
 		return false;
 	}
@@ -200,8 +198,11 @@ public class EbookSystem implements SystemInterface {
 		DatabaseSupport db = new DatabaseSupport();
 		BookInterface book = db.getBook(bid);
 		Review r = new Review(Integer.parseInt(bid), rating, review);
-		return book.addReview(r);
-
+		 
+		if (!book.addReview(r)) {
+			return false;
+		}
+		return db.putBook(book);
 	}
 
 	@Override
@@ -214,7 +215,11 @@ public class EbookSystem implements SystemInterface {
 		}
 		
 		BookInterface book = db.getBook(bid);
-		return series.addBook(book);
+		
+		if (!series.addBook(book)) {
+			return false;
+		}
+		return db.putSeries(series);
 	}
 
 	@Override
