@@ -265,6 +265,9 @@ public class EbookSystem implements SystemInterface {
 			return false;
 		}
 		
-		return series.removeBook(bid);
+		if (!series.removeBook(bid)) {
+			return false;
+		}
+		return db.putSeries(series);
 	}
 }
