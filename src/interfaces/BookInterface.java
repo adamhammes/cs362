@@ -22,6 +22,7 @@ public interface BookInterface extends Comparable<BookInterface> {
 
 	public boolean addAuthor(AuthorInterface author);
 	public ArrayList<AuthorInterface> getAuthors();
+	public void removeAuthor(String id);
 	
 	public boolean removeReview(int reviewId);
 	public boolean updateReview(int reviewId, int newRateing, String newReview);

@@ -12,4 +12,6 @@ public interface AuthorInterface {
 
 	boolean addBook(BookInterface book);
 
+	void removeBook(String id);
+
 }

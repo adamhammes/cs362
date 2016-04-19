@@ -50,4 +50,22 @@ public class AuthorDbTests {
 		}
 		fail();
 	}
+	
+	@Test
+	public void author_removeBook(){
+		AuthorInterface author = db.getAuthor("jkr");
+		assertNotNull(author);
+		assertNotNull(author.getBooks());
+		assertEquals(1, author.getBooks().size());
+		
+		BookInterface book = author.getBooks().get(0);
+		author.removeBook(book.getId());
+		
+		db.putAuthor(author);
+		
+		author = db.getAuthor("jkr");
+		assertNotNull(author);
+		assertNotNull(author.getBooks());
+		assertEquals(0, author.getBooks().size());
+	}
 }

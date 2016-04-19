@@ -43,4 +43,16 @@ public class Author implements AuthorInterface {
 		}
 		return true;
 	}
+
+	@Override
+	public void removeBook(String id) {
+		
+		for (int i = 0; i < books.size(); i++) {
+			if (books.get(i).getId().equals(id)){
+				BookInterface temp = books.get(i);
+				books.remove(i);
+				temp.removeAuthor(id);
+			}
+		}
+	}
 }

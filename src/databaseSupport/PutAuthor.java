@@ -19,6 +19,7 @@ class PutAuthor extends Putable {
 	public boolean put(Connection conn) throws SQLException {
 		putAuthor(conn);
 		putBooks(conn);
+		removeOldBooks(conn);
 		return false;
 	}
 
@@ -40,5 +41,24 @@ class PutAuthor extends Putable {
 				new PutBook(book, null).put(conn);
 			}
 		}
+	}
+	
+	
+	private void removeOldBooks(Connection conn) throws SQLException {
+		StringBuffer rmSQL = new StringBuffer("DELETE FROM book_author WHERE (book_id, author_id) NOT IN ");
+		rmSQL.append("(SELECT * FROM book_author WHERE author_id != ?");
+		for (int i = 0; i < author.getBooks().size() - 1; i++)
+			rmSQL.append( "OR book_id = ? ");
+		rmSQL.append(");");
+		
+		PreparedStatement rmstmt = conn.prepareStatement(rmSQL.toString());
+		rmstmt.setString(1, author.getId());
+		
+		int i = 2;
+		for (BookInterface book : author.getBooks()){
+			rmstmt.setString(i++, book.getId());
+		}
+		
+		rmstmt.executeUpdate();
 	}
 }

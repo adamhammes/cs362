@@ -116,6 +116,18 @@ public class Book implements BookInterface, Comparable<BookInterface> {
 		return authors;
 	}
 
+	
+	@Override
+	public void removeAuthor(String authorId){
+		for (AuthorInterface author : authors){
+			if (author.getId().equals(authorId)){
+				authors.remove(author);
+				author.removeBook(id);
+			}
+		}
+		
+	}
+	
 	@Override
 	public boolean removeReview(int reviewId) {
 		for (int i = 0; i < reviews.size(); i++){
