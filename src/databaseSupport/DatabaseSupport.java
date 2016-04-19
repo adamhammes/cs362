@@ -192,6 +192,14 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 		return put(new PutSeries(series));
 	}
 	
+	
+	public AuthorInterface getAuthor(String authorId) {
+		if (authorId == null || authorId.equals("")) return null;
+		
+		return (AuthorInterface) get(new GetAuthor(authorId));
+	}
+	
+	
 	/**
 	 * Resets the database to a known starting state to make testing easier. This method will run the 
 	 * database/reset.sql script.

@@ -103,7 +103,12 @@ public class Book implements BookInterface, Comparable<BookInterface> {
 
 	@Override
 	public boolean addAuthor(AuthorInterface author){
-		return authors.add(author);
+		
+		if (!authors.contains(author)){
+			authors.add(author);
+			author.addBook(this);
+		}
+		return true;
 	}
 	
 	@Override

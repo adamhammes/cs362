@@ -104,7 +104,7 @@ class GetBook extends Getable{
 	
 	
 	/**
-	 * Generates the required SQL prepared statement for retreving Ratings for the provided
+	 * Generates the required SQL prepared statement for retrieving Ratings for the provided
 	 * book.
 	 * 
 	 * @param conn connection to the database
@@ -126,15 +126,17 @@ class GetBook extends Getable{
 	 * @param conn connection to the database
 	 * @throws SQLException
 	 */
-	private void retrieveAuthors(Connection conn) throws SQLException {
-		PreparedStatement stmt = conn.prepareStatement("SELECT author.author_id, author_name FROM author JOIN book_author "
-				+ "ON author.author_id = book_author.author_id WHERE book_id = ?;");
+	private void retrieveAuthors(Connection conn) throws SQLException {		
+		PreparedStatement stmt = conn.prepareStatement("SELECT author_id FROM book_author WHERE book_id = ?");
 		stmt.setString(1, book.getId());
 		ResultSet results = stmt.executeQuery();
 		
-		while(results.next()){
-			Author author = new Author(results.getString("author_id"), results.getString("author_name"));
-			book.addAuthor(author);
+		while (results.next()) {
+			String authorId = results.getString("author_id");
+			
+			if (!alreadyPopulatedAuthors.contains(authorId)){
+				book.addAuthor(new GetAuthor(authorId).get(conn));
+			}
 		}
 	}
 	
