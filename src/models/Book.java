@@ -158,7 +158,9 @@ public class Book implements BookInterface, Comparable<BookInterface> {
 	
 	@Override
 	public boolean addDescription(String desc){
-		this.description = desc; //TODO: check if description exists already??
+		if(this.description.isEmpty())
+			return false;
+		this.description = desc;
 		return true;
 	}
 	

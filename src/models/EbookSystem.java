@@ -191,14 +191,19 @@ public class EbookSystem implements SystemInterface {
 
 	@Override
 	public List<BookInterface> displayAllBooksByRating(String uid) {
-		// TODO Auto-generated method stub
-		return null;
+		DatabaseSupport db = new DatabaseSupport();
+		UserInterface user = db.getUser(uid);
+		return user.getAllBooksByRating();
 	}
 
 	@Override
-	public boolean addRating(String uid, String bid, int rating) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean addRating(String uid, String bid, int rating, String review) {
+		DatabaseSupport db = new DatabaseSupport();
+		UserInterface user = db.getUser(uid);
+		BookInterface book = db.getBook(bid);
+		Review r = new Review(Integer.parseInt(bid), rating, review);
+		return book.addReview(r);
+
 	}
 
 	@Override

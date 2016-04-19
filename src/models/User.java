@@ -6,6 +6,7 @@ import interfaces.UserInterface;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -140,6 +141,27 @@ public class User implements UserInterface {
 	@Override
 	public List<BookInterface> getAllBooks() {
 		return new ArrayList<BookInterface>(userBooks.values());
+	}
+	
+	@Override
+	public List<BookInterface> getAllBooksByRating(){
+		ArrayList<BookInterface> a = new ArrayList<>(userBooks.values());
+		Comparator<BookInterface> c = new Comparator<BookInterface>() {
+			
+			@Override
+			public int compare(BookInterface o1, BookInterface o2) {
+				// TODO Auto-generated method stub
+				if(o1.averageRating() - o2.averageRating() > 0)
+					return 1;
+				else if(o1.averageRating() - o2.averageRating() == 0)
+					return 0;
+				else
+					return -1;
+			}
+		};
+		
+		a.sort(c);
+		return a;
 	}
 
 
