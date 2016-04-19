@@ -42,5 +42,12 @@ public class AuthorDbTests {
 		assertNotNull(author.getBooks());
 		assertEquals(author.getBooks().size(), 2);
 		
+		for (BookInterface book : author.getBooks()){
+			if (book.getId().equals("hp3")){
+				assertEquals("The Prisoner of Azkaban", book.getTitle());
+				return;
+			}
+		}
+		fail();
 	}
 }
