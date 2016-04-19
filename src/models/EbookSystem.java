@@ -2,6 +2,7 @@ package models;
 
 import interfaces.BookInterface;
 import interfaces.ReviewInterface;
+import interfaces.SeriesInterface;
 import interfaces.SystemInterface;
 import interfaces.UserInterface;
 
@@ -204,8 +205,15 @@ public class EbookSystem implements SystemInterface {
 
 	@Override
 	public boolean addBookToSeries(String bid, String sid) {
-		// TODO Auto-generated method stub
-		return false;
+		DatabaseSupport db = new DatabaseSupport();
+		
+		SeriesInterface series = db.getSeries(sid);
+		if (null == series) {
+			return false;
+		}
+		
+		BookInterface book = db.getBook(bid);
+		return series.addBook(book);
 	}
 
 	@Override
