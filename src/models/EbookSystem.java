@@ -59,7 +59,7 @@ public class EbookSystem implements SystemInterface {
 
 		if (book == null)
 			return false;
-		if (book.removeReview(reviewId) == false)
+		if (book.removeRating(reviewId) == false)
 			return false;
 
 		return db.putBook(book);
@@ -228,5 +228,21 @@ public class EbookSystem implements SystemInterface {
 		BookInterface book = db.getBook(bid);
 		
 		return book == null ? false : book.updateReview(reviewId, newRating, newReview);
+	}
+
+	@Override
+	public boolean removeRating(String bid, int reviewId) {
+		DatabaseSupport db = new DatabaseSupport();
+		
+		BookInterface book = db.getBook(bid);
+		
+		if (null == book) {
+			return false;
+		}
+		
+		if (!book.removeRating(reviewId)) {
+			return true;
+		}
+		return db.putBook(book);
 	}
 }
