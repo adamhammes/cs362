@@ -8,7 +8,7 @@ public interface SystemInterface {
 	public boolean addUser(String uid, String name);
 	public boolean addVersion(String uid, String bid, String path, String type);
 	
-	public List<String> getBooksWithTag(String uid, String tid);
+	public List<BookInterface> getBooksWithTag(String uid, String tid);
 	public List<BookInterface> displayAllBooks(String uid);
 	public List<BookInterface> displayAllBooksByRating(String uid);
 	
