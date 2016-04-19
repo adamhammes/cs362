@@ -129,7 +129,7 @@ public class Book implements BookInterface, Comparable<BookInterface> {
 	}
 	
 	@Override
-	public boolean removeReview(int reviewId) {
+	public boolean removeRating(int reviewId) {
 		for (int i = 0; i < reviews.size(); i++){
 			if (reviews.get(i).getId() == reviewId){
 				reviews.remove(i);
