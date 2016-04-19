@@ -77,10 +77,10 @@ public class EbookSystem implements SystemInterface {
 		return db.putBook(book);
 	}
 
-	public Collection<ReviewInterface> getReviews(String bookId) {
+	public List<ReviewInterface> getReviews(String bookId) {
 		DatabaseSupport db = new DatabaseSupport();
 		BookInterface book = db.getBook(bookId);
-		return book.getReviews();
+		return new ArrayList<>(book.getReviews());
 	}
 
 	public boolean addVersion(String uid, String bid, String path, String type) {
