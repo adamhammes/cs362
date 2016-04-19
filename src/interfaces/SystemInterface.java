@@ -25,4 +25,5 @@ public interface SystemInterface {
 	
 	public boolean changeRating(String bid, int reviewId, int newRating, String newReview);
 	public boolean removeRating(String bid, int reviewId);
+	public List<ReviewInterface> getReviews(String bid);
 }
