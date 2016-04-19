@@ -2,6 +2,7 @@ package interfaces;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 
 public interface BookInterface extends Comparable<BookInterface> {
@@ -26,7 +27,6 @@ public interface BookInterface extends Comparable<BookInterface> {
 	
 	public boolean removeRating(int reviewId);
 	public boolean updateReview(int reviewId, int newRating, String newReview);
-	
 
 	public boolean addDescription(String desc);
 	public boolean editDescription(String desc);
