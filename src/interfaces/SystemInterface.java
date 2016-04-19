@@ -24,4 +24,5 @@ public interface SystemInterface {
 	public List<BookInterface> searchBySeries(String sid);
 	
 	public boolean changeRating(String bid, int reviewId, int newRating, String newReview);
+	public boolean removeRating(String bid, int reviewId);
 }
