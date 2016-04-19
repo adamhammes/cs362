@@ -21,9 +21,30 @@ public class Series implements SeriesInterface{
 	public boolean addBook(BookInterface book){
 		if (book == null) return false;
 		
-		books.add(book);
-		book.addSeries(this);
-		return true;
+		if (books.contains(book)){
+			return true;
+		}
+		else{
+			books.add(book);
+			book.addSeries(this);
+			return true;
+		}
+	}
+	
+	
+	@Override
+	public boolean removeBook(String bookid){
+		
+		for (int i = 0; i < books.size(); i++){
+			if (books.get(i).getId().equals(bookid)){
+				
+				BookInterface temp = books.remove(i);
+				temp.removeSeries();
+				
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	@Override

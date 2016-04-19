@@ -66,4 +66,20 @@ public class SeriesDbTests {
 		assertEquals(series.getName(), "The Lord of the Rings");
 	}
 	
+	
+	@Test
+	public void removeBookFromSeries(){
+		SeriesInterface series = db.getSeries("hp");
+		assertNotNull(series);
+		
+		int size = series.getBooks().size();
+		assertTrue(series.removeBook("hp1"));
+		
+		db.putSeries(series);
+		
+		series = db.getSeries("hp");
+		assertNotNull(series);
+		assertEquals(series.getBooks().size(), size - 1);
+		
+	}
 }

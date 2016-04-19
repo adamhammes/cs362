@@ -33,6 +33,7 @@ public interface BookInterface extends Comparable<BookInterface> {
 	public String retrieveDescription();
 
 	public void addSeries(SeriesInterface series);
-	SeriesInterface getSeries();
+	public SeriesInterface getSeries();
+	public void removeSeries();
 
 }
