@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import org.postgresql.ssl.DbKeyStoreSocketFactory.DbKeyStoreSocketException;
 
 import databaseSupport.DatabaseSupport;
 
@@ -184,8 +185,9 @@ public class EbookSystem implements SystemInterface {
 
 	@Override
 	public List<BookInterface> displayAllBooks(String uid) {
-		// TODO Auto-generated method stub
-		return null;
+		DatabaseSupport db = new DatabaseSupport();
+		UserInterface user = db.getUser(uid);
+		return user.getAllBooks();
 	}
 
 	@Override
