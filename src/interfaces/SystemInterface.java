@@ -21,4 +21,5 @@ public interface SystemInterface {
 	public String retrieveDescription(String bid);
 	
 	public boolean addBookToSeries(String bid, String sid);
+	public List<BookInterface> searchBySeries(String bid, String sid);
 }
