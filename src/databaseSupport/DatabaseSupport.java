@@ -200,6 +200,12 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 	}
 	
 	
+	public boolean putAuthor(AuthorInterface author) {
+		if (author == null || author.getId() == null || author.getId().equals("")) return false;
+		
+		return put(new PutAuthor(author));
+	}
+	
 	/**
 	 * Resets the database to a known starting state to make testing easier. This method will run the 
 	 * database/reset.sql script.

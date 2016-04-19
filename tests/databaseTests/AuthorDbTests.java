@@ -8,6 +8,7 @@ import org.junit.Test;
 import databaseSupport.DatabaseSupport;
 import interfaces.AuthorInterface;
 import interfaces.BookInterface;
+import models.Book;
 
 public class AuthorDbTests {
 
@@ -27,5 +28,19 @@ public class AuthorDbTests {
 		
 		BookInterface book = author.getBooks().get(0);
 		assertEquals("hp2", book.getId());
+	}
+	
+	@Test
+	public void author_putBook() {
+		AuthorInterface author = db.getAuthor("jkr");
+		assertNotNull(author);
+		author.addBook(new Book("hp3", "The Prisoner of Azkaban"));
+		db.putAuthor(author);
+		
+		author = db.getAuthor("jkr");
+		assertNotNull(author);
+		assertNotNull(author.getBooks());
+		assertEquals(author.getBooks().size(), 2);
+		
 	}
 }
