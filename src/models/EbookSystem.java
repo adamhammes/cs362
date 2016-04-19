@@ -257,4 +257,16 @@ public class EbookSystem implements SystemInterface {
 		}
 		return db.putBook(book);
 	}
+
+	@Override
+	public boolean removeBookFromSeries(String bid, String sid) {
+		DatabaseSupport db = new DatabaseSupport();
+		SeriesInterface series = db.getSeries(sid);
+		
+		if (null == series) {
+			return false;
+		}
+		
+		return series.removeBook(bid);
+	}
 }
