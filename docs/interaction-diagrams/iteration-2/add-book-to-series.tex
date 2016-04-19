@@ -43,7 +43,7 @@
 
 \draw (start) -- (controller) node[midway] {1.};
 \draw (controller) -- (system) node[midway] {2.};
-\draw (system) -- (database) node[midway] {3., 4.};
+\draw (system) -- (database) node[midway] {3., 4., 6.};
 \draw (system) -- (series) node[midway] {5.};
 
 
@@ -57,6 +57,7 @@
   \item \texttt{book:=getBook(bid:String):Book}
   \item \texttt{s:=getSeries(sid:String):Series}
   \item \texttt{b:=addBook(book):boolean}
+  \item \texttt{b:=putSeries(s):boolean)}
 \end{enumerate}
 
 \end{document}
