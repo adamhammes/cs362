@@ -217,9 +217,11 @@ public class EbookSystem implements SystemInterface {
 	}
 
 	@Override
-	public List<BookInterface> searchBySeries(String bid, String sid) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<BookInterface> searchBySeries(String sid) {
+		DatabaseSupport db = new DatabaseSupport();
+		SeriesInterface series = db.getSeries(sid);
+		
+		return series == null ? null : series.getBooks();
 	}
 
 }
