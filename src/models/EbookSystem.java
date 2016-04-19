@@ -227,7 +227,14 @@ public class EbookSystem implements SystemInterface {
 		DatabaseSupport db = new DatabaseSupport();
 		BookInterface book = db.getBook(bid);
 		
-		return book == null ? false : book.updateReview(reviewId, newRating, newReview);
+		if (null == book) {
+			return false;
+		}
+		
+		if (!book.updateReview(reviewId, newRating, newReview)) {
+			return false;
+		}
+		return db.putBook(book);
 	}
 
 	@Override
