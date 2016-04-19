@@ -11,6 +11,8 @@ public interface ReviewInterface {
 	public void setRating(int rating);
 
 	public void setReview(String review);
+	
+	public void update(int newRating, String newReview);
 
 	public void setId(int id);
 

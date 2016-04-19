@@ -45,4 +45,10 @@ public class Review implements ReviewInterface {
 		this.id = id;
 	}
 
+	@Override
+	public void update(int newRating, String newReview) {
+		setRating(newRating);
+		setReview(newReview);
+	}
+
 }
