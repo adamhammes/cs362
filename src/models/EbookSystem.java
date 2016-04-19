@@ -11,8 +11,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import org.postgresql.ssl.DbKeyStoreSocketFactory.DbKeyStoreSocketException;
-
 import databaseSupport.DatabaseSupport;
 
 public class EbookSystem implements SystemInterface {
