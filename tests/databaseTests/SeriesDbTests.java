@@ -80,6 +80,27 @@ public class SeriesDbTests {
 		series = db.getSeries("hp");
 		assertNotNull(series);
 		assertEquals(series.getBooks().size(), size - 1);
+	}
+	
+	@Test
+	public void addBookToSeries() {
+		SeriesInterface series = db.getSeries("hp");
+		assertNotNull(series);
 		
+		int size = series.getBooks().size();
+		series.addBook(new Book("asdf", "asdfasdf"));
+		
+		db.putSeries(series);
+		
+		series = db.getSeries("hp");
+		assertNotNull(series);
+		assertEquals(size + 1, series.getBooks().size());
+		
+		for(BookInterface b: series.getBooks()) {
+			if (b.getId().equals("asdf")) {
+				return;
+			}
+		}
+		fail("Could not find added book");
 	}
 }
