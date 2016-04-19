@@ -1,6 +1,6 @@
 package interfaces;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface SeriesInterface {
 	boolean setName(String name);
@@ -8,7 +8,7 @@ public interface SeriesInterface {
 	String getId();
 
 	boolean addBook(BookInterface book);
-	ArrayList<BookInterface> getBooks();
+	List<BookInterface> getBooks();
 	boolean removeBook(String bid);
 	BookInterface getBook(String bid);
 }
