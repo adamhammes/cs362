@@ -21,9 +21,14 @@ public class Series implements SeriesInterface{
 	public boolean addBook(BookInterface book){
 		if (book == null) return false;
 		
-		books.add(book);
-		book.addSeries(this);
-		return true;
+		if (books.contains(book)){
+			return true;
+		}
+		else{
+			books.add(book);
+			book.addSeries(this);
+			return true;
+		}
 	}
 	
 	
@@ -32,9 +37,10 @@ public class Series implements SeriesInterface{
 		
 		for (int i = 0; i < books.size(); i++){
 			if (books.get(i).getId().equals(bookid)){
-				books.get(i).removeSeries();
 				
-				books.remove(i);
+				BookInterface temp = books.remove(i);
+				temp.removeSeries();
+				
 				return true;
 			}
 		}

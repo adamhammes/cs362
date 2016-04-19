@@ -137,6 +137,7 @@ public class Book implements BookInterface, Comparable<BookInterface> {
 	@Override
 	public void addSeries(SeriesInterface series) {
 		this.series = series;
+		series.addBook(this);
 	}
 	
 	@Override
@@ -169,7 +170,15 @@ public class Book implements BookInterface, Comparable<BookInterface> {
 	
 	@Override
 	public void removeSeries(){
+		SeriesInterface temp = series;
 		series = null;
+		
+		if (temp != null) temp.removeBook(id);
 	}
 
+	
+	@Override
+	public boolean equals(Object other){
+		return id.equals(((Book) other).id);
+	}
 }

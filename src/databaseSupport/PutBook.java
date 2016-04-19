@@ -210,6 +210,11 @@ class PutBook extends Putable{
 			PutSeries putSeriesRequest = new PutSeries(book.getSeries());
 			putSeriesRequest.put(conn);
 		}
+		else if (book.getSeries() == null) {
+			PreparedStatement stmt = conn.prepareStatement("DELETE FROM book_series WHERE book_id = ?;");
+			stmt.setString(1, book.getId());
+			stmt.executeUpdate();
+		}
 	}
 	
 }

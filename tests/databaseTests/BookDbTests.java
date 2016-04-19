@@ -211,6 +211,39 @@ public class BookDbTests {
 	
 	
 	@Test
+	public void book_addSeries(){
+		BookInterface book = db.getBook("mobydick");
+		assertNotNull(book);
+		assertNull(book.getSeries());
+		
+		SeriesInterface series = db.getSeries("hp");
+		assertNotNull(book);
+		
+		book.addSeries(series);
+		assertTrue(db.putBook(book));
+		
+		book = db.getBook("mobydick");
+		assertNotNull(book);
+		assertNotNull(book.getSeries());
+		assertEquals(book.getSeries().getId(), "hp");
+	}
+	
+	@Test
+	public void book_removeSeries(){
+		BookInterface book = db.getBook("hp1");
+		assertNotNull(book);
+		assertNotNull(book.getSeries());
+		assertEquals(book.getSeries().getId(), "hp");
+		
+		book.removeSeries();
+		assertTrue(db.putBook(book));
+		
+		book = db.getBook("hp1");
+		assertNotNull(book);
+		assertNull(book.getSeries());
+	}
+	
+	@Test
 	public void getBook_Null(){
 		assertNull(db.getBook(null));
 	}
