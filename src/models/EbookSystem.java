@@ -7,7 +7,6 @@ import interfaces.SystemInterface;
 import interfaces.UserInterface;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -199,7 +198,6 @@ public class EbookSystem implements SystemInterface {
 	@Override
 	public boolean addRating(String uid, String bid, int rating, String review) {
 		DatabaseSupport db = new DatabaseSupport();
-		UserInterface user = db.getUser(uid);
 		BookInterface book = db.getBook(bid);
 		Review r = new Review(Integer.parseInt(bid), rating, review);
 		return book.addReview(r);

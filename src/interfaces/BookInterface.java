@@ -2,8 +2,6 @@ package interfaces;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-
 
 public interface BookInterface extends Comparable<BookInterface> {
 	public String getTitle();
