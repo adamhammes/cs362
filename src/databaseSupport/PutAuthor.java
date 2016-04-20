@@ -10,9 +10,11 @@ import interfaces.BookInterface;
 class PutAuthor extends Putable {
 
 	private AuthorInterface author;
+	private String username;
 	
-	public PutAuthor(AuthorInterface author){
+	public PutAuthor(AuthorInterface author, String username){
 		this.author = author;
+		this.username = username;
 	}
 	
 	@Override
@@ -41,7 +43,7 @@ class PutAuthor extends Putable {
 	private void putBooks(Connection conn) throws SQLException {
 		for (BookInterface book : author.getBooks()){
 			if (book != null && !alreadyStoredBooks.contains(book)){
-				new PutBook(book, null).put(conn);
+				new PutBook(book, username).put(conn);
 			}
 		}
 	}
