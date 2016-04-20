@@ -167,11 +167,12 @@ class PutBook extends Putable{
 		
 		//Setup for remove
 		StringBuffer rmSQL = new StringBuffer("DELETE FROM book_review WHERE (review_id) NOT IN "
-				+ "(SELECT review_id FROM book_review WHERE book_id != ? OR (");
+				+ "(SELECT review_id FROM book_review WHERE book_id != ?");
 		
-		for (int i = 0; i < book.getReviews().size() - 1; i++)
-			rmSQL.append("(review_id = ?) OR");
-		rmSQL.append("(review_id = ?)));");
+		for (int i = 0; i < book.getReviews().size(); i++)
+			rmSQL.append("OR review_id = ?");
+		rmSQL.append(");");
+
 		PreparedStatement rmstmt = conn.prepareStatement(rmSQL.toString());
 		rmstmt.setString(1, book.getId());
 		
