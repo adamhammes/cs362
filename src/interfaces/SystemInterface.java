@@ -1,5 +1,6 @@
 package interfaces;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface SystemInterface {
@@ -34,4 +35,9 @@ public interface SystemInterface {
 	public boolean editDescription(String bid, String desc);
 	public boolean removeDescription(String bid);
 	public String retrieveDescription(String bid);
+	
+	// Nick Iteration 3
+	public Collection<VersionInterface> listAllVersions(String bid, String userId);
+	public VersionInterface getVersionId(String bookid, String format, String userId);
+	public Collection<BookInterface> listBookByAuthor(String authorId, String userId);
 }

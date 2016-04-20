@@ -1,12 +1,15 @@
 package models;
 
+import interfaces.AuthorInterface;
 import interfaces.BookInterface;
 import interfaces.ReviewInterface;
 import interfaces.SeriesInterface;
 import interfaces.SystemInterface;
 import interfaces.UserInterface;
+import interfaces.VersionInterface;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -274,5 +277,45 @@ public class EbookSystem implements SystemInterface {
 			return false;
 		}
 		return db.putSeries(series);
+	}
+	
+	
+	@Override
+	public Collection<VersionInterface> listAllVersions(String bid, String userId){
+		DatabaseSupport db = new DatabaseSupport();
+		BookInterface book = db.getBook(bid, userId);
+		
+		if (book == null)
+			return null;
+		else
+			return book.getVersions();
+	}
+	
+	@Override
+	public VersionInterface getVersionId(String bookid, String format, String userId) {
+		DatabaseSupport db = new DatabaseSupport();
+		
+		BookInterface book = db.getBook(bookid, userId);
+		if (book == null) return null;
+		
+		Collection<VersionInterface> versions = book.getVersions();
+		
+		for (VersionInterface version : versions){
+			if (version.getType().equals(format))
+				return version;
+		}
+		
+		return null;
+	}
+	
+	@Override
+	public Collection<BookInterface> listBookByAuthor(String authorId, String userId) {
+		DatabaseSupport db = new DatabaseSupport();
+		
+		AuthorInterface author = db.getAuthor(authorId, userId);
+		if (author == null)
+			return null;
+		else
+			return author.getBooks();
 	}
 }
