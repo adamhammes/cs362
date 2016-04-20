@@ -193,10 +193,13 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 	}
 	
 	
-	public AuthorInterface getAuthor(String authorId) {
+	public AuthorInterface getAuthor(String authorId) { return getAuthor(authorId, null); }
+	
+	
+	public AuthorInterface getAuthor(String authorId, String username) {
 		if (authorId == null || authorId.equals("")) return null;
 		
-		return (AuthorInterface) get(new GetAuthor(authorId));
+		return (AuthorInterface) get(new GetAuthor(authorId, username));
 	}
 	
 	
