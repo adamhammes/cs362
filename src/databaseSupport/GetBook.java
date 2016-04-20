@@ -135,7 +135,7 @@ class GetBook extends Getable{
 			String authorId = results.getString("author_id");
 			
 			if (!alreadyPopulatedAuthors.contains(authorId)){
-				book.addAuthor(new GetAuthor(authorId).get(conn));
+				book.addAuthor(new GetAuthor(authorId, username).get(conn));
 			}
 		}
 	}

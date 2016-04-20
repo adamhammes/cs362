@@ -12,11 +12,13 @@ import models.Author;
 class GetAuthor extends Getable{
 
 	private String authorId;
+	private String username;
 	private AuthorInterface author;
 	
 	
-	public GetAuthor(String authorId){
+	public GetAuthor(String authorId, String username){
 		this.authorId = authorId;
+		this.username = username;
 	}
 	
 	@Override
@@ -48,7 +50,7 @@ class GetAuthor extends Getable{
 			String bookid = results.getString("book_id");
 			
 			if (!alreadyPopulatedAuthors.contains(bookid)){
-				author.addBook((BookInterface) (new GetBook(bookid, null)).get(conn));
+				author.addBook((BookInterface) (new GetBook(bookid, username)).get(conn));
 			}
 		}
 	}
