@@ -207,7 +207,7 @@ class PutBook extends Putable{
 	
 	private void putSeries(Connection conn) throws SQLException {
 		if (book.getSeries() != null && !alreadyStoredSeries.contains(book.getSeries().getId())){
-			PutSeries putSeriesRequest = new PutSeries(book.getSeries());
+			PutSeries putSeriesRequest = new PutSeries(book.getSeries(), username);
 			putSeriesRequest.put(conn);
 		}
 		else if (book.getSeries() == null) {
