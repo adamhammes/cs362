@@ -199,4 +199,11 @@ public class Book implements BookInterface, Comparable<BookInterface> {
 	public boolean equals(Object other){
 		return id.equals(((Book) other).id);
 	}
+	
+	@Override
+	public String toString(){
+		return "Id: " + id + ",  " + 
+				"Title: " + title + ",  " + 
+				(description != null ? "Description: " + description : "");
+	}
 }

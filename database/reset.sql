@@ -103,7 +103,7 @@ INSERT INTO Book_Tag VALUES
 
 INSERT INTO Book_Version (book_id, account_name, format, location) VALUES
 	('hp2', 'nick', 'pdf', 'HarryPotter1.pdf'),
-	('hp2', 'nick', 'tex', 'How_Converted_HP_TO_Latex.tex');
+	('hp2', 'nick', 'tex', 'Who_Converted_HP2_TO_Latex.tex');
 	
 INSERT INTO book_author VALUES
 	('hp2', 'jkr');
