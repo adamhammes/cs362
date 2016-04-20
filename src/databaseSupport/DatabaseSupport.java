@@ -188,11 +188,14 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 		return (SeriesInterface) get(new GetSeries(seriesId, username));
 	}
 	
+	
+	public boolean putSeries(SeriesInterface series) { return putSeries(series, null); }
+	
 
-	public boolean putSeries(SeriesInterface series){
+	public boolean putSeries(SeriesInterface series, String username){
 		if (series == null || series.getId() == null || series.getId().equals("")) return false;
 		
-		return put(new PutSeries(series));
+		return put(new PutSeries(series, username));
 	}
 	
 	

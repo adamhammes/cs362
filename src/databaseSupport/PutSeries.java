@@ -10,9 +10,11 @@ import interfaces.SeriesInterface;
 class PutSeries extends Putable{
 
 	private SeriesInterface series;
+	private String username;
 	
-	public PutSeries(SeriesInterface series){
+	public PutSeries(SeriesInterface series, String username){
 		this.series = series;
+		this.username = username;
 	}
 	
 	
@@ -45,7 +47,7 @@ class PutSeries extends Putable{
 		for (BookInterface book : series.getBooks()){
 			//book must be in place before joining table can be updated
 			if (!alreadyStoredBooks.contains(book.getId())){
-				PutBook putBookRequest = new PutBook(book, null);
+				PutBook putBookRequest = new PutBook(book, username);
 				putBookRequest.put(conn);
 			}
 			
@@ -54,7 +56,6 @@ class PutSeries extends Putable{
 					+ "ON CONFLICT DO NOTHING;"); //The joining table might be duplicated
 			stmt.setString(1, book.getId());
 			stmt.setString(2, series.getId());
-//			System.out.println(stmt);
 			stmt.executeUpdate();
 		}
 		
@@ -62,12 +63,12 @@ class PutSeries extends Putable{
 	
 	private void removeOldBooks(Connection conn) throws SQLException {
 		StringBuffer rmSQL = new StringBuffer("DELETE FROM book_series WHERE (book_id, series_id) NOT IN ");
-		rmSQL.append("(SELECT book_id, series_id FROM book_series WHERE series_id != ? OR ");
+		rmSQL.append("(SELECT book_id, series_id FROM book_series WHERE series_id != ? ");
 		
 		//Build Query String
-		for (int i = 0; i < series.getBooks().size() - 1; i++)
-			rmSQL.append("(book_id = ?) OR ");
-		rmSQL.append("(book_id = ?));");
+		for (int i = 0; i < series.getBooks().size(); i++)
+			rmSQL.append(" OR book_id = ?");
+		rmSQL.append(");");
 		
 		PreparedStatement rmstmt = conn.prepareStatement(rmSQL.toString());
 		rmstmt.setString(1, series.getId());
