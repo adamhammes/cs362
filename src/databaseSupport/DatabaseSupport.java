@@ -179,10 +179,13 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 	}
 	
 
-	public SeriesInterface getSeries(String seriesId) {
+	public SeriesInterface getSeries(String seriesId) { return getSeries(seriesId, null); }
+	
+	
+	public SeriesInterface getSeries(String seriesId, String username) {
 		if (seriesId == null || seriesId.equals("")) return null;
 		
-		return (SeriesInterface) get(new GetSeries(seriesId));
+		return (SeriesInterface) get(new GetSeries(seriesId, username));
 	}
 	
 
