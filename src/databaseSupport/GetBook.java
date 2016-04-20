@@ -173,7 +173,7 @@ class GetBook extends Getable{
 			
 			//If the series has not already been created, create it and attach this book to it
 			if(!alreadyPopulatedSeries.contains(seriesId)) {
-				GetSeries getSeriesRequest = new GetSeries(seriesId);
+				GetSeries getSeriesRequest = new GetSeries(seriesId, username);
 				SeriesInterface series = (SeriesInterface) getSeriesRequest.get(conn);
 				series.addBook(book);
 			}

@@ -11,10 +11,12 @@ import models.Series;
 class GetSeries extends Getable{
 
 	private String seriesId;
+	private String username;
 	private Series series = null;
 	
-	public GetSeries(String seriesId){
+	public GetSeries(String seriesId, String username){
 		this.seriesId = seriesId;
+		this.username = username;
 	}
 	
 	@Override
@@ -48,7 +50,7 @@ class GetSeries extends Getable{
 			
 			//If the book has already been populated, don't populate again
 			if (!alreadyPopulatedBooks.contains(bookId)) {
-				GetBook getBookRequest = new GetBook(results.getString("book_id"), null);
+				GetBook getBookRequest = new GetBook(results.getString("book_id"), username);
 				series.addBook(getBookRequest.get(conn));
 			}
 		}
