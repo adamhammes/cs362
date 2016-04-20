@@ -1,0 +1,160 @@
+\documentclass[12pt]{article}
+
+\usepackage[margin=0.5in]{geometry}
+
+\title{\vspace{1in}Iteration 2 - Class Diagram Fragments}
+\author{Adam Hammes}
+
+% no page number at bottom
+\pagenumbering{gobble}
+
+\begin{document}
+\maketitle
+
+\begin{tabular}{| l |}
+    \hline
+    Book\\
+    \hline
+    \texttt{title:getTitle():String}\\
+    \texttt{id:=getId():String}\\
+    \texttt{b:=addReview(review: Review):boolean}\\
+    \texttt{l:=getReviews():list<Review>}\\
+    \texttt{b:=addVersion(path:String, type:String):boolean}\\
+    \texttt{l:=getVersions():list<Version>}\\
+    \texttt{b:=addTag(t:Tag):boolean}\\
+    \texttt{b:=removeTag(t:Tag):boolean}\\
+    \texttt{l:=getTags():list<Tag>}\\
+    \texttt{d:=averageRating():double}\\
+    \texttt{b:=removeRating(id:int):boolean}\\
+    \texttt{b:=updateReview(id:int, newRating:int, newReview:String):boolean}\\
+    \texttt{b:=addDescription(desc:String):boolean}\\
+    \texttt{b:=editDescription(desc:String):boolean}\\
+    \texttt{b:=removeDescription():boolean}\\
+    \texttt{s:=retrieveDescription():String}\\
+    \texttt{addSeries(s:Series)}\\
+    \texttt{s:=getSeries():Series}\\
+    \texttt{removeSeries()}\\
+    \hline
+\end{tabular}
+
+\vspace{1cm}
+
+\begin{tabular}{| l |}
+    \hline
+    DatabaseSupport\\
+    \hline
+    \texttt{u:getUser(uid:String):User}\\
+    \texttt{b:putUser(u:User):boolean}\\
+    \texttt{b:=getBook(bid:String):Book}\\
+    \texttt{b:=getBook(bid:String, username:String):Book}\\
+    \texttt{b:=putBook(b:Book):boolean}\\
+    \texttt{b:=putBook(b:Book, username:String):boolean}\\
+    \texttt{s:=getSeries(sid:String):Series}\\
+        \texttt{b:=putSeries(s:Series):boolean}\\
+    \hline
+\end{tabular}
+\vspace{1cm}
+
+\begin{tabular}{| l |}
+    \hline
+    Review\\
+    \hline
+    \texttt{id:getId():int}\\
+    \texttt{s:getReview():String}\\
+    \texttt{i:getRating():int}\\
+    \texttt{setRating(rating:int)}\\
+    \texttt{setReview(review:String)}\\
+    \texttt{update(newRating:int, newReview:String)}\\
+    \texttt{setId(id:int)}\\
+    \hline
+\end{tabular}
+\vspace{1cm}
+
+\begin{tabular}{| l |}
+    \hline
+    Series\\
+    \hline
+    \texttt{b:=setName(name:String):boolean}\\
+    \texttt{id:getId():String}\\
+    \texttt{b:=addBook(b:Book):boolean}\\
+    \texttt{l:=getBooks():list<Book>}\\
+    \texttt{b:=removeBook(bid:String):boolean}\\
+    \texttt{b:=getBook(bid:String):boolean}\\
+    \hline
+    
+\end{tabular}
+\vspace{1cm}
+
+\begin{tabular}{| l |}
+    \hline
+    System\\
+    \hline
+    \texttt{b:=addUser(name:String):boolean}\\
+    \texttt{b:=addBook(uid:String, bid:String, title:String):boolean}\\
+    \texttt{b:=addVersion(uid:String, bid:String, path:String, type:String):boolean}\\
+    \texttt{b:=addTag(uid:String, bookTitle:String, tag:String):boolean}\\\
+    \texttt{b:=removeTag(uid:String, bookTitle:String, tag:String):boolean}\\
+    \texttt{l:=getBookWithTag(uid:String, tid:String):list<Book>}\\
+    \texttt{l:=displayAllBooks(uid:String):list<Book>}\\
+    \texttt{b:=addRating(uid:String, bid:String, rating:int, description:String):boolean}\\
+    \texttt{l:=searchBySeries(sid:String):list<Book>}\\
+    \texttt{b:=addBookToSeries(bid:String, sid:String):boolean}\\
+    \texttt{b:=removeBookFromSeries(bid:String, sid:String):boolean}\\
+    \texttt{b:=changeRating(bid:STring, reviewId:int, newRating:int, description:String):boolean}\\
+    \texttt{b:=removeRating(bid:String, reviewId:int):boolean}\\
+    \texttt{l:=getReviews(bid:String):list<Review>}\\
+    \texttt{b:=addDescription(bid:String, description:String):boolean}\\
+    \texttt{b:=editDescription(bid:String, description:String):boolean}\\
+    \texttt{b:=removeDescription(bid:String):boolean}\\
+    \texttt{s:=retrieveDescription(bid:String):String}\\
+    \hline
+    
+\end{tabular}
+\vspace{1cm}
+
+\begin{tabular}{| l |}
+    \hline
+    Tag\\
+    \hline
+    \texttt{s:=getName():String}\\
+    \texttt{b:=addBook(b:Book):boolean}\\
+    \texttt{l:=getBooks():list<Book>}\\
+    \texttt{b:=getBook(bookTitle:String):Book}\\
+    \texttt{b:=removeBook(b:Book):boolean}\\
+    \hline
+    
+\end{tabular}
+\vspace{1cm}
+
+\begin{tabular}{| l |}
+    \hline
+    User\\
+    \hline
+    \texttt{s:=getName():String}\\
+    \texttt{b:=addTag(bookTitle:String, tag:String):boolean}\\
+    \texttt{b:=addBook(bid:String, title:String):boolean}\\
+    \texttt{l:=getAllBooks():list<Book>}\\
+    \texttt{l:=getAllBookByRating():list<Book>}\\
+    \texttt{b:=removeTag(bookTitle:String, tag:String):boolean}\\
+    \texttt{l:=getTags():list<Tag>}\\
+    \texttt{b:=addVersion(bid:String, path:String, type:String):boolean}\\
+    \texttt{l:=getBooksWithTag(tag:String):list<Book>}\\
+    \hline
+    
+\end{tabular}
+\vspace{1cm}
+
+\begin{tabular}{| l |}
+    \hline
+    Version\\
+    \hline
+    \texttt{s:=getPath():String}\\
+    \texttt{setPath(path:String)}\\
+    \texttt{s:=getType():String}\\
+    \texttt{setType(type:String)}\\
+    \hline
+    
+\end{tabular}
+\vspace{1cm}
+
+\end{document}
