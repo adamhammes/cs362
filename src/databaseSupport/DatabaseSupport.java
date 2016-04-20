@@ -206,10 +206,13 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 	}
 	
 	
-	public boolean putAuthor(AuthorInterface author) {
+	public boolean putAuthor(AuthorInterface author) { return putAuthor(author, null);  }
+	
+	
+	public boolean putAuthor(AuthorInterface author, String username) {
 		if (author == null || author.getId() == null || author.getId().equals("")) return false;
 		
-		return put(new PutAuthor(author));
+		return put(new PutAuthor(author, username));
 	}
 	
 	/**

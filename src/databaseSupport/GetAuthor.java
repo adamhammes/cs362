@@ -35,7 +35,10 @@ class GetAuthor extends Getable{
 		ResultSet results = stmt.executeQuery();
 		
 		if(results.next()) {
-			author = new Author(results.getString("author_id"), results.getString("author_name"));
+			author = new Author(results.getString("author_id"), 
+					results.getString("author_name"), 
+					results.getString("description"));
+			
 			alreadyPopulatedAuthors.add(authorId);
 		}
 	}

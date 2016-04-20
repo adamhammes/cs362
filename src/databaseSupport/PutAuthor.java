@@ -10,9 +10,11 @@ import interfaces.BookInterface;
 class PutAuthor extends Putable {
 
 	private AuthorInterface author;
+	private String username;
 	
-	public PutAuthor(AuthorInterface author){
+	public PutAuthor(AuthorInterface author, String username){
 		this.author = author;
+		this.username = username;
 	}
 	
 	@Override
@@ -20,16 +22,19 @@ class PutAuthor extends Putable {
 		putAuthor(conn);
 		putBooks(conn);
 		removeOldBooks(conn);
-		return false;
+		return true;
 	}
 
 	
 	private void putAuthor(Connection conn) throws SQLException {
-		PreparedStatement stmt = conn.prepareStatement("INSERT INTO author VALUES (?, ?) "
-				+ "ON CONFLICT (author_id) DO UPDATE SET author_name = ?;");
+		PreparedStatement stmt = conn.prepareStatement("INSERT INTO author VALUES (?, ?, ?) "
+				+ "ON CONFLICT (author_id) DO UPDATE SET author_name = ?, description = ?;");
 		stmt.setString(1, author.getId());
 		stmt.setString(2, author.getName());
-		stmt.setString(3, author.getName());
+		stmt.setString(3, author.retreveDescription());
+		
+		stmt.setString(4, author.getName());
+		stmt.setString(5, author.retreveDescription());
 		stmt.executeUpdate();
 		alreadyStoredAuthors.add(author.getId());
 	}
@@ -38,7 +43,7 @@ class PutAuthor extends Putable {
 	private void putBooks(Connection conn) throws SQLException {
 		for (BookInterface book : author.getBooks()){
 			if (book != null && !alreadyStoredBooks.contains(book)){
-				new PutBook(book, null).put(conn);
+				new PutBook(book, username).put(conn);
 			}
 		}
 	}
@@ -47,7 +52,7 @@ class PutAuthor extends Putable {
 	private void removeOldBooks(Connection conn) throws SQLException {
 		StringBuffer rmSQL = new StringBuffer("DELETE FROM book_author WHERE (book_id, author_id) NOT IN ");
 		rmSQL.append("(SELECT * FROM book_author WHERE author_id != ?");
-		for (int i = 0; i < author.getBooks().size() - 1; i++)
+		for (int i = 0; i < author.getBooks().size(); i++)
 			rmSQL.append( "OR book_id = ? ");
 		rmSQL.append(");");
 		

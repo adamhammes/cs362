@@ -13,7 +13,8 @@ CREATE TABLE Book (
 
 CREATE TABLE Author (
     author_id VARCHAR(40) PRIMARY KEY,
-    author_name VARCHAR(60)
+    author_name VARCHAR(60),
+    description TEXT
 );
 
 CREATE TABLE Series (

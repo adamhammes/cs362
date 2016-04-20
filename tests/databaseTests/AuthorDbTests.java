@@ -30,6 +30,22 @@ public class AuthorDbTests {
 		assertEquals("hp2", book.getId());
 	}
 	
+	
+	@Test
+	public void addDescription(){
+		AuthorInterface author = db.getAuthor("jkr");
+		assertNotNull(author);
+		assertEquals("", author.retreveDescription());
+		
+		assertTrue(author.addDescription("An Awesome Author!!!! =D"));
+		assertTrue(db.putAuthor(author));
+		
+		author = db.getAuthor("jkr");
+		assertNotNull(author);
+		assertEquals("An Awesome Author!!!! =D", author.retreveDescription());
+	}
+	
+	
 	@Test
 	public void author_putBook() {
 		AuthorInterface author = db.getAuthor("jkr");
