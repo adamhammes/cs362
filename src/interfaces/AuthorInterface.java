@@ -14,4 +14,9 @@ public interface AuthorInterface {
 
 	void removeBook(String id);
 
+	boolean addDescription(String description);
+	boolean deleteDescription();
+	String retreveDescription();
+	boolean editDescription(String description);
+
 }
