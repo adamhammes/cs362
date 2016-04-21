@@ -1,0 +1,41 @@
+\documentclass{article}
+
+\title{Use Case Elaboration: Archive Invoice}
+\author{ Adam Hammes }
+
+\pagenumbering{gobble}
+
+\begin{document}
+\maketitle
+
+
+\section*{Use Case}
+\begin{tabular}{l l}
+Use Case:     & Archive Invoice\\
+Actor:        & Baggage Employee\\
+Precondition: & Employee is authenticated\\
+\end{tabular}
+ 
+
+\section*{Main Success Scenario:}
+
+\begin{enumerate}
+    \item Employee provides unique ID of invoice
+    \item System acknowledges that the operation succeeded
+
+\end{enumerate}
+
+\section*{Extensions}
+
+\begin{itemize}
+    \item [1a.] No unarchived invoice exists with the given ID
+    
+    - System indicates that the operation failed
+\end{itemize}
+
+\section*{Information Expert}
+
+The Information Expert is System, as System knows Invoice.
+
+
+\end{document}
