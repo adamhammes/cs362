@@ -1,0 +1,43 @@
+\documentclass{article}
+ 
+\title{Use Case Elaboration: Delete Book}
+\author{ Adam Hammes }
+
+\pagenumbering{gobble}
+
+\begin{document}
+\maketitle
+
+
+\section*{Use Case}
+\begin{tabular}{l l}
+Use Case:     & Delete Book\\
+Actor:        & User\\
+Precondition: & None\\
+\end{tabular}
+
+
+\section*{Main Success Scenario:}
+
+\begin{enumerate}
+    \item User provides unique id of book
+    \item System acknowledges that the specified book is deleted
+
+\end{enumerate}
+
+\section*{Extensions}
+
+\begin{itemize}
+    \item [1a.] No book exists with the given id
+                
+    - System indicates that the operation failed
+
+\end{itemize}
+
+
+\section*{Information Expert}
+
+The Information Expert is System, as System knows User.
+The deleteBook() method on System will call the deleteBook() method on DatabaseSupport.
+
+\end{document}
