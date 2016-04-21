@@ -38,7 +38,7 @@
 \node[block, below = 2cm of start]      (controller) {\underline{: SystemController}};
 \node[block, below = 2cm of controller] (system)     {\underline{: System}}; 
 \node[block, below left = 2.7cm of system]     (database)   {\underline{: DatabaseSupport}};
-\node[block, below = 2cm of system]       (author)       {\underline{book : Author}};
+\node[block, below = 2cm of system]       (author)       {\underline{author : Author}};
 
 \draw (start)      -- (controller) node[midway] {1. $\shortdownarrow$};
 \draw (controller) -- (system)     node[midway] {2. $\shortdownarrow$};
