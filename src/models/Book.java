@@ -82,6 +82,15 @@ public class Book implements BookInterface, Comparable<BookInterface> {
 	}
 
 	@Override
+	public VersionInterface getVersion(String type) {
+		for (VersionInterface version : versions){
+			if (version.getType().equals(type))
+				return version;
+		}
+		return null;
+	}
+	
+	@Override
 	public boolean removeTag(TagInterface t) {
 		return tags.remove(t);
 	}

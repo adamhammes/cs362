@@ -43,7 +43,7 @@ public class nicks_iteration_3_tests {
 
 	@Test
 	public void listAuthorsBooks() {
-		Collection<BookInterface> books = sys.listBookByAuthor("jkr", "nick");
+		Collection<BookInterface> books = sys.findBooksByAuthor("jkr", "nick");
 		
 		assertNotNull(books);
 		assertEquals(1, books.size());
@@ -57,7 +57,7 @@ public class nicks_iteration_3_tests {
 	
 	@Test
 	public void AuthorHasNoBooks() {
-		Collection<BookInterface> books = sys.listBookByAuthor("hm", "nick");
+		Collection<BookInterface> books = sys.findBooksByAuthor("hm", "nick");
 		assertNotNull(books);
 		assertEquals(0, books.size());
 	}
@@ -65,7 +65,7 @@ public class nicks_iteration_3_tests {
 	
 	@Test
 	public void getVersion() {
-		VersionInterface version = sys.getVersionId("hp2", "tex", "nick");
+		VersionInterface version = sys.getVersion("hp2", "tex", "nick");
 		assertNotNull(version);
 		assertEquals("tex", version.getType());
 		assertEquals("Who_Converted_HP2_TO_Latex.tex", version.getPath());
@@ -74,7 +74,7 @@ public class nicks_iteration_3_tests {
 	
 	@Test
 	public void noVersionAvalable() {
-		VersionInterface version = sys.getVersionId("hp2", "ebook", "nick");
+		VersionInterface version = sys.getVersion("hp2", "ebook", "nick");
 		assertNull(version);
 	}
 }

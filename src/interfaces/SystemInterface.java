@@ -38,6 +38,6 @@ public interface SystemInterface {
 	
 	// Nick Iteration 3
 	public Collection<VersionInterface> listAllVersions(String bid, String userId);
-	public VersionInterface getVersionId(String bookid, String format, String userId);
-	public Collection<BookInterface> listBookByAuthor(String authorId, String userId);
+	public VersionInterface getVersion(String bookid, String format, String userId);
+	public Collection<BookInterface> findBooksByAuthor(String authorId, String userId);
 }

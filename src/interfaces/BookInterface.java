@@ -15,6 +15,7 @@ public interface BookInterface extends Comparable<BookInterface> {
 	
 	public boolean addTag(TagInterface t);
 	public boolean removeTag(TagInterface t);
+	public VersionInterface getVersion(String format);
 	
 	public ArrayList<TagInterface> getTags();
 	public Double averageRating();
@@ -34,5 +35,5 @@ public interface BookInterface extends Comparable<BookInterface> {
 	public void addSeries(SeriesInterface series);
 	public SeriesInterface getSeries();
 	public void removeSeries();
-
+	
 }

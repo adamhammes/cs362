@@ -292,24 +292,18 @@ public class EbookSystem implements SystemInterface {
 	}
 	
 	@Override
-	public VersionInterface getVersionId(String bookid, String format, String userId) {
+	public VersionInterface getVersion(String bookid, String format, String userId) {
 		DatabaseSupport db = new DatabaseSupport();
 		
 		BookInterface book = db.getBook(bookid, userId);
 		if (book == null) return null;
 		
-		Collection<VersionInterface> versions = book.getVersions();
-		
-		for (VersionInterface version : versions){
-			if (version.getType().equals(format))
-				return version;
-		}
-		
-		return null;
+		return book.getVersion(format);
+	
 	}
 	
 	@Override
-	public Collection<BookInterface> listBookByAuthor(String authorId, String userId) {
+	public Collection<BookInterface> findBooksByAuthor(String authorId, String userId) {
 		DatabaseSupport db = new DatabaseSupport();
 		
 		AuthorInterface author = db.getAuthor(authorId, userId);
