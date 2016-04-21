@@ -1,0 +1,41 @@
+\documentclass{article}
+
+\title{Use Case Elaboration: Get Invoice By ID}
+\author{ Adam Hammes }
+
+\pagenumbering{gobble}
+
+\begin{document}
+\maketitle
+
+
+\section*{Use Case}
+\begin{tabular}{l l}
+Use Case:     & Get Invoice By ID\\
+Actor:        & Baggage Employee\\
+Precondition: & Employee is authenticated\\
+\end{tabular}
+ 
+
+\section*{Main Success Scenario:}
+
+\begin{enumerate}
+    \item Employee provides unique ID of bag
+    \item System returns the invoice corresponding to the given ID
+
+\end{enumerate}
+
+\section*{Extensions}
+
+\begin{itemize}
+    \item [1a.] No bag exists with the given ID
+    
+    - System indicates that the operation failed
+\end{itemize}
+
+\section*{Information Expert}
+
+The Information Expert is System, as System knows Invoice.
+
+
+\end{document}
