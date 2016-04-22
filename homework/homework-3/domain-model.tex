@@ -1,0 +1,49 @@
+\documentclass{article}
+
+\usepackage{stmaryrd}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+ 
+\title{Homework 3 Domain Model}
+\author{ Steve Monson $\bullet$ Adam Hammes $\bullet$ Nick Riesen }
+
+% no page number at bottom
+\pagenumbering{gobble}
+
+\begin{document}
+\maketitle
+
+\vspace{2cm}
+\begin{center}
+
+\begin{tikzpicture}[
+  auto,
+  block/.style = {
+    rectangle,
+    draw=black,
+    align=center,
+    rounded corners
+  },
+  multiple/.style = {
+    rectangle, draw, rounded corners, fill= white,
+    text width=9em, align= center,
+    copy shadow = {
+      ,fill=white, draw=black,
+      shadow xshift=0.5mm, shadow yshift=-0.5mm
+    }
+  }
+]
+\node[block]      (controller) {System};
+\node[block, below = 2cm of controller] (system)     {Invoice}; 
+
+\draw (controller) -- (system)     node[midway] {contains}
+                                   node[pos=.15] {1}
+                                   node[pos=.9] {*};
+
+
+
+\end{tikzpicture}
+\end{center}
+
+\end{document}
