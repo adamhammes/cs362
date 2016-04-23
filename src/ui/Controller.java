@@ -11,7 +11,7 @@ public class Controller implements iController{
 	
 	@Override
 	public String command(String command) {
-		String method = command.split(" ")[0].toLowerCase();
+		String method = command.split("-")[0].toLowerCase();
 		switch (method) {
 			case "adduser":
 				return addUser(command);
@@ -113,11 +113,11 @@ public class Controller implements iController{
 
 	@Override
 	public String displayAllBooks(String input) {
-		if(input.split(" ").length < 2)
-			return "Please enter user ID with command";
-		String uid = input.split(" ")[1];
+		if(input.split("-").length < 2)
+			return "Please enter all required inputs";
+		String uid = input.split("-")[1];
 		List<BookInterface> l = system.displayAllBooks(uid);
-		if(l == null) return "Invalid User ID. Please Try Again";
+		if(l == null) return "Action not completed. Please try again";
 		String result = "";
 		for(BookInterface b : l){
 			result += b.getTitle() + "\n";
@@ -127,8 +127,15 @@ public class Controller implements iController{
 
 	@Override
 	public String addRating(String input) {
-		// TODO Auto-generated method stub
-		return null;
+		if(input.split("-").length < 5)
+			return "Please enter all required inputs";
+		String uid = input.split("-")[1];
+		String bid = input.split("-")[2];
+		int rating = Integer.parseInt(input.split("-")[3]);
+		String review = input.split("-")[4];
+		boolean b = system.addRating(uid, bid, rating, review);
+		if(b) return "Rating added";
+		else return "Action not completed. Please try again";
 	}
 
 	@Override

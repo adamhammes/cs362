@@ -198,6 +198,8 @@ public class EbookSystem implements SystemInterface {
 	public boolean addRating(String uid, String bid, int rating, String review) {
 		DatabaseSupport db = new DatabaseSupport();
 		BookInterface book = db.getBook(bid);
+		if(book == null)
+			return false;
 		Review r = new Review(Integer.parseInt(bid), rating, review);
 		 
 		if (!book.addReview(r)) {
