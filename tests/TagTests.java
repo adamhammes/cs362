@@ -26,4 +26,13 @@ public class TagTests {
 		
 		assertTrue(u.getTags().get(0).getName().equals("fantacy"));
 	}	
+	
+	
+	@Test
+	public void getTag() {
+		User user = (User) db.getUser("adam");
+		
+		System.out.println(user.getBooksWithTag("fantasy").size());
+		System.out.println(user.getTags().size());
+	}
 }

@@ -85,7 +85,7 @@ class GetUser extends Getable{
 			
 			while(results.next()){
 				Book toAdd = new Book(results.getString("book_id"), results.getString("title"));
-				user.userBooks.put(toAdd.getTitle(), toAdd);
+				user.userBooks.put(toAdd.getId(), toAdd);
 			}
 	}
 	
@@ -107,10 +107,12 @@ class GetUser extends Getable{
 			if (tag == null){
 				tag = new Tag(results.getString("tag"));
 				user.userTags.put(tag.getName(), tag);
+				System.out.println("new tag created: " + tag.getName());
 			}
-			BookInterface book = user.userBooks.get(results.getString("title"));
+			BookInterface book = user.userBooks.get(results.getString("book_id"));
 			tag.addBook(book);
 			book.addTag(tag);
+			System.out.println("book: " + book.getTitle() + " Tag: " + tag.getName());
 		}
 	}	
 }
