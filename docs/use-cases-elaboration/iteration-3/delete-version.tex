@@ -1,0 +1,38 @@
+\documentclass{article}
+ 
+\title{Use Case Elaboration: Delete Version}
+\author{ Adam Hammes }
+
+\pagenumbering{gobble}
+
+\begin{document}
+\maketitle
+
+
+\section*{Use Case}
+\begin{tabular}{l l}
+Use Case:     & Delete Version\\
+Actor:        & User\\
+Precondition: & None\\
+\end{tabular}
+
+
+\section*{Main Success Scenario:}
+
+\begin{enumerate}
+    \item User provides unique id of user and book, plus the version format
+    \item System acknowledges that the specified version is deleted
+
+\end{enumerate}
+
+\section*{Extensions}
+
+None.
+
+
+\section*{Information Expert}
+
+The Information Expert is System, as System knows User and Book.
+System will be in charge of calling deleteVersion on DatabaseSupport.
+
+\end{document}

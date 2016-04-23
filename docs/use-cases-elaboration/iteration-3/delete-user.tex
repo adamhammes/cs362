@@ -1,0 +1,38 @@
+\documentclass{article}
+ 
+\title{Use Case Elaboration: Delete User}
+\author{ Adam Hammes }
+
+\pagenumbering{gobble}
+
+\begin{document}
+\maketitle
+
+
+\section*{Use Case}
+\begin{tabular}{l l}
+Use Case:     & Delete User\\
+Actor:        & User\\
+Precondition: & None\\
+\end{tabular}
+
+
+\section*{Main Success Scenario:}
+
+\begin{enumerate}
+    \item User provides unique id of user
+    \item System acknowledges that the specified user is deleted
+
+\end{enumerate}
+
+\section*{Extensions}
+
+None.
+
+
+\section*{Information Expert}
+
+The Information Expert is System, as System knows User.
+The deleteUser() method on System will call the deleteUser() method on DatabaseSupport.
+
+\end{document}

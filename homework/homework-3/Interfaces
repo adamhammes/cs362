@@ -1,0 +1,32 @@
+public interface iSystem {
+	
+	public Invoice getInvoiceByID(String id);
+	public boolean createInvoice(String description, String location, String airline, Date flight-time);
+	public boolean addDamageReport(int invoiceID, String damage);
+	public List<Invoice> searchByName(String flierName);
+	public List<Invoice> searchByTimeDate(Date time);
+	public boolean updateLocation(int invoiceID, String location);
+	public boolean logIn(String uID, String pw);
+	public boolean logOff();
+}
+
+
+public interface iInvoice{
+
+	public boolean archive();
+	public boolean addDamageReport(String damage);
+	public boolean setLocation(String location);
+	
+}
+
+
+public interface iDatabaseSupport {
+	
+	public Invoice getInvoice(String id);
+	public boolean putInvoice(Invoice i);
+	public boolean checkCredential(String uID, String pw);
+	public List<Invoice> searchByName(String flierName);
+	public List<Invoice> searchByTimeDate(Date time);
+	
+	
+}
