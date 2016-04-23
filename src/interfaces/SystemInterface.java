@@ -34,4 +34,9 @@ public interface SystemInterface {
 	public boolean editDescription(String bid, String desc);
 	public boolean removeDescription(String bid);
 	public String retrieveDescription(String bid);
+	
+	// Adam Iteration 3
+	public boolean deleteUser(String uid);
+	public boolean deleteBook(String bid);
+	public boolean deleteVersion(String uid, String bid, String format);
 }

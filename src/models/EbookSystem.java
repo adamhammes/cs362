@@ -275,4 +275,22 @@ public class EbookSystem implements SystemInterface {
 		}
 		return db.putSeries(series);
 	}
+
+	@Override
+	public boolean deleteUser(String uid) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean deleteBook(String bid) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean deleteVersion(String uid, String bid, String format) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
