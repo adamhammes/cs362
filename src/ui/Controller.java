@@ -113,7 +113,7 @@ public class Controller implements iController{
 
 	@Override
 	public String displayAllBooks(String input) {
-		if(input.split("-").length < 2)
+		if(input.split("-").length != 2)
 			return "Please enter all required inputs";
 		String uid = input.split("-")[1];
 		List<BookInterface> l = system.displayAllBooks(uid);
@@ -127,7 +127,7 @@ public class Controller implements iController{
 
 	@Override
 	public String addRating(String input) {
-		if(input.split("-").length < 5)
+		if(input.split("-").length != 5)
 			return "Please enter all required inputs";
 		String uid = input.split("-")[1];
 		String bid = input.split("-")[2];
@@ -140,8 +140,16 @@ public class Controller implements iController{
 
 	@Override
 	public String displayAllBooksByRating(String input) {
-		// TODO Auto-generated method stub
-		return null;
+		if(input.split("-").length != 2)
+			return "Please enter all required inputs";
+		String uid = input.split("-")[1];
+		List<BookInterface> l = system.displayAllBooksByRating(uid);
+		if(l == null) return "Action not completed. Please try again";
+		String result = "";
+		for(BookInterface b : l){
+			result += b.getTitle() + "\n";
+		}
+		return result;
 	}
 
 	@Override
