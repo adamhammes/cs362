@@ -204,20 +204,39 @@ public class Controller implements iController{
 
 	@Override
 	public String editDescription(String input) {
-		// TODO Auto-generated method stub
-		return null;
+		if(input.split("-").length != 3)
+			return "Please enter all required inputs";
+		String bid = input.split("-")[1];
+		String desc = input.split("-")[2];
+		
+		boolean b = system.editDescription(bid, desc);
+
+		if(b) return "Description edited";
+		else return "Action not completed. Please try again";
 	}
 
 	@Override
 	public String removeDescription(String input) {
-		// TODO Auto-generated method stub
-		return null;
+		if(input.split("-").length != 2)
+			return "Please enter all required inputs";
+		String bid = input.split("-")[1];
+		
+		boolean b = system.removeDescription(bid);
+
+		if(b) return "Description deleted";
+		else return "Action not completed. Please try again";
 	}
 
 	@Override
 	public String retrieveDescription(String input) {
-		// TODO Auto-generated method stub
-		return null;
+		if(input.split("-").length != 2)
+			return "Please enter all required inputs";
+		String bid = input.split("-")[1];
+		
+		String result = system.retrieveDescription(bid);
+
+		if(result != null) return result;
+		else return "Action not completed. Please try again";
 	}
 	
 
