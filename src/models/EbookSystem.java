@@ -183,6 +183,7 @@ public class EbookSystem implements SystemInterface {
 	public List<BookInterface> displayAllBooks(String uid) {
 		DatabaseSupport db = new DatabaseSupport();
 		UserInterface user = db.getUser(uid);
+		if(user == null) return null;
 		return user.getAllBooks();
 	}
 

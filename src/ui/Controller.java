@@ -1,7 +1,14 @@
 package ui;
 
+import java.util.List;
+
+import interfaces.BookInterface;
+import models.EbookSystem;
+
 public class Controller implements iController{
 
+	EbookSystem system = new EbookSystem();
+	
 	@Override
 	public String command(String command) {
 		String method = command.split(" ")[0].toLowerCase();
@@ -106,8 +113,16 @@ public class Controller implements iController{
 
 	@Override
 	public String displayAllBooks(String input) {
-		// TODO Auto-generated method stub
-		return null;
+		if(input.split(" ").length < 2)
+			return "Please enter user ID with command";
+		String uid = input.split(" ")[1];
+		List<BookInterface> l = system.displayAllBooks(uid);
+		if(l == null) return "Invalid User ID. Please Try Again";
+		String result = "";
+		for(BookInterface b : l){
+			result += b.getTitle() + "\n";
+		}
+		return result;
 	}
 
 	@Override
