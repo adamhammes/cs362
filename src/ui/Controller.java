@@ -134,6 +134,7 @@ public class Controller implements iController{
 		int rating = Integer.parseInt(input.split("-")[3]);
 		String review = input.split("-")[4];
 		boolean b = system.addRating(uid, bid, rating, review);
+		
 		if(b) return "Rating added";
 		else return "Action not completed. Please try again";
 	}
@@ -190,8 +191,15 @@ public class Controller implements iController{
 
 	@Override
 	public String addDescription(String input) {
-		// TODO Auto-generated method stub
-		return null;
+		if(input.split("-").length != 3)
+			return "Please enter all required inputs";
+		String bid = input.split("-")[1];
+		String desc = input.split("-")[2];
+		
+		boolean b = system.addDescription(bid, desc);
+
+		if(b) return "Description added";
+		else return "Action not completed. Please try again";
 	}
 
 	@Override
