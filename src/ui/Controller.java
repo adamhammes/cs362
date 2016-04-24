@@ -69,6 +69,27 @@ public class Controller implements iController{
 				
 			case "retrievedescription":
 				return retrieveDescription(command);
+				
+			case "deleteuser":
+				return deleteUser(command);
+				
+			case "deletebook":
+				return deleteBook(command);
+				
+			case "deleteversion":
+				return deleteVersion(command);
+				
+			case "addauthordescription":
+				return addAuthorDescription(command);
+				
+			case "editauthordescription":
+				return editAuthorDescription(command);
+				
+			case "removeauthordescription":
+				return removeAuthorDescription(command);
+				
+			case "retrieveauthordescription":
+				return retrieveAuthorDescription(command);
 						
 			default:
 				return "Invalid Command. Please try again";
@@ -238,8 +259,74 @@ public class Controller implements iController{
 		if(result != null) return result;
 		else return "Action not completed. Please try again";
 	}
-	
 
+	@Override
+	public String deleteUser(String uid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String deleteBook(String bid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String deleteVersion(String input) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String addAuthorDescription(String input) {
+		if(input.split("-").length != 3)
+			return "Please enter all required inputs";
+		String aid = input.split("-")[1];
+		String desc = input.split("-")[2];
+		
+		boolean b = system.addDescription(aid, desc);
+
+		if(b) return "Author description added";
+		else return "Action not completed. Please try again";
+	}
+
+	@Override
+	public String editAuthorDescription(String input) {
+		if(input.split("-").length != 3)
+			return "Please enter all required inputs";
+		String aid = input.split("-")[1];
+		String desc = input.split("-")[2];
+		
+		boolean b = system.addDescription(aid, desc);
+
+		if(b) return "Author description edited";
+		else return "Action not completed. Please try again";
+	}
+
+	@Override
+	public String removeAuthorDescription(String input) {
+		if(input.split("-").length != 2)
+			return "Please enter all required inputs";
+		String aid = input.split("-")[1];
+		
+		boolean b = system.removeDescription(aid);
+
+		if(b) return "Author description deleted";
+		else return "Action not completed. Please try again";
+	}
+
+	@Override
+	public String retrieveAuthorDescription(String input) {
+		if(input.split("-").length != 2)
+			return "Please enter all required inputs";
+		String aid = input.split("-")[1];
+		
+		String result = system.retrieveDescription(aid);
+
+		if(result != null) return result;
+		else return "Action not completed. Please try again";
+	}
 	
 	
 }
