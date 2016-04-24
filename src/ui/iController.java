@@ -42,4 +42,15 @@ public interface iController {
 	public String removeDescription(String input);
 	public String retrieveDescription(String input);
 	
+	// Adam Iteration 3
+	public String deleteUser(String input);
+	public String deleteBook(String input);
+	public String deleteVersion(String input);
+	
+	//Steven Iteration 3
+	public String addAuthorDescription(String input);
+	public String editAuthorDescription(String input);
+	public String removeAuthorDescription(String input);
+	public String retrieveAuthorDescription(String input);
+	
 }

@@ -1,5 +1,6 @@
 package models;
 
+import interfaces.AuthorInterface;
 import interfaces.BookInterface;
 import interfaces.ReviewInterface;
 import interfaces.SeriesInterface;
@@ -295,5 +296,45 @@ public class EbookSystem implements SystemInterface {
 	public boolean deleteVersion(String uid, String bid, String format) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public boolean addAuthorDescription(String aid, String desc) {
+		DatabaseSupport db = new DatabaseSupport();
+		AuthorInterface a = db.getAuthor(aid);
+		if(a == null) 
+			return false;
+		
+		return a.addDescription(desc);
+	}
+
+	@Override
+	public boolean editAuthorDescription(String aid, String desc) {
+		DatabaseSupport db = new DatabaseSupport();
+		AuthorInterface a = db.getAuthor(aid);
+		if(a == null) 
+			return false;
+		
+		return a.addDescription(desc);
+	}
+
+	@Override
+	public boolean removeAuthorDescription(String aid) {
+		DatabaseSupport db = new DatabaseSupport();
+		AuthorInterface a = db.getAuthor(aid);
+		if(a == null) 
+			return false;
+		
+		return a.deleteDescription();
+	}
+
+	@Override
+	public String retrieveAuthorDescription(String aid) {
+		DatabaseSupport db = new DatabaseSupport();
+		AuthorInterface a = db.getAuthor(aid);
+		if(a == null) 
+			return null;
+		
+		return a.retreveDescription();
 	}
 }
