@@ -25,7 +25,7 @@ public class GUI extends JPanel implements ActionListener {
 			area.append(in + "\n");
 			text.selectAll();
 			
-			area.append(controller.command(in) + "\n");
+			area.append(controller.command(in) + "\n\n");
 			
 			
 			area.setCaretPosition(area.getDocument().getLength());
@@ -36,10 +36,10 @@ public class GUI extends JPanel implements ActionListener {
 		
 			super(new GridBagLayout());
 			
-			text = new JTextField(20);
+			text = new JTextField(150);
 			text.addActionListener(this);
 			
-			area = new JTextArea(5, 20);
+			area = new JTextArea(50, 150);
 			area.setEditable(false);
 			JScrollPane pane = new JScrollPane(area);
 			
