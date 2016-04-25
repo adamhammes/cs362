@@ -3,6 +3,8 @@ package interfaces;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import models.Version;
+
 public interface BookInterface extends Comparable<BookInterface> {
 	public String getTitle();
 	public String getId();
@@ -11,6 +13,7 @@ public interface BookInterface extends Comparable<BookInterface> {
 	public Collection<ReviewInterface> getReviews();
 	
 	public boolean addVersion(String path, String type);
+	public VersionInterface getVersion(String type);
 	public Collection<VersionInterface> getVersions();
 	
 	public boolean addTag(TagInterface t);
