@@ -3,11 +3,12 @@ package ui;
 import java.util.List;
 
 import interfaces.BookInterface;
+import interfaces.SystemInterface;
 import models.EbookSystem;
 
 public class Controller implements iController{
 
-	EbookSystem system = new EbookSystem();
+	SystemInterface system = new EbookSystem();
 	
 	@Override
 	public String command(String command) {
