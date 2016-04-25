@@ -8,9 +8,11 @@ import java.sql.SQLException;
 import interfaces.BookInterface;
 import interfaces.TagInterface;
 import interfaces.UserInterface;
+import interfaces.VersionInterface;
 import models.Book;
 import models.Tag;
 import models.User;
+import models.Version;
 
 class GetUser extends Getable{
 
@@ -48,8 +50,8 @@ class GetUser extends Getable{
 
 		return user;
 	}
-	
-	
+
+
 	/**
 	 * Retrieves User object from the database. All books/tags owned by the user
 	 * are un-populated.
@@ -85,6 +87,17 @@ class GetUser extends Getable{
 			
 			while(results.next()){
 				Book toAdd = new Book(results.getString("book_id"), results.getString("title"));
+
+
+				PreparedStatement versionQuery = conn.prepareStatement("SELECT * FROM Book_Version WHERE book_id = ? AND account_name = ?;");
+				versionQuery.setString(1, toAdd.getId());
+				versionQuery.setString(2, user.getName());
+
+				ResultSet versionResults = versionQuery.executeQuery();
+				while (versionResults.next()) {
+					toAdd.addVersion(versionResults.getString("location"), versionResults.getString("format"));
+				}
+				
 				user.userBooks.put(toAdd.getTitle(), toAdd);
 			}
 	}
