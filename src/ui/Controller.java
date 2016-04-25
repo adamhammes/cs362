@@ -546,5 +546,12 @@ public class Controller implements iController{
 			return "Unable to execute operation"; 
 		}
 	}
+
+
+	@Override
+	public String getVersion(String input) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }
