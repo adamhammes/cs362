@@ -1,5 +1,6 @@
 package ui;
 
+import java.util.Collection;
 import java.util.List;
 
 import interfaces.BookInterface;
@@ -7,7 +8,7 @@ import interfaces.BookInterface;
 import interfaces.ReviewInterface;
 
 import interfaces.SystemInterface;
-
+import interfaces.VersionInterface;
 import models.EbookSystem;
 
 public class Controller implements iController{
@@ -95,11 +96,18 @@ public class Controller implements iController{
 				
 			case "retrieveauthordescription":
 				return retrieveAuthorDescription(command);
-						
+					
+			case "getbookswithauthor":
+				return getBooksWithAuthor(command);
+			
+			case "listversions":
+				return listVersions(command);
+				
 			default:
 				return "Invalid Command. Please try again";
 		}
 	}
+
 
 	@Override
 	public String addUser(String input) {
@@ -425,5 +433,45 @@ public class Controller implements iController{
 		else return "Action not completed. Please try again";
 	}
 	
+	
+	public String getBooksWithAuthor(String input) {
+		if (input.split("-").length != 2)
+			return "Please enter all required inputs";
+		String authorId = input.split("-")[1];
+		
+		Collection<BookInterface> books = system.findBooksByAuthor(authorId, null);
+		if (books != null) {
+			StringBuffer buff = new StringBuffer();
+			for (BookInterface book : books) {
+				buff.append(book.toString()).append("\n");
+			}
+			return buff.toString();
+		}
+		else {
+			return "Unable to execute operation";
+		}
+	}
+	
+	
+	public String listVersions(String input) {
+		String[] args = input.split("-");
+		if (args.length < 3)
+			return "Please enter all required inputs";
+
+		String bid = args[1];
+		String uid = args[2];
+		
+		Collection<VersionInterface> versions = system.listAllVersions(bid, uid);
+		if (versions != null) {
+			StringBuffer buff = new StringBuffer();
+			for (VersionInterface version : versions) {
+				buff.append(version.toString()).append("\n");
+			}
+			return buff.toString();
+		}
+		else {
+			return "Unable to execute operation"; 
+		}
+	}
 	
 }
