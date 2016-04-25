@@ -109,3 +109,6 @@ INSERT INTO book_author VALUES
 INSERT INTO book_series VALUES
 	('hp1', 'hp', 1),
 	('hp2', 'hp', 2);
+
+INSERT INTO book_version VALUES
+	('hp1', 'adam', 'mobi', '/books/hp1.mobi');
