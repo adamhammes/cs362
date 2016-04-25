@@ -125,14 +125,29 @@ public class Controller implements iController{
 
 	@Override
 	public String addBook(String input) {
-		// TODO
-		return null;
+		String[] args = input.split("-");
+		
+		if (args.length < 4) {
+			return "Insufficient number of arguments";
+		}
+		
+		boolean result = system.addBook(args[1], args[2], args[3]);
+		
+		return result ? "Book " + args[2] + " added" :
+						"Operation failed";
 	}
 
 	@Override
 	public String addVersion(String input) {
-		// TODO Auto-generated method stub
-		return null;
+		String[] args = input.split("-");
+		
+		if (args.length < 5) {
+			return "Insufficient number of arguments";
+		}
+		
+		boolean result = system.addVersion(args[1], args[2], args[3], args[4]);
+		
+		return result ? "Version added" : "Operation failed";
 	}
 
 	@Override
@@ -244,20 +259,48 @@ public class Controller implements iController{
 
 	@Override
 	public String searchBySeries(String input) {
-		// TODO Auto-generated method stub
-		return null;
+		if(input.split("-").length != 2)
+			return "Please enter all required inputs";
+		
+		String sid = input.split("-")[1];
+		List<BookInterface> l = system.searchBySeries(sid);
+		if(l == null) { 
+			return "Action not completed. Please try again";
+		}
+		
+		String result = "";
+		for(BookInterface b : l){
+			result += b.getTitle() + "\n";
+		}
+		return result;
 	}
 
 	@Override
 	public String addBookToSeries(String input) {
-		// TODO Auto-generated method stub
-		return null;
+		String[] args = input.split("-");
+		
+		if (args.length != 3) {
+			return "Invalid number of arguments";
+		}
+		
+		boolean result = system.addBookToSeries(args[1], args[2]);
+		
+		return result ? "Book added to series" :
+						"Operation failed";
 	}
 
 	@Override
 	public String removeBookFromSeries(String input) {
-		// TODO Auto-generated method stub
-		return null;
+		String[] args = input.split("-");
+		
+		if (args.length < 3) {
+			return "Insufficient number of arguments";
+		}
+		
+		boolean result = system.removeBookFromSeries(args[1], args[2]);
+		
+		return result ? "Book removed from series" :
+						"Operation failed";
 	}
 
 	@Override
@@ -306,7 +349,7 @@ public class Controller implements iController{
 	public String getReviews(String input) {
 		String[] args = input.split("-");
 		if (args.length < 2)
-			return "Invalid number of arguments. Pleas provide book id";
+			return "Invalid number of arguments. Please provide book id";
 		
 		String bid = args[1];
 		
@@ -374,21 +417,44 @@ public class Controller implements iController{
 	}
 
 	@Override
-	public String deleteUser(String uid) {
-		// TODO Auto-generated method stub
-		return null;
+	public String deleteUser(String input) {
+		String[] args = input.split("-");
+		
+		if (args.length < 2) {
+			return "Insufficient number of arguments";
+		}
+		
+		boolean result = system.deleteUser(args[1]);
+		
+		return result ? "User \"" + args[1] + "\" deleted" :
+						"Operation failed";
 	}
 
 	@Override
-	public String deleteBook(String bid) {
-		// TODO Auto-generated method stub
-		return null;
+	public String deleteBook(String input) {
+		String[] args = input.split("-");
+		
+		if (args.length < 2) {
+			return "Insufficient number of arguments";
+		}
+		
+		boolean result = system.deleteBook(args[1]);
+		
+		return result ? "Book \"" + args[1] + "\" deleted" :
+						"Operation failed";
 	}
 
 	@Override
 	public String deleteVersion(String input) {
-		// TODO Auto-generated method stub
-		return null;
+		String[] args = input.split("-");
+		
+		if (args.length < 4) {
+			return "Insufficient number of arguments";
+		}
+		
+		boolean result = system.deleteVersion(args[1], args[2], args[3]);
+		
+		return result ? "Version deleted" : "Operation failed";
 	}
 
 	@Override
@@ -459,7 +525,6 @@ public class Controller implements iController{
 			return "Unable to execute operation";
 		}
 	}
-	
 	
 	public String listVersions(String input) {
 		String[] args = input.split("-");
