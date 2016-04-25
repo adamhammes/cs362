@@ -209,4 +209,9 @@ public class Book implements BookInterface, Comparable<BookInterface> {
 		}
 		return null;
 	}
+	
+	@Override
+	public String toString() {
+		return id;
+	}
 }
