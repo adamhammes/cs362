@@ -111,13 +111,21 @@ public class Controller implements iController{
 
 	@Override
 	public String addUser(String input) {
-		// TODO Auto-generated method stub
-		return null;
+		String[] args = input.split("-");
+		
+		if (args.length < 2) {
+			return "Insufficient number of arguments";
+		}
+		
+		boolean result = system.addUser(args[1]);
+		
+		return result ? "User " + args[1] + " added" :
+						"Operation failed";
 	}
 
 	@Override
 	public String addBook(String input) {
-		// TODO Auto-generated method stub
+		// TODO
 		return null;
 	}
 
