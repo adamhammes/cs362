@@ -332,8 +332,8 @@ public class EbookSystem implements SystemInterface {
 
 	@Override
 	public boolean deleteBook(String bid) {
-		// TODO Auto-generated method stub
-		return false;
+		DatabaseSupport db = new DatabaseSupport();
+		return db.deleteBook(bid);
 	}
 
 	@Override

@@ -242,6 +242,10 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 		return delete(new DeleteUser(uid));
 	}
 	
+	public boolean deleteBook(String bid) {
+		return delete(new DeleteBook(bid));
+	}
+	
 	/**
 	 * Resets the database to a known starting state to make testing easier. This method will run the 
 	 * database/reset.sql script.
