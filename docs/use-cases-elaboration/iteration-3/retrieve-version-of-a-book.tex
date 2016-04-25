@@ -1,0 +1,41 @@
+\documentclass{article}
+
+\title{Use Case Elaboration: Retrieve a Version of a Book}
+\author{ Nicholas Riesen }
+
+\pagenumbering{gobble}
+
+\begin{document}
+\maketitle
+
+
+\section*{Use Case}
+\begin{tabular}{l l}
+Use Case:     & Retrieve Version of a Book  \\
+Actor:        & User                         \\
+Precondition: & None                         \\
+\end{tabular}
+
+
+\section*{Main Success Scenario:}
+
+\begin{enumerate}
+    \item User provides the book id, the format type, and the username for the book version they wish to access
+    \item System returns the requested book version
+ 
+\end{enumerate}
+
+\section*{Extensions}
+
+\begin{itemize}
+    \item [1a.] No versions of this type exist for the specified user \\
+         - System indicates that no versions were found
+    \item [2.a] No book by that id exists \\
+        - System indicates it was unable to locate that book
+\end{itemize}
+
+
+\section*{Information Expert}
+The information expert is System, and book. System knows and can retrieve book objects. Book objects intern know about versions, and can find requested versions. 
+
+\end{document}
