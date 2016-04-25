@@ -303,6 +303,13 @@ public class BookDbTests {
 	}
 	
 	@Test
+	public void getVersion() {
+		UserInterface u = db.getUser("adam");
+		BookInterface b = u.getBook("hp1");
+		assertNotNull(b.getVersion("mobi"));
+	}
+	
+	@Test
 	public void addVersion() {
 		assertTrue(system.addVersion("adam", "mobydick", "", "mobi"));
 		
