@@ -326,13 +326,10 @@ public class BookDbTests {
 		system.deleteVersion("adam", "mobydick", "mobi");
 		
 		UserInterface u = db.getUser("adam");
+		BookInterface b = u.getBook("mobydick");
 		
-		for (BookInterface b: u.getAllBooks()) {
-			if (b.getId().equals("mobydick")) {
-				for (VersionInterface v: b.getVersions()) {
-					assertNotEquals("mobi", v.getType());
-				}
-			}
+		for (VersionInterface v: b.getVersions()) {
+			assertNotEquals("mobi", v.getType());
 		}
 	}
 }
