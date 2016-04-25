@@ -3,8 +3,6 @@ package interfaces;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import models.Version;
-
 public interface BookInterface extends Comparable<BookInterface> {
 	public String getTitle();
 	public String getId();

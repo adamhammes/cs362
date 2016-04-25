@@ -192,7 +192,7 @@ public class Controller implements iController{
 
 	@Override
 	public String addRating(String input) {
-		String args[] = input.split(" ");
+		String args[] = input.split("-");
 		String bid = args[1];
 		String rating = args[2];
 		String review = args[3];
@@ -210,8 +210,6 @@ public class Controller implements iController{
 		catch (NumberFormatException e) {
 			return "Must provide a number for the second argument";
 		}
-		
-		
 	}
 
 	@Override
@@ -248,34 +246,52 @@ public class Controller implements iController{
 
 	@Override
 	public String changeRating(String input) {
-		// TODO Auto-generated method stub
-		return null;
+		String[] args = input.split("-");
+		if (args.length < 5)
+			return "invalid number of arguments";
+		
+		String bid = args[1];
+		String reviewId = args[2];
+		String newRating = args[3];
+		String newReview = args[4];
+		
+		try {
+			system.changeRating(bid, Integer.parseInt(reviewId), Integer.parseInt(newRating), newReview);
+			return "";
+		}
+		catch (NumberFormatException e) {
+			return "review Id and newRating must be of type int";
+		}
 	}
 
 	@Override
 	public String removeRating(String input) {
-		String args[] = input.split(" ");
+		String args[] = input.split("-");
+		if (args.length < 3)
+			return "Needs more arguments";
 		
 		String bookId = args[1];
 		String reviewId = args[2];
 		
-//		try {
-//			if (sys.removeReview(bookId, Integer.parseInt(reviewId))){
-//				return "";
-//			}
-//			else {
-//				return "unable to remove rateing";
-//			}
-//		}
-//		catch (NumberFormatException e){
-//			return "invalid review id";
-//		}
-		return null;
+		try {
+			if (system.removeRating(bookId, Integer.parseInt(reviewId))){
+				return "";
+			}
+			else {
+				return "unable to remove rateing";
+			}
+		}
+		catch (NumberFormatException e){
+			return "invalid review id";
+		}
 	}
 
 	@Override
 	public String getReviews(String input) {
 		String[] args = input.split("-");
+		if (args.length < 2)
+			return "Invalid number of arguments. Pleas provide book id";
+		
 		String bid = args[1];
 		
 		List<ReviewInterface> reviews = system.getReviews(bid);

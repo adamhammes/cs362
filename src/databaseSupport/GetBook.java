@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import interfaces.BookInterface;
 import interfaces.ReviewInterface;
 import interfaces.SeriesInterface;
-import models.Author;
 import models.Book;
 import models.Review;
 

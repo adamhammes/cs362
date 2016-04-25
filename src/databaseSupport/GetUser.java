@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import interfaces.BookInterface;
 import interfaces.TagInterface;
 import interfaces.UserInterface;
-import models.Book;
 import models.Tag;
 import models.User;
 
