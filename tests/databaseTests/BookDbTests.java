@@ -306,7 +306,7 @@ public class BookDbTests {
 	
 	@Test
 	public void addVersion() {
-		system.addVersion("adam", "mobydick", "", "mobi");
+		assertTrue(system.addVersion("adam", "mobydick", "", "mobi"));
 		
 		UserInterface u = db.getUser("adam");
 		BookInterface b = u.getBook("mobydick");
