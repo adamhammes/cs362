@@ -338,8 +338,8 @@ public class EbookSystem implements SystemInterface {
 
 	@Override
 	public boolean deleteVersion(String uid, String bid, String format) {
-		// TODO Auto-generated method stub
-		return false;
+		DatabaseSupport db = new DatabaseSupport();
+		return db.deleteVersion(uid, bid, format);
 	}
 
 	@Override

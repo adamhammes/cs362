@@ -67,6 +67,7 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 			conn = openConnection();
 			return toDelete.delete(conn);
 		} catch (SQLException | ClassNotFoundException e) {
+			System.out.println(e.getMessage());
 			return false;
 		}
 		finally{
@@ -244,6 +245,10 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 	
 	public boolean deleteBook(String bid) {
 		return delete(new DeleteBook(bid));
+	}
+
+	public boolean deleteVersion(String uid, String bid, String format) {
+		return delete(new DeleteVersion(uid, bid, format));
 	}
 	
 	/**
