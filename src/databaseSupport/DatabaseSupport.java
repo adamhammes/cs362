@@ -1,6 +1,7 @@
 package databaseSupport;
 
 import java.io.File;
+import java.net.ConnectException;
 import java.sql.*;
 import java.util.Scanner;
 
@@ -57,6 +58,25 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 				e2.printStackTrace();
 			}
 		}
+	}
+	
+	private boolean delete(Deletable toDelete) {
+		Connection conn = null;
+		
+		try {
+			conn = openConnection();
+			return toDelete.delete(conn);
+		} catch (SQLException | ClassNotFoundException e) {
+			return false;
+		}
+		finally{
+			try {
+				conn.close();
+			} catch (Exception e2) {
+				return false;
+			}
+		}
+
 	}
 
 	
@@ -216,6 +236,10 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 		if (author == null || author.getId() == null || author.getId().equals("")) return false;
 		
 		return put(new PutAuthor(author, username));
+	}
+	
+	public boolean deleteUser(String uid) {
+		return delete(new DeleteUser(uid));
 	}
 	
 	/**

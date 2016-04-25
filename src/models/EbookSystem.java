@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.xml.crypto.Data;
+
 import databaseSupport.DatabaseSupport;
 
 public class EbookSystem implements SystemInterface {
@@ -283,8 +285,8 @@ public class EbookSystem implements SystemInterface {
 
 	@Override
 	public boolean deleteUser(String uid) {
-		// TODO Auto-generated method stub
-		return false;
+		DatabaseSupport db = new DatabaseSupport();
+		return db.deleteUser(uid);
 	}
 
 	@Override

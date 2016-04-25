@@ -80,7 +80,7 @@ public class UserDbTests {
 		assertNotNull(db.getUser("adam"));
 		
 		EbookSystem system = new EbookSystem();
-		system.deleteUser("adam");
+		assertTrue(system.deleteUser("adam"));
 		
 		assertNull(db.getUser("adam"));
 	}
