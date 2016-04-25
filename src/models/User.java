@@ -162,7 +162,6 @@ public class User implements UserInterface {
 			
 			@Override
 			public int compare(BookInterface o1, BookInterface o2) {
-				// TODO Auto-generated method stub
 				if(o1.averageRating() - o2.averageRating() > 0)
 					return 1;
 				else if(o1.averageRating() - o2.averageRating() == 0)
