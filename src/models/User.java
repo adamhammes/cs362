@@ -106,13 +106,14 @@ public class User implements UserInterface {
 	
 	
 	/**
-	 * Retrieves the users book specified by the book title. If the user does not own 
-	 * a book by this title, then null will be returned.
+	 * Retrieves the users book specified by the book id. If the user does not own 
+	 * a book by this id, then null will be returned.
 	 * 
 	 * @param bid title of the book to retrieve
 	 * @return requested book
 	 */
-	private BookInterface getBook(String bid){
+	@Override
+	public BookInterface getBook(String bid){
 		return userBooks.get(bid);
 	}	
 	
@@ -175,6 +176,9 @@ public class User implements UserInterface {
 	@Override
 	public boolean addVersion(String bid, String path, String type) {
 		BookInterface book = getBook(bid);
+		if (book == null)
+			return false;
+		
 		return book.addVersion(path, type);
 	}
 

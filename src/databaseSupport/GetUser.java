@@ -84,8 +84,18 @@ class GetUser extends Getable{
 			ResultSet results = stmt.executeQuery();
 			
 			while(results.next()){
-				Book toAdd = new Book(results.getString("book_id"), results.getString("title"));
-				user.userBooks.put(toAdd.getId(), toAdd);
+				//Book toAdd = new Book(results.getString("book_id"), results.getString("title"));
+				//user.userBooks.put(toAdd.getId(), toAdd);
+				String bid = results.getString("book_id");
+				
+//				BookInterface BookInterface book;
+				if (!alreadyPopulatedBooks.containsKey(bid)) {
+					BookInterface book = new GetBook(bid, uid).get(conn);
+					user.userBooks.put(bid, book);
+				}
+				else {
+					user.userBooks.put(bid, alreadyPopulatedBooks.get(bid));
+				}
 			}
 	}
 	

@@ -189,6 +189,7 @@ public class EbookSystem implements SystemInterface {
 	public List<BookInterface> displayAllBooks(String uid) {
 		DatabaseSupport db = new DatabaseSupport();
 		UserInterface user = db.getUser(uid);
+		if(user == null) return null;
 		return user.getAllBooks();
 	}
 
@@ -203,8 +204,12 @@ public class EbookSystem implements SystemInterface {
 	public boolean addRating(String bid, int rating, String review) {
 		DatabaseSupport db = new DatabaseSupport();
 		BookInterface book = db.getBook(bid);
+
 		Review r = new Review(-1, rating, review);
- 		
+
+		if(book == null)
+			return false;
+		 
 		if (!book.addReview(r)) {
 			return false;
 		}
@@ -314,5 +319,63 @@ public class EbookSystem implements SystemInterface {
 			return null;
 		else
 			return author.getBooks();
+	}
+
+	@Override
+	public boolean deleteUser(String uid) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean deleteBook(String bid) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean deleteVersion(String uid, String bid, String format) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean addAuthorDescription(String aid, String desc) {
+		DatabaseSupport db = new DatabaseSupport();
+		AuthorInterface a = db.getAuthor(aid);
+		if(a == null) 
+			return false;
+		
+		return a.addDescription(desc);
+	}
+
+	@Override
+	public boolean editAuthorDescription(String aid, String desc) {
+		DatabaseSupport db = new DatabaseSupport();
+		AuthorInterface a = db.getAuthor(aid);
+		if(a == null) 
+			return false;
+		
+		return a.addDescription(desc);
+	}
+
+	@Override
+	public boolean removeAuthorDescription(String aid) {
+		DatabaseSupport db = new DatabaseSupport();
+		AuthorInterface a = db.getAuthor(aid);
+		if(a == null) 
+			return false;
+		
+		return a.deleteDescription();
+	}
+
+	@Override
+	public String retrieveAuthorDescription(String aid) {
+		DatabaseSupport db = new DatabaseSupport();
+		AuthorInterface a = db.getAuthor(aid);
+		if(a == null) 
+			return null;
+		
+		return a.retreveDescription();
 	}
 }

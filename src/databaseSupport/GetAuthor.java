@@ -52,7 +52,7 @@ class GetAuthor extends Getable{
 		while (results.next()) {
 			String bookid = results.getString("book_id");
 			
-			if (!alreadyPopulatedAuthors.contains(bookid)){
+			if (!alreadyPopulatedBooks.containsKey(bookid)){
 				author.addBook((BookInterface) (new GetBook(bookid, username)).get(conn));
 			}
 		}

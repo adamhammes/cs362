@@ -3,16 +3,20 @@ package ui;
 import java.util.List;
 
 import interfaces.BookInterface;
+
 import interfaces.ReviewInterface;
+
+import interfaces.SystemInterface;
+
 import models.EbookSystem;
 
 public class Controller implements iController{
 
-	EbookSystem sys = new EbookSystem();
+	SystemInterface system = new EbookSystem();
 	
 	@Override
 	public String command(String command) {
-		String method = command.split(" ")[0].toLowerCase();
+		String method = command.split("-")[0].toLowerCase();
 		switch (method) {
 			case "adduser":
 				return addUser(command);
@@ -70,6 +74,27 @@ public class Controller implements iController{
 				
 			case "retrievedescription":
 				return retrieveDescription(command);
+				
+			case "deleteuser":
+				return deleteUser(command);
+				
+			case "deletebook":
+				return deleteBook(command);
+				
+			case "deleteversion":
+				return deleteVersion(command);
+				
+			case "addauthordescription":
+				return addAuthorDescription(command);
+				
+			case "editauthordescription":
+				return editAuthorDescription(command);
+				
+			case "removeauthordescription":
+				return removeAuthorDescription(command);
+				
+			case "retrieveauthordescription":
+				return retrieveAuthorDescription(command);
 						
 			default:
 				return "Invalid Command. Please try again";
@@ -96,7 +121,7 @@ public class Controller implements iController{
 
 	@Override
 	public String addTag(String input) {
-		String[] args = input.split(" ");
+		String[] args = input.split("-");
 		if (args.length < 4)
 			return "insufficient number of arguments";
 		
@@ -104,7 +129,7 @@ public class Controller implements iController{
 		String tag = args[2];
 		String uid = args[3];
 				
-		if (sys.addTag(uid, bid, tag))
+		if (system.addTag(uid, bid, tag))
 			return "";
 		else
 			return "Unable to add tag";
@@ -112,7 +137,7 @@ public class Controller implements iController{
 
 	@Override
 	public String removeTag(String input) {
-		String[] args = input.split(" ");
+		String[] args = input.split("-");
 		if (args.length < 4)
 			return "insufficient number of arguments";
 		
@@ -120,7 +145,7 @@ public class Controller implements iController{
 		String tag = args[2];
 		String uid = args[3];
 				
-		if (sys.removeTag(uid, bid, tag))
+		if (system.removeTag(uid, bid, tag))
 			return "";
 		else
 			return "Unable to remove tag";
@@ -129,7 +154,7 @@ public class Controller implements iController{
 	@Override
 	public String getBooksWithTag(String input) {
 				
-		String[] args = input.split(" ");
+		String[] args = input.split("-");
 		if (args.length < 3) {
 			return "insufficient number of arguments";
 		}
@@ -137,7 +162,7 @@ public class Controller implements iController{
 		String uid = args[2];
 		
 		
-		List<BookInterface> books = sys.getBooksWithTag(uid, tag);
+		List<BookInterface> books = system.getBooksWithTag(uid, tag);
 		if (books != null) {
 			StringBuffer responce = new StringBuffer();
 			
@@ -153,8 +178,16 @@ public class Controller implements iController{
 
 	@Override
 	public String displayAllBooks(String input) {
-		// TODO Auto-generated method stub
-		return null;
+		if(input.split("-").length != 2)
+			return "Please enter all required inputs";
+		String uid = input.split("-")[1];
+		List<BookInterface> l = system.displayAllBooks(uid);
+		if(l == null) return "Action not completed. Please try again";
+		String result = "";
+		for(BookInterface b : l){
+			result += b.getTitle() + "\n";
+		}
+		return result;
 	}
 
 	@Override
@@ -164,27 +197,35 @@ public class Controller implements iController{
 		String rating = args[2];
 		String review = args[3];
 
-		//try {
+		try {
 			int value = Integer.parseInt(rating.trim());
 			System.out.println(value);
-			if (sys.addRating(bid, value, review)) {
+			if (system.addRating(bid, value, review)) {
 				return "";
 			}
 			else {
 				return "unable to submit review";
 			}
-//		}
-//		catch (NumberFormatException e) {
-//			return "Must provide a number for the second argument";
-//		}
+		}
+		catch (NumberFormatException e) {
+			return "Must provide a number for the second argument";
+		}
 		
 		
 	}
 
 	@Override
 	public String displayAllBooksByRating(String input) {
-		// TODO Auto-generated method stub
-		return null;
+		if(input.split("-").length != 2)
+			return "Please enter all required inputs";
+		String uid = input.split("-")[1];
+		List<BookInterface> l = system.displayAllBooksByRating(uid);
+		if(l == null) return "Action not completed. Please try again";
+		String result = "";
+		for(BookInterface b : l){
+			result += b.getTitle() + "\n";
+		}
+		return result;
 	}
 
 	@Override
@@ -234,10 +275,10 @@ public class Controller implements iController{
 
 	@Override
 	public String getReviews(String input) {
-		String[] args = input.split(" ");
+		String[] args = input.split("-");
 		String bid = args[1];
 		
-		List<ReviewInterface> reviews = sys.getReviews(bid);
+		List<ReviewInterface> reviews = system.getReviews(bid);
 		if (reviews != null) {
 			StringBuffer buff = new StringBuffer();
 			for (ReviewInterface review : reviews) {
@@ -252,29 +293,121 @@ public class Controller implements iController{
 
 	@Override
 	public String addDescription(String input) {
-		// TODO Auto-generated method stub
-		return null;
+		if(input.split("-").length != 3)
+			return "Please enter all required inputs";
+		String bid = input.split("-")[1];
+		String desc = input.split("-")[2];
+		
+		boolean b = system.addDescription(bid, desc);
+
+		if(b) return "Description added";
+		else return "Action not completed. Please try again";
 	}
 
 	@Override
 	public String editDescription(String input) {
-		// TODO Auto-generated method stub
-		return null;
+		if(input.split("-").length != 3)
+			return "Please enter all required inputs";
+		String bid = input.split("-")[1];
+		String desc = input.split("-")[2];
+		
+		boolean b = system.editDescription(bid, desc);
+
+		if(b) return "Description edited";
+		else return "Action not completed. Please try again";
 	}
 
 	@Override
 	public String removeDescription(String input) {
+		if(input.split("-").length != 2)
+			return "Please enter all required inputs";
+		String bid = input.split("-")[1];
+		
+		boolean b = system.removeDescription(bid);
+
+		if(b) return "Description deleted";
+		else return "Action not completed. Please try again";
+	}
+
+	@Override
+	public String retrieveDescription(String input) {
+		if(input.split("-").length != 2)
+			return "Please enter all required inputs";
+		String bid = input.split("-")[1];
+		
+		String result = system.retrieveDescription(bid);
+
+		if(result != null) return result;
+		else return "Action not completed. Please try again";
+	}
+
+	@Override
+	public String deleteUser(String uid) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String retrieveDescription(String input) {
+	public String deleteBook(String bid) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
 
+	@Override
+	public String deleteVersion(String input) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String addAuthorDescription(String input) {
+		if(input.split("-").length != 3)
+			return "Please enter all required inputs";
+		String aid = input.split("-")[1];
+		String desc = input.split("-")[2];
+		
+		boolean b = system.addDescription(aid, desc);
+
+		if(b) return "Author description added";
+		else return "Action not completed. Please try again";
+	}
+
+	@Override
+	public String editAuthorDescription(String input) {
+		if(input.split("-").length != 3)
+			return "Please enter all required inputs";
+		String aid = input.split("-")[1];
+		String desc = input.split("-")[2];
+		
+		boolean b = system.addDescription(aid, desc);
+
+		if(b) return "Author description edited";
+		else return "Action not completed. Please try again";
+	}
+
+	@Override
+	public String removeAuthorDescription(String input) {
+		if(input.split("-").length != 2)
+			return "Please enter all required inputs";
+		String aid = input.split("-")[1];
+		
+		boolean b = system.removeDescription(aid);
+
+		if(b) return "Author description deleted";
+		else return "Action not completed. Please try again";
+	}
+
+	@Override
+	public String retrieveAuthorDescription(String input) {
+		if(input.split("-").length != 2)
+			return "Please enter all required inputs";
+		String aid = input.split("-")[1];
+		
+		String result = system.retrieveDescription(aid);
+
+		if(result != null) return result;
+		else return "Action not completed. Please try again";
+	}
 	
 	
 }

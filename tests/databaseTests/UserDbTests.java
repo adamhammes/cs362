@@ -8,14 +8,17 @@ import org.junit.Test;
 import databaseSupport.DatabaseSupport;
 import interfaces.BookInterface;
 import interfaces.UserInterface;
+import models.EbookSystem;
 import models.User;
 
 public class UserDbTests {
 
 	DatabaseSupport db;
+	EbookSystem system;
 	
 	@Before
 	public void setup(){
+		system = new EbookSystem();
 		db = new DatabaseSupport();
 		db.reset();
 	}
@@ -70,6 +73,22 @@ public class UserDbTests {
 		User user = new User("");
 		
 		assertFalse(db.putUser(user));
+	}
+	
+	@Test
+	public void deleteUser_basic() {
+		assertNotNull(db.getUser("adam"));
+		
+		EbookSystem system = new EbookSystem();
+		system.deleteUser("adam");
+		
+		assertNull(db.getUser("adam"));
+	}
+	
+	@Test
+	public void deleteUser_noUser() {
+		system.deleteUser("asdfasdfasdfasdf");
+		// just making sure no exception gets thrown
 	}
 	
 }

@@ -80,14 +80,10 @@ public class Book implements BookInterface, Comparable<BookInterface> {
 	public boolean addVersion(String path, String type) {
 		return this.versions.add(new Version(path, type));
 	}
-
-	@Override
-	public VersionInterface getVersion(String type) {
-		for (VersionInterface version : versions){
-			if (version.getType().equals(type))
-				return version;
-		}
-		return null;
+	
+	//for database use
+	public boolean addVersion(VersionInterface version) {
+		return this.versions.add(version);
 	}
 	
 	@Override
@@ -214,5 +210,15 @@ public class Book implements BookInterface, Comparable<BookInterface> {
 		return "Id: " + id + ",  " + 
 				"Title: " + title + ",  " + 
 				(description != null ? "Description: " + description : "");
+	}
+	
+	@Override
+	public VersionInterface getVersion(String type) {
+		for (VersionInterface v: versions) {
+			if (v.getType().equals(type)) {
+				return v;
+			}
+		}
+		return null;
 	}
 }

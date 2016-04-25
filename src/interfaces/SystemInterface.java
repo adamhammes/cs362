@@ -40,4 +40,16 @@ public interface SystemInterface {
 	public Collection<VersionInterface> listAllVersions(String bid, String userId);
 	public VersionInterface getVersion(String bookid, String format, String userId);
 	public Collection<BookInterface> findBooksByAuthor(String authorId, String userId);
+
+	// Adam Iteration 3
+	public boolean deleteUser(String uid);
+	public boolean deleteBook(String bid);
+	public boolean deleteVersion(String uid, String bid, String format);
+	
+	//Steven Iteration 3
+	public boolean addAuthorDescription(String aid, String desc);
+	public boolean editAuthorDescription(String aid, String desc);
+	public boolean removeAuthorDescription(String aid);
+	public String retrieveAuthorDescription(String aid);
+	
 }

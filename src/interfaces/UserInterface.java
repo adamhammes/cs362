@@ -14,4 +14,5 @@ public interface UserInterface {
 	public ArrayList<TagInterface> getTags();
 	public boolean addVersion(String bid, String path, String type);
 	public Collection<BookInterface> getBooksWithTag(String tag);
+	public BookInterface getBook(String bid);
 }

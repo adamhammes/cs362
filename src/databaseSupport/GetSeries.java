@@ -49,7 +49,7 @@ class GetSeries extends Getable{
 			String bookId = results.getString("book_id");
 			
 			//If the book has already been populated, don't populate again
-			if (!alreadyPopulatedBooks.contains(bookId)) {
+			if (!alreadyPopulatedBooks.containsKey(bookId)) {
 				GetBook getBookRequest = new GetBook(results.getString("book_id"), username);
 				series.addBook(getBookRequest.get(conn));
 			}

@@ -2,8 +2,12 @@ package databaseSupport;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+
+import interfaces.BookInterface;
 
 /**
  * Encapsulates all information relevant to a get request to the database.
@@ -12,7 +16,8 @@ import java.util.Set;
  */
 abstract class Getable {
 	
-	protected static Set<String> alreadyPopulatedBooks = new HashSet<String>();
+//	protected static Set<String> alreadyPopulatedBooks = new HashSet<String>();
+	protected static Map<String, BookInterface> alreadyPopulatedBooks = new HashMap<String, BookInterface>();
 	protected static Set<String> alreadyPopulatedSeries = new HashSet<String>();
 	protected static Set<String> alreadyPopulatedAuthors = new HashSet<String>();
 	
@@ -29,7 +34,8 @@ abstract class Getable {
 	
 	
 	public void clear(){
-		alreadyPopulatedBooks = new HashSet<String>();
+//		alreadyPopulatedBooks = new HashSet<String>();
+		alreadyPopulatedBooks = new HashMap<String, BookInterface>();
 		alreadyPopulatedSeries = new HashSet<String>();
 		alreadyPopulatedAuthors = new HashSet<String>();
 	}

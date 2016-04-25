@@ -79,7 +79,7 @@ class GetBook extends Getable{
 		
 		if (results.next()) {
 			book = new Book(results.getString("book_id"), results.getString("title"), results.getString("description"));
-			alreadyPopulatedBooks.add(bid); //Add book to list of books already retrieved
+			alreadyPopulatedBooks.put(bid, book); //Add book to list of books already retrieved
 		}
 	}
 	
