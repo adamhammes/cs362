@@ -5,8 +5,6 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.sun.xml.internal.ws.api.addressing.AddressingVersion;
-
 import databaseSupport.DatabaseSupport;
 import interfaces.AuthorInterface;
 import interfaces.BookInterface;
