@@ -178,14 +178,17 @@ public class EbookSystem implements SystemInterface {
 		DatabaseSupport db = new DatabaseSupport();
 		
 		UserInterface user = db.getUser(uid);
-		return user.addBook(bid, title);
+		boolean result = user.addBook(bid, title);
+		db.putUser(user);
+		return result;
 	}
 
 	@Override
 	public boolean addUser(String name) {
 		DatabaseSupport db = new DatabaseSupport();
 		UserInterface user = new User(name);
-		return db.putUser(user);
+		boolean result = db.putUser(user);
+		return result;
 	}
 
 	@Override
