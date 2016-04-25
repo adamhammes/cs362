@@ -88,9 +88,10 @@ public class EbookSystem implements SystemInterface {
 		if (null == user) {
 			return false;
 		}
-
-		if (!user.addVersion(bid, path, type))
-			return false;/// !!!!!! This doesn't commit changes to the db
+		
+		if (!user.addVersion(bid, path, type)) {
+			return false;
+		}
 
 		return db.putUser(user);
 	}
