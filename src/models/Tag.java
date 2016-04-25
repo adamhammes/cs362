@@ -40,7 +40,7 @@ public class Tag implements TagInterface {
 	@Override
 	public BookInterface getBook(String bookTitle) {
 		for (BookInterface book : books){
-			if (book.getTitle().equals(bookTitle))
+			if (book.getId().equals(bookTitle))
 				return book;
 		}
 		return null;

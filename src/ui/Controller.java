@@ -3,6 +3,7 @@ package ui;
 import java.util.List;
 
 import interfaces.BookInterface;
+import interfaces.ReviewInterface;
 import models.EbookSystem;
 
 public class Controller implements iController{
@@ -111,8 +112,18 @@ public class Controller implements iController{
 
 	@Override
 	public String removeTag(String input) {
-		// TODO Auto-generated method stub
-		return null;
+		String[] args = input.split(" ");
+		if (args.length < 4)
+			return "insufficient number of arguments";
+		
+		String bid = args[1];
+		String tag = args[2];
+		String uid = args[3];
+				
+		if (sys.removeTag(uid, bid, tag))
+			return "";
+		else
+			return "Unable to remove tag";
 	}
 
 	@Override
@@ -148,8 +159,26 @@ public class Controller implements iController{
 
 	@Override
 	public String addRating(String input) {
-		// TODO Auto-generated method stub
-		return null;
+		String args[] = input.split(" ");
+		String bid = args[1];
+		String rating = args[2];
+		String review = args[3];
+
+		//try {
+			int value = Integer.parseInt(rating.trim());
+			System.out.println(value);
+			if (sys.addRating(bid, value, review)) {
+				return "";
+			}
+			else {
+				return "unable to submit review";
+			}
+//		}
+//		catch (NumberFormatException e) {
+//			return "Must provide a number for the second argument";
+//		}
+		
+		
 	}
 
 	@Override
@@ -184,14 +213,41 @@ public class Controller implements iController{
 
 	@Override
 	public String removeRating(String input) {
-		// TODO Auto-generated method stub
+		String args[] = input.split(" ");
+		
+		String bookId = args[1];
+		String reviewId = args[2];
+		
+//		try {
+//			if (sys.removeReview(bookId, Integer.parseInt(reviewId))){
+//				return "";
+//			}
+//			else {
+//				return "unable to remove rateing";
+//			}
+//		}
+//		catch (NumberFormatException e){
+//			return "invalid review id";
+//		}
 		return null;
 	}
 
 	@Override
 	public String getReviews(String input) {
-		// TODO Auto-generated method stub
-		return null;
+		String[] args = input.split(" ");
+		String bid = args[1];
+		
+		List<ReviewInterface> reviews = sys.getReviews(bid);
+		if (reviews != null) {
+			StringBuffer buff = new StringBuffer();
+			for (ReviewInterface review : reviews) {
+				buff.append(review.toString()).append("\n");
+			}
+			return buff.toString();
+		}
+		else {
+			return "Unable to get reviews";
+		}
 	}
 
 	@Override

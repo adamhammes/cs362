@@ -80,7 +80,10 @@ public class EbookSystem implements SystemInterface {
 	public List<ReviewInterface> getReviews(String bookId) {
 		DatabaseSupport db = new DatabaseSupport();
 		BookInterface book = db.getBook(bookId);
-		return new ArrayList<>(book.getReviews());
+		if (book != null)
+			return new ArrayList<ReviewInterface>(book.getReviews());
+		else 
+			return null;
 	}
 
 	public boolean addVersion(String uid, String bid, String path, String type) {
@@ -197,11 +200,11 @@ public class EbookSystem implements SystemInterface {
 	}
 
 	@Override
-	public boolean addRating(String uid, String bid, int rating, String review) {
+	public boolean addRating(String bid, int rating, String review) {
 		DatabaseSupport db = new DatabaseSupport();
 		BookInterface book = db.getBook(bid);
-		Review r = new Review(Integer.parseInt(bid), rating, review);
-		 
+		Review r = new Review(-1, rating, review);
+ 		
 		if (!book.addReview(r)) {
 			return false;
 		}

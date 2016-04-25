@@ -16,7 +16,7 @@ public interface SystemInterface {
 
 	// Steve Iteration 1
 	public List<BookInterface> displayAllBooks(String uid);
-	public boolean addRating(String uid, String bid, int rating, String review);
+	public boolean addRating(String bid, int rating, String review);
 	public List<BookInterface> displayAllBooksByRating(String uid);
 	
 	// Adam Iteration 2
