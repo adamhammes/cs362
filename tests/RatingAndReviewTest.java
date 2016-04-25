@@ -65,7 +65,6 @@ public class RatingAndReviewTest {
 		assertNotNull(reviews);
 		
 		//Handdled by Controller?
-		System.out.println("rating\treview");
 		for (ReviewInterface review : reviews){
 			System.out.println(review.getRating() + "\t" + review.getReview());
 		}

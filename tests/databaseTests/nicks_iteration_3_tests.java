@@ -27,11 +27,6 @@ public class nicks_iteration_3_tests {
 		Collection<VersionInterface> versions = sys.listAllVersions("hp2", "nick");
 		assertNotNull(versions);
 		assertEquals(2, versions.size());
-		
-		System.out.println("Versions for hp2 owned by nick");
-		for (VersionInterface version : versions) {
-			System.out.println(version);
-		}	
 	}
 	
 	@Test
@@ -46,13 +41,7 @@ public class nicks_iteration_3_tests {
 		Collection<BookInterface> books = sys.findBooksByAuthor("jkr", "nick");
 		
 		assertNotNull(books);
-		assertEquals(1, books.size());
-		
-		System.out.println("Books Writen By jkr");
-		for (BookInterface book : books) {
-			System.out.println(book);
-		}
-		
+		assertEquals(1, books.size());		
 	}
 	
 	@Test
