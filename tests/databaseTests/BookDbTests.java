@@ -5,22 +5,30 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.sun.xml.internal.ws.api.addressing.AddressingVersion;
+
 import databaseSupport.DatabaseSupport;
 import interfaces.AuthorInterface;
 import interfaces.BookInterface;
 import interfaces.ReviewInterface;
 import interfaces.SeriesInterface;
+import interfaces.TagInterface;
+import interfaces.UserInterface;
 import interfaces.VersionInterface;
 import models.Author;
 import models.Book;
+import models.EbookSystem;
 import models.Review;
+import models.User;
 
 public class BookDbTests {
 
+	EbookSystem system;
 	DatabaseSupport db;
 	
 	@Before
 	public void setup(){
+		system = new EbookSystem();
 		db = new DatabaseSupport();
 		db.reset();
 	}
@@ -122,7 +130,6 @@ public class BookDbTests {
 		assertEquals(1, b.getAuthors().size());
 		
 		assertEquals(b.getAuthors().get(0).getId(), "jkr");
-		System.out.println(b.getAuthors().get(0).getName());
 		assertEquals(b.getAuthors().get(0).getName(), "J.K. Rowling");
 		
 		b.getAuthors().remove(0);
@@ -274,5 +281,58 @@ public class BookDbTests {
 		Book book = new Book("", "some title");
 		
 		assertFalse(db.putBook(book));
+	}
+	
+	@Test
+	public void deleteBook_Basic() {
+		String bookId = "hp1";
+		
+		assertNotNull(db.getBook(bookId));
+		system.deleteBook(bookId);
+		
+		assertNull(db.getBook(bookId));
+		
+		UserInterface u = db.getUser("adam");
+		for (BookInterface b: u.getAllBooks()) {
+			assertNotEquals(bookId, b.getId());
+		}
+	}
+	
+	@Test
+	public void deleteBook_Nonexistent() {
+		// testing that no exception is thrown
+		system.deleteBook("asdfasdfasdfaslkjdfasd");
+	}
+	
+	@Test
+	public void addVersion() {
+		system.addVersion("adam", "mobydick", "", "mobi");
+		
+		UserInterface u = db.getUser("adam");
+		BookInterface b = u.getBook("mobydick");
+		
+		for (VersionInterface v: b.getVersions()) {
+			if (v.getType().equals("mobi")) {
+				return;
+			}
+		}
+		
+		fail();
+	}
+	
+	@Test
+	public void deleteVersion_Basic() {
+		system.addVersion("adam", "mobydick", "", "mobi");
+		system.deleteVersion("adam", "mobydick", "mobi");
+		
+		UserInterface u = db.getUser("adam");
+		
+		for (BookInterface b: u.getAllBooks()) {
+			if (b.getId().equals("mobydick")) {
+				for (VersionInterface v: b.getVersions()) {
+					assertNotEquals("mobi", v.getType());
+				}
+			}
+		}
 	}
 }
