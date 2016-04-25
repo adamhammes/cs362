@@ -8,11 +8,8 @@ import java.sql.SQLException;
 import interfaces.BookInterface;
 import interfaces.TagInterface;
 import interfaces.UserInterface;
-import interfaces.VersionInterface;
-import models.Book;
 import models.Tag;
 import models.User;
-import models.Version;
 
 class GetUser extends Getable{
 
@@ -86,19 +83,34 @@ class GetUser extends Getable{
 			ResultSet results = stmt.executeQuery();
 			
 			while(results.next()){
-				Book toAdd = new Book(results.getString("book_id"), results.getString("title"));
-
-
-				PreparedStatement versionQuery = conn.prepareStatement("SELECT * FROM Book_Version WHERE book_id = ? AND account_name = ?;");
-				versionQuery.setString(1, toAdd.getId());
-				versionQuery.setString(2, user.getName());
-
-				ResultSet versionResults = versionQuery.executeQuery();
-				while (versionResults.next()) {
-					toAdd.addVersion(versionResults.getString("location"), versionResults.getString("format"));
-				}
+//<<<<<<< HEAD
+//				Book toAdd = new Book(results.getString("book_id"), results.getString("title"));
+//
+//
+//				PreparedStatement versionQuery = conn.prepareStatement("SELECT * FROM Book_Version WHERE book_id = ? AND account_name = ?;");
+//				versionQuery.setString(1, toAdd.getId());
+//				versionQuery.setString(2, user.getName());
+//
+//				ResultSet versionResults = versionQuery.executeQuery();
+//				while (versionResults.next()) {
+//					toAdd.addVersion(versionResults.getString("location"), versionResults.getString("format"));
+//				}
+//				
+//				user.userBooks.put(toAdd.getTitle(), toAdd);
+//=======
+				//Book toAdd = new Book(results.getString("book_id"), results.getString("title"));
+				//user.userBooks.put(toAdd.getId(), toAdd);
+				String bid = results.getString("book_id");
 				
-				user.userBooks.put(toAdd.getTitle(), toAdd);
+//				BookInterface BookInterface book;
+				if (!alreadyPopulatedBooks.containsKey(bid)) {
+					BookInterface book = new GetBook(bid, uid).get(conn);
+					user.userBooks.put(bid, book);
+				}
+				else {
+					user.userBooks.put(bid, alreadyPopulatedBooks.get(bid));
+				}
+//>>>>>>> refs/remotes/origin/nicks_iteration_3
 			}
 	}
 	
@@ -120,10 +132,12 @@ class GetUser extends Getable{
 			if (tag == null){
 				tag = new Tag(results.getString("tag"));
 				user.userTags.put(tag.getName(), tag);
+				System.out.println("new tag created: " + tag.getName());
 			}
-			BookInterface book = user.userBooks.get(results.getString("title"));
+			BookInterface book = user.userBooks.get(results.getString("book_id"));
 			tag.addBook(book);
 			book.addTag(tag);
+			System.out.println("book: " + book.getTitle() + " Tag: " + tag.getName());
 		}
 	}	
 }

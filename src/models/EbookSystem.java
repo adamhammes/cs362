@@ -6,8 +6,10 @@ import interfaces.ReviewInterface;
 import interfaces.SeriesInterface;
 import interfaces.SystemInterface;
 import interfaces.UserInterface;
+import interfaces.VersionInterface;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -80,7 +82,10 @@ public class EbookSystem implements SystemInterface {
 	public List<ReviewInterface> getReviews(String bookId) {
 		DatabaseSupport db = new DatabaseSupport();
 		BookInterface book = db.getBook(bookId);
-		return new ArrayList<>(book.getReviews());
+		if (book != null)
+			return new ArrayList<ReviewInterface>(book.getReviews());
+		else 
+			return null;
 	}
 
 	public boolean addVersion(String uid, String bid, String path, String type) {
@@ -199,12 +204,14 @@ public class EbookSystem implements SystemInterface {
 	}
 
 	@Override
-	public boolean addRating(String uid, String bid, int rating, String review) {
+	public boolean addRating(String bid, int rating, String review) {
 		DatabaseSupport db = new DatabaseSupport();
 		BookInterface book = db.getBook(bid);
+
+		Review r = new Review(-1, rating, review);
+
 		if(book == null)
 			return false;
-		Review r = new Review(Integer.parseInt(bid), rating, review);
 		 
 		if (!book.addReview(r)) {
 			return false;
@@ -281,6 +288,40 @@ public class EbookSystem implements SystemInterface {
 			return false;
 		}
 		return db.putSeries(series);
+	}
+	
+	
+	@Override
+	public Collection<VersionInterface> listAllVersions(String bid, String userId){
+		DatabaseSupport db = new DatabaseSupport();
+		BookInterface book = db.getBook(bid, userId);
+		
+		if (book == null)
+			return null;
+		else
+			return book.getVersions();
+	}
+	
+	@Override
+	public VersionInterface getVersion(String bookid, String format, String userId) {
+		DatabaseSupport db = new DatabaseSupport();
+		
+		BookInterface book = db.getBook(bookid, userId);
+		if (book == null) return null;
+		
+		return book.getVersion(format);
+	
+	}
+	
+	@Override
+	public Collection<BookInterface> findBooksByAuthor(String authorId, String userId) {
+		DatabaseSupport db = new DatabaseSupport();
+		
+		AuthorInterface author = db.getAuthor(authorId, userId);
+		if (author == null)
+			return null;
+		else
+			return author.getBooks();
 	}
 
 	@Override

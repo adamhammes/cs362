@@ -18,7 +18,7 @@ public class addVersionTest {
 	
 	@Test
 	public void test() {
-		assertTrue(sys.addVersion("adam", "Worm", "/path/to/somewhere", "epub"));
+		assertTrue(sys.addVersion("adam", "worm", "/path/to/somewhere", "epub"));
 		// TODO: actual test :)
 	}
 

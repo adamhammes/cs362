@@ -36,14 +36,14 @@ public class User implements UserInterface {
      * Adds tags a book owned by the user. If the tag does not exist a tag will
      * be created.
      * 
-     * @param bookTitle the title of the book to tag
+     * @param bid the title of the book to tag
      * @param tagName what to tag the book with
      * @return successfully completed operation
      */
-	public boolean addTag(String bookTitle, String tagName) {
+	public boolean addTag(String bid, String tagName) {
 		TagInterface tag = getTag(tagName);
-		BookInterface book = getBookByTitle(bookTitle);
-		
+		BookInterface book = getBookById(bid);
+
 		if (book != null){
 			tag.addBook(book);
 			book.addTag(tag);
@@ -56,7 +56,7 @@ public class User implements UserInterface {
 	
 	
 	@Override
-	public boolean removeTag(String bookTitle, String tag) {
+	public boolean removeTag(String bid, String tag) {
 		if (!userTags.containsKey(tag)) {
 			return false;
 		}
@@ -65,7 +65,7 @@ public class User implements UserInterface {
 		if (t == null)
 			return false;
 		
-		BookInterface book = t.getBook(bookTitle);
+		BookInterface book = t.getBook(bid);
 		if (book == null)
 			return false;
 		
@@ -107,10 +107,10 @@ public class User implements UserInterface {
 	
 	
 	/**
-	 * Retrieves teh users book specified by the book title. If the user does not own 
-	 * a book by this title, then null will be returned.
+	 * Retrieves the users book specified by the book id. If the user does not own 
+	 * a book by this id, then null will be returned.
 	 * 
-	 * @param bookTitle title of the book to retrieve
+	 * @param bid title of the book to retrieve
 	 * @return requested book
 	 */
 	public BookInterface getBookByTitle(String bookTitle){
@@ -125,6 +125,7 @@ public class User implements UserInterface {
 		}
 		return null;
 	}
+
 	
 	public void printUser(){
 		System.out.println("name: " + name);
@@ -184,11 +185,11 @@ public class User implements UserInterface {
 
 	@Override
 	public boolean addVersion(String bid, String path, String type) {
-		BookInterface book = getBookById(bid);
-		if (null == book) {
-			return false;
-		}
 
+		BookInterface book = getBookById(bid);
+		if (book == null)
+			return false;
+		
 		return book.addVersion(path, type);
 	}
 

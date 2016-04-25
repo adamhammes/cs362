@@ -51,4 +51,9 @@ public class Review implements ReviewInterface {
 		setReview(newReview);
 	}
 
+	
+	@Override
+	public String toString(){
+		return id + " " + rating + " " + review;
+	}
 }

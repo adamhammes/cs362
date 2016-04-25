@@ -80,7 +80,12 @@ public class Book implements BookInterface, Comparable<BookInterface> {
 	public boolean addVersion(String path, String type) {
 		return this.versions.add(new Version(path, type));
 	}
-
+	
+	//for database use
+	public boolean addVersion(VersionInterface version) {
+		return this.versions.add(version);
+	}
+	
 	@Override
 	public boolean removeTag(TagInterface t) {
 		return tags.remove(t);
@@ -199,7 +204,14 @@ public class Book implements BookInterface, Comparable<BookInterface> {
 	public boolean equals(Object other){
 		return id.equals(((Book) other).id);
 	}
-
+	
+	@Override
+	public String toString(){
+		return "Id: " + id + ",  " + 
+				"Title: " + title + ",  " + 
+				(description != null ? "Description: " + description : "");
+	}
+	
 	@Override
 	public VersionInterface getVersion(String type) {
 		for (VersionInterface v: versions) {
@@ -210,8 +222,4 @@ public class Book implements BookInterface, Comparable<BookInterface> {
 		return null;
 	}
 	
-	@Override
-	public String toString() {
-		return id;
-	}
 }

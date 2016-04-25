@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import interfaces.BookInterface;
 import interfaces.ReviewInterface;
 import interfaces.SeriesInterface;
-import models.Author;
 import models.Book;
 import models.Review;
 
@@ -79,7 +78,7 @@ class GetBook extends Getable{
 		
 		if (results.next()) {
 			book = new Book(results.getString("book_id"), results.getString("title"), results.getString("description"));
-			alreadyPopulatedBooks.add(bid); //Add book to list of books already retrieved
+			alreadyPopulatedBooks.put(bid, book); //Add book to list of books already retrieved
 		}
 	}
 	
