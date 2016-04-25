@@ -305,19 +305,23 @@ public class BookDbTests {
 	@Test
 	public void getVersion() {
 		UserInterface u = db.getUser("adam");
-		BookInterface b = u.getBook("hp1");
+		BookInterface b = u.getBookById("hp1");
 		assertNotNull(b.getVersion("mobi"));
 	}
 	
 	@Test
 	public void addVersion() {
-		assertTrue(system.addVersion("adam", "mobydick", "", "mobi"));
+		String uid = "nick";
+		String bid = "hp1";
+		String format = "mobi";
 		
-		UserInterface u = db.getUser("adam");
-		BookInterface b = u.getBook("mobydick");
+		assertTrue(system.addVersion(uid, bid, "", format));
+		
+		UserInterface u = db.getUser(uid);
+		BookInterface b = u.getBookById(bid);
 		
 		for (VersionInterface v: b.getVersions()) {
-			if (v.getType().equals("mobi")) {
+			if (v.getType().equals(format)) {
 				return;
 			}
 		}
@@ -331,7 +335,7 @@ public class BookDbTests {
 		system.deleteVersion("adam", "mobydick", "mobi");
 		
 		UserInterface u = db.getUser("adam");
-		BookInterface b = u.getBook("mobydick");
+		BookInterface b = u.getBookById("mobydick");
 		
 		for (VersionInterface v: b.getVersions()) {
 			assertNotEquals("mobi", v.getType());

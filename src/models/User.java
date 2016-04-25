@@ -5,6 +5,7 @@ import interfaces.TagInterface;
 import interfaces.UserInterface;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -41,7 +42,7 @@ public class User implements UserInterface {
      */
 	public boolean addTag(String bookTitle, String tagName) {
 		TagInterface tag = getTag(tagName);
-		BookInterface book = getBook(bookTitle);
+		BookInterface book = getBookByTitle(bookTitle);
 		
 		if (book != null){
 			tag.addBook(book);
@@ -112,9 +113,18 @@ public class User implements UserInterface {
 	 * @param bookTitle title of the book to retrieve
 	 * @return requested book
 	 */
-	public BookInterface getBook(String bookTitle){
+	public BookInterface getBookByTitle(String bookTitle){
 		return userBooks.get(bookTitle);
-	}	
+	}
+	
+	public BookInterface getBookById(String id) {
+		for (BookInterface b: getAllBooks()) {
+			if (b.getId().equals(id)) {
+				return b;
+			}
+		}
+		return null;
+	}
 	
 	public void printUser(){
 		System.out.println("name: " + name);
@@ -174,7 +184,11 @@ public class User implements UserInterface {
 
 	@Override
 	public boolean addVersion(String bid, String path, String type) {
-		BookInterface book = getBook(bid);
+		BookInterface book = getBookById(bid);
+		if (null == book) {
+			return false;
+		}
+
 		return book.addVersion(path, type);
 	}
 
