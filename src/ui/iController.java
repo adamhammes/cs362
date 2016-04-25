@@ -1,9 +1,11 @@
 package ui;
 
+import java.util.Collection;
 import java.util.List;
 
 import interfaces.BookInterface;
 import interfaces.ReviewInterface;
+import interfaces.VersionInterface;
 
 public interface iController {
 
@@ -41,6 +43,11 @@ public interface iController {
 	public String editDescription(String input);
 	public String removeDescription(String input);
 	public String retrieveDescription(String input);
+	
+	// Nick Iteration 3
+	public String listAllVersions(String input);
+	public String getVersion(String input);
+	public String findBooksByAuthor(String input);
 	
 	// Adam Iteration 3
 	public String deleteUser(String input);
