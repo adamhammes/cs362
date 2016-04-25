@@ -112,7 +112,7 @@ public class User implements UserInterface {
 	 * @param bookTitle title of the book to retrieve
 	 * @return requested book
 	 */
-	private BookInterface getBook(String bookTitle){
+	public BookInterface getBook(String bookTitle){
 		return userBooks.get(bookTitle);
 	}	
 	
