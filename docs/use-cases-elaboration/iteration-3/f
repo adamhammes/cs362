@@ -1,0 +1,39 @@
+\documentclass{article}
+
+\title{Use Case Elaboration: Find Book by Author}
+\author{ Nicholas Riesen }
+
+\pagenumbering{gobble}
+
+\begin{document}
+\maketitle
+
+
+\section*{Use Case}
+\begin{tabular}{l l}
+Use Case:     & Find Book by Author\\
+Actor:        & User\\
+Precondition: & User logged in\\
+\end{tabular}
+
+
+\section*{Main Success Scenario:}
+
+\begin{enumerate}
+    \item User provides an author id
+    \item System lists all books written by the author
+ 
+\end{enumerate}
+
+\section*{Extensions}
+
+\begin{itemize}
+    \item [1a.] Author ID is not valid \\
+         - System indicates unable to find author
+\end{itemize}
+
+
+\section*{Information Expert}
+The information expert is System and Author. System knows Author, and author knows about the books it owns.
+
+\end{document}
