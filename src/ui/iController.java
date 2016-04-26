@@ -45,9 +45,9 @@ public interface iController {
 	public String retrieveDescription(String input);
 	
 	// Nick Iteration 3
-	public String listAllVersions(String input);
+	public String listVersions(String input);
 	public String getVersion(String input);
-	public String findBooksByAuthor(String input);
+	public String getBooksWithAuthor(String input);
 	
 	// Adam Iteration 3
 	public String deleteUser(String input);
