@@ -103,6 +103,9 @@ public class Controller implements iController{
 			case "listversions":
 				return listVersions(command);
 				
+			case "getversion":
+				return getVersion(command);
+				
 			default:
 				return "Invalid Command. Please try again";
 		}
@@ -550,8 +553,20 @@ public class Controller implements iController{
 
 	@Override
 	public String getVersion(String input) {
-		// TODO Auto-generated method stub
-		return null;
+		String[] args = input.split("-");
+		if (args.length < 4)
+			return "Please enter all required inputs";
+		String bookId = args[1];
+		String format = args[2];
+		String userId = args[3];
+		
+		VersionInterface version = system.getVersion(bookId, format, userId);
+		if (version != null){
+			return version.toString();
+		}
+		else {
+			return "Unable to execute operation";  
+		}
 	}
 	
 }
