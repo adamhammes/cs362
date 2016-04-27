@@ -74,12 +74,15 @@ class GetUser extends Getable{
 	
 	/**
 	 * Retrieves all books owned by the specified user id and attaches them to the provided user.
-	 * 
+	 *
 	 * @param conn database connection
 	 * @throws SQLException
 	 */
 	private void retreiveBooks(Connection conn) throws SQLException{
-			PreparedStatement stmt = conn.prepareStatement("SELECT book.book_id, book.title FROM account_book join book on account_book.book_id=book.book_id where account_book.account_name=?;");
+			PreparedStatement stmt = conn.prepareStatement(
+					  "SELECT book.book_id, book.title "
+					+ "FROM account_book join book "
+					+ "ON account_book.book_id=book.book_id where account_book.account_name=?;");
 			stmt.setString(1, uid);
 			ResultSet results = stmt.executeQuery();
 			
@@ -95,7 +98,6 @@ class GetUser extends Getable{
 					toAdd.addVersion(versionResults.getString("location"), versionResults.getString("format"));
 				}
 				
-				user.userBooks.put(toAdd.getTitle(), toAdd);
 				String bid = results.getString("book_id");
 				
 				if (!alreadyPopulatedBooks.containsKey(bid)) {
