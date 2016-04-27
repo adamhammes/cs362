@@ -47,6 +47,7 @@ public interface SystemInterface {
 	public boolean deleteVersion(String uid, String bid, String format);
 	
 	//Steven Iteration 3
+	public boolean addAuthor(String aid, String name);
 	public boolean addAuthorDescription(String aid, String desc);
 	public boolean editAuthorDescription(String aid, String desc);
 	public boolean removeAuthorDescription(String aid);

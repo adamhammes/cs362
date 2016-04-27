@@ -55,6 +55,7 @@ public interface iController {
 	public String deleteVersion(String input);
 	
 	//Steven Iteration 3
+	public String addAuthor(String input);
 	public String addAuthorDescription(String input);
 	public String editAuthorDescription(String input);
 	public String removeAuthorDescription(String input);

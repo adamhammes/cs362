@@ -106,11 +106,13 @@ public class Controller implements iController{
 			case "getversion":
 				return getVersion(command);
 				
+			case "addauthor":
+				return addAuthor(command);
+				
 			default:
 				return "Invalid Command. Please try again";
 		}
 	}
-
 
 	@Override
 	public String addUser(String input) {
@@ -567,6 +569,19 @@ public class Controller implements iController{
 		else {
 			return "Unable to execute operation";  
 		}
+	}
+
+	@Override
+	public String addAuthor(String input) {
+		String[] args = input.split("-");
+		if(args.length != 3)
+			return "Please enter all required inputs";
+		String aid = args[1];
+		String name = args[2];
+		
+		boolean b = system.addAuthor(aid, name);
+		if(b) return "Author Added";
+		else return "Unable to execute operation";
 	}
 	
 }
