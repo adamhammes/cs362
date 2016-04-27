@@ -161,7 +161,7 @@ class PutBook extends Putable{
 	private void putReviews(Connection conn) throws SQLException {
 		
 		PreparedStatement insertstmt = conn.prepareStatement("INSERT INTO book_review (book_id, review_id, rating, review) VALUES (?, ?, ?, ?) "
-															+ " ON CONFLICT (review_id) DO NOTHING;");
+															+ " ON CONFLICT (review_id) DO UPDATE SET rating=?, review=?;");
 		insertstmt.setString(1, book.getId());
 		
 		//Setup for remove
@@ -181,6 +181,8 @@ class PutBook extends Putable{
 			insertstmt.setInt(2, rev.getId());
 			insertstmt.setInt(3, rev.getRating());
 			insertstmt.setString(4, rev.getReview());
+			insertstmt.setInt(5, rev.getRating());
+			insertstmt.setString(6, rev.getReview());
 
 			insertstmt.executeUpdate();
 			

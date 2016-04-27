@@ -40,16 +40,18 @@ public class RatingAndReviewTest {
 	@Test
 	public void UpdateReview(){
 		EbookSystem sys = new EbookSystem();
-		boolean result = sys.updateReview("mobydick", 1, 5, "Not as boaring as I thought");
+//		boolean result = sys.updateReview("mobydick", 1, 5, "Not as boring as I thought");
+		boolean result = sys.updateReview("mobydick", 0, 5, "Not as boring as I thought");
+
 		
 		assertTrue(result);
 		
 		Collection<ReviewInterface> reviews= sys.getReviews("mobydick");
 		assertNotNull(reviews);
 		for (ReviewInterface review : reviews){
-			if (review.getId() == 1){
+			if (review.getId() == 0){
 				assertEquals(review.getRating(), 5);
-				assertEquals(review.getReview(), "Not as boaring as I thought");
+				assertEquals(review.getReview(), "Not as boring as I thought");
 				return;
 			}
 		}

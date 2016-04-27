@@ -90,10 +90,10 @@ INSERT INTO Account_Book (account_name, book_id) VALUES
 	('nick', 'hp1'),
 	('nick', 'hp2');
 
-INSERT INTO Book_Review (book_id, review, rating) VALUES
-	('mobydick', 'boring', 1),
-	('mobydick', 'classic', 2),
-	('worm', 'my favorite book', 5);
+INSERT INTO Book_Review (book_id, review_id, review, rating) VALUES
+	('mobydick', 0, 'boring', 1),
+	('mobydick', 1, 'classic', 2),
+	('worm', 3, 'my favorite book', 5);
 
 INSERT INTO Book_Tag VALUES
 	('adam', 'worm', 'fantasy'),
