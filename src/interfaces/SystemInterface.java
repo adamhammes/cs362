@@ -54,7 +54,6 @@ public interface SystemInterface {
 	public String retrieveAuthorDescription(String aid);
 	
 	// for demo
-	public boolean addAuthor(String aid, String name);
 	public boolean addAuthorToBook(String aid, String bid);
 	public boolean createSeries(String sid, String name);
 	
