@@ -399,14 +399,11 @@ public class EbookSystem implements SystemInterface {
 	@Override
 	public boolean addAuthor(String aid, String name) {
 		DatabaseSupport db = new DatabaseSupport();
-<<<<<<< HEAD
 		
 		Author a = new Author(aid, name);
 		return db.putAuthor(a);
 	}
-=======
-		return db.putAuthor(new Author(aid, name));
-	}
+
 
 	@Override
 	public boolean addAuthorToBook(String aid, String bid) {
@@ -421,6 +418,7 @@ public class EbookSystem implements SystemInterface {
 		return book.addAuthor(author) && db.putBook(book);
 	}
 
+	
 	@Override
 	public boolean createSeries(String sid, String name) {
 		DatabaseSupport db = new DatabaseSupport();
@@ -428,6 +426,5 @@ public class EbookSystem implements SystemInterface {
 		return db.putSeries(series);
 	}
 	
-	
->>>>>>> origin/master
 }
+
