@@ -20,3 +20,18 @@ addAuthorDescription-i-Fantastic author
 editAuthorDescription-i-Fantastic author minus the latest book
 retrieveDescription-i
 deleteDescription-i
+
+//Nicks Stuff
+addtag-hp2-funny-nick
+getbookswithtag-funny-nick
+removetag-hp2-funny-nick
+getbookswithtag-funny-nick
+
+addrating-hp2-4-AWESOME BOOK
+getreviews-hp2
+removerating-hp2-5
+getreviews-hp2
+
+listversions-hp2-nick
+getversion-hp2-tex-nick
+getbookswithauthor-jkr
