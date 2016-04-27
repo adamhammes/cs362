@@ -98,6 +98,7 @@ public class DatabaseSupport implements DatabaseSupportInterface {
 			return put.put(conn);
 		}
 		catch(SQLException | ClassNotFoundException e) {
+			System.out.println(e.getMessage());
 			return false;
 		}
 		finally {

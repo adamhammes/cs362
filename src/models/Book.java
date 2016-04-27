@@ -25,7 +25,7 @@ public class Book implements BookInterface, Comparable<BookInterface> {
     public Book(String id, String title) {
         this.id = id;
         this.title = title;
-        this.description = null;
+        this.description = "";
     }
 
     public Book(String id, String title, String description){
@@ -163,8 +163,6 @@ public class Book implements BookInterface, Comparable<BookInterface> {
 	
 	@Override
 	public boolean addDescription(String desc){
-		if(this.description.isEmpty())
-			return false;
 		this.description = desc;
 		return true;
 	}

@@ -109,9 +109,43 @@ public class Controller implements iController{
 			case "addauthor":
 				return addAuthor(command);
 				
+			case "addauthortobook":
+				return addAuthorToBook(command);
+				
+			case "createseries":
+				return createseries(command);
+				
 			default:
 				return "Invalid Command. Please try again";
 		}
+	}
+
+
+	private String createseries(String command) {
+		String[] args = command.split("-");
+		
+		if (args.length != 3) {
+			return "Incorrect number of arguments";
+		}
+		
+		boolean result = system.createSeries(args[1], args[2]);
+		
+		return result ? "Series " + args[2] + " created" :
+						"Operation failed";
+	}
+
+
+	private String addAuthorToBook(String command) {
+		String[] args = command.split("-");
+		
+		if (args.length != 3) {
+			return "Incorrect number of arguments";
+		}
+		
+		boolean result = system.addAuthorToBook(args[1], args[2]);
+		
+		return result ? "Author " + args[1] + " added to book " + args[2] :
+						"Operation failed";
 	}
 
 
@@ -181,7 +215,7 @@ public class Controller implements iController{
 		String uid = args[3];
 				
 		if (system.addTag(uid, bid, tag))
-			return "";
+			return "Operation succeeded";
 		else
 			return "Unable to add tag";
 	}
@@ -197,7 +231,7 @@ public class Controller implements iController{
 		String uid = args[3];
 				
 		if (system.removeTag(uid, bid, tag))
-			return "";
+			return "Operation succeeded";
 		else
 			return "Unable to remove tag";
 	}
@@ -252,7 +286,7 @@ public class Controller implements iController{
 			int value = Integer.parseInt(rating.trim());
 			System.out.println(value);
 			if (system.addRating(bid, value, review)) {
-				return "";
+				return "Operation succeeded";
 			}
 			else {
 				return "unable to submit review";
@@ -354,7 +388,7 @@ public class Controller implements iController{
 		
 		try {
 			if (system.removeRating(bookId, Integer.parseInt(reviewId))){
-				return "";
+				return "Operation succeeded";
 			}
 			else {
 				return "unable to remove rateing";
@@ -509,7 +543,7 @@ public class Controller implements iController{
 			return "Please enter all required inputs";
 		String aid = input.split("-")[1];
 		
-		boolean b = system.removeDescription(aid);
+		boolean b = system.removeAuthorDescription(aid);
 
 		if(b) return "Author description deleted";
 		else return "Action not completed. Please try again";
@@ -521,7 +555,7 @@ public class Controller implements iController{
 			return "Please enter all required inputs";
 		String aid = input.split("-")[1];
 		
-		String result = system.retrieveDescription(aid);
+		String result = system.retrieveAuthorDescription(aid);
 
 		if(result != null) return result;
 		else return "Action not completed. Please try again";

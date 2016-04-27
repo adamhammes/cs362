@@ -15,6 +15,8 @@ import java.util.List;
 
 import javax.xml.crypto.Data;
 
+import org.postgresql.ssl.DbKeyStoreSocketFactory.DbKeyStoreSocketException;
+
 import databaseSupport.DatabaseSupport;
 
 public class EbookSystem implements SystemInterface {
@@ -395,4 +397,26 @@ public class EbookSystem implements SystemInterface {
 		DatabaseSupport db = new DatabaseSupport();
 		return db.putAuthor(new Author(aid, name));
 	}
+
+	@Override
+	public boolean addAuthorToBook(String aid, String bid) {
+		DatabaseSupport db = new DatabaseSupport();
+		BookInterface book = db.getBook(bid);
+		AuthorInterface author = db.getAuthor(aid);
+		
+		if (null == book || null == author) {
+			 return false;
+		}
+		
+		return book.addAuthor(author) && db.putBook(book);
+	}
+
+	@Override
+	public boolean createSeries(String sid, String name) {
+		DatabaseSupport db = new DatabaseSupport();
+		SeriesInterface series = new Series(sid, name);
+		return db.putSeries(series);
+	}
+	
+	
 }
