@@ -1,6 +1,9 @@
+adduser-u
+addbook-u-x-Twig
+addversion-u-x-documents/Twig.mobi-mobi
 
-
-
+addbook-u-y-Twig 2
+addbook-u-z-Twig 3
 
 // Steven's portion (assumes user with id u, book with id x,y,z , and author with id i)
 addRating-x-8-Amazing book
