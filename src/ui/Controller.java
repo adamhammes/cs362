@@ -1,5 +1,6 @@
 package ui;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -127,7 +128,7 @@ public class Controller implements iController{
 		return result ? "User " + args[1] + " added" :
 						"Operation failed";
 	}
-
+ 
 	@Override
 	public String addBook(String input) {
 		String[] args = input.split("-");
@@ -219,9 +220,14 @@ public class Controller implements iController{
 		String uid = input.split("-")[1];
 		List<BookInterface> l = system.displayAllBooks(uid);
 		if(l == null) return "Action not completed. Please try again";
+		ArrayList<String> titles = new ArrayList<>();
 		String result = "";
 		for(BookInterface b : l){
-			result += b.getTitle() + "\n";
+			if(!titles.contains(b.getTitle())){
+				result += b.getTitle() + "\n";
+				titles.add(b.getTitle());
+			}
+			
 		}
 		return result;
 	}
@@ -235,9 +241,8 @@ public class Controller implements iController{
 
 		try {
 			int value = Integer.parseInt(rating.trim());
-			System.out.println(value);
 			if (system.addRating(bid, value, review)) {
-				return "";
+				return "Rating added";
 			}
 			else {
 				return "unable to submit review";
@@ -255,9 +260,13 @@ public class Controller implements iController{
 		String uid = input.split("-")[1];
 		List<BookInterface> l = system.displayAllBooksByRating(uid);
 		if(l == null) return "Action not completed. Please try again";
+		ArrayList<String> titles = new ArrayList<>();
 		String result = "";
 		for(BookInterface b : l){
-			result += b.getTitle() + "\n";
+			if(!titles.contains(b.getTitle())){
+				result += b.getTitle() + "\n";
+				titles.add(b.getTitle());
+			}
 		}
 		return result;
 	}
@@ -469,7 +478,7 @@ public class Controller implements iController{
 		String aid = input.split("-")[1];
 		String desc = input.split("-")[2];
 		
-		boolean b = system.addDescription(aid, desc);
+		boolean b = system.addAuthorDescription(aid, desc);
 
 		if(b) return "Author description added";
 		else return "Action not completed. Please try again";
@@ -482,7 +491,7 @@ public class Controller implements iController{
 		String aid = input.split("-")[1];
 		String desc = input.split("-")[2];
 		
-		boolean b = system.addDescription(aid, desc);
+		boolean b = system.editAuthorDescription(aid, desc);
 
 		if(b) return "Author description edited";
 		else return "Action not completed. Please try again";
@@ -494,7 +503,7 @@ public class Controller implements iController{
 			return "Please enter all required inputs";
 		String aid = input.split("-")[1];
 		
-		boolean b = system.removeDescription(aid);
+		boolean b = system.removeAuthorDescription(aid);
 
 		if(b) return "Author description deleted";
 		else return "Action not completed. Please try again";
@@ -506,7 +515,7 @@ public class Controller implements iController{
 			return "Please enter all required inputs";
 		String aid = input.split("-")[1];
 		
-		String result = system.retrieveDescription(aid);
+		String result = system.retrieveAuthorDescription(aid);
 
 		if(result != null) return result;
 		else return "Action not completed. Please try again";

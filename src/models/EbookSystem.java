@@ -134,7 +134,8 @@ public class EbookSystem implements SystemInterface {
 		if (b == null)
 			return false;
 
-		b.addDescription(desc);
+		if(!b.addDescription(desc))
+			return false;
 		return (db.putBook(b));
 
 	}
@@ -352,7 +353,8 @@ public class EbookSystem implements SystemInterface {
 		if(a == null) 
 			return false;
 		
-		return a.addDescription(desc);
+		a.addDescription(desc);
+		return db.putAuthor(a);  
 	}
 
 	@Override
@@ -362,7 +364,8 @@ public class EbookSystem implements SystemInterface {
 		if(a == null) 
 			return false;
 		
-		return a.addDescription(desc);
+		a.addDescription(desc);
+		return db.putAuthor(a);  
 	}
 
 	@Override
@@ -372,7 +375,8 @@ public class EbookSystem implements SystemInterface {
 		if(a == null) 
 			return false;
 		
-		return a.deleteDescription();
+		a.deleteDescription();
+		return db.putAuthor(a);  
 	}
 
 	@Override
