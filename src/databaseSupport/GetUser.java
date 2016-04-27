@@ -80,24 +80,11 @@ class GetUser extends Getable{
 	 */
 	private void retreiveBooks(Connection conn) throws SQLException{
 			PreparedStatement stmt = conn.prepareStatement(
-					  "SELECT book.book_id, book.title "
-					+ "FROM account_book join book "
-					+ "ON account_book.book_id=book.book_id where account_book.account_name=?;");
+					"SELECT book_id FROM account_book WHERE account_name=?;");
 			stmt.setString(1, uid);
 			ResultSet results = stmt.executeQuery();
 			
-			while(results.next()){
-				BookInterface toAdd = new Book(results.getString("book_id"), results.getString("title"));
-
-				PreparedStatement versionQuery = conn.prepareStatement("SELECT * FROM Book_Version WHERE book_id = ? AND account_name = ?;");
-				versionQuery.setString(1, toAdd.getId());
-				versionQuery.setString(2, user.getName());
-
-				ResultSet versionResults = versionQuery.executeQuery();
-				while (versionResults.next()) {
-					toAdd.addVersion(versionResults.getString("location"), versionResults.getString("format"));
-				}
-				
+			while(results.next()){				
 				String bid = results.getString("book_id");
 				
 				if (!alreadyPopulatedBooks.containsKey(bid)) {
