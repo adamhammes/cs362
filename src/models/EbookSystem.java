@@ -389,4 +389,10 @@ public class EbookSystem implements SystemInterface {
 		
 		return a.retreveDescription();
 	}
+
+	@Override
+	public boolean addAuthor(String aid, String name) {
+		DatabaseSupport db = new DatabaseSupport();
+		return db.putAuthor(new Author(aid, name));
+	}
 }

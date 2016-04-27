@@ -106,9 +106,26 @@ public class Controller implements iController{
 			case "getversion":
 				return getVersion(command);
 				
+			case "addauthor":
+				return addAuthor(command);
+				
 			default:
 				return "Invalid Command. Please try again";
 		}
+	}
+
+
+	private String addAuthor(String command) {
+		String[] args = command.split("-");
+		
+		if (args.length != 3) {
+			return "Incorrect number of arguments";
+		}
+		
+		boolean result = system.addAuthor(args[1], args[2]);
+		
+		return result ? "Author " + args[1] + " added" :
+						"Operation failed";
 	}
 
 
@@ -467,7 +484,7 @@ public class Controller implements iController{
 		String aid = input.split("-")[1];
 		String desc = input.split("-")[2];
 		
-		boolean b = system.addDescription(aid, desc);
+		boolean b = system.addAuthorDescription(aid, desc);
 
 		if(b) return "Author description added";
 		else return "Action not completed. Please try again";

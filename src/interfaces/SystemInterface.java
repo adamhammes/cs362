@@ -52,4 +52,7 @@ public interface SystemInterface {
 	public boolean removeAuthorDescription(String aid);
 	public String retrieveAuthorDescription(String aid);
 	
+	// for demo
+	public boolean addAuthor(String aid, String name);
+	
 }
