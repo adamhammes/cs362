@@ -497,7 +497,7 @@ public class Controller implements iController{
 		String aid = input.split("-")[1];
 		String desc = input.split("-")[2];
 		
-		boolean b = system.addDescription(aid, desc);
+		boolean b = system.addAuthorDescription(aid, desc);
 
 		if(b) return "Author description edited";
 		else return "Action not completed. Please try again";
