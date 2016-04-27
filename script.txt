@@ -28,14 +28,18 @@ displayAllBooks-u
 displayAllBooksByRating-u
 
 addDescription-x-Awesome story, I'm halfway through
+retrieveDescription-x
 editDescription-x-Wow the ending ruined it
 retrieveDescription-x
-deleteDescription-x
+removeDescription-x
+retrieveDescription-x
 
 addAuthorDescription-i-Fantastic author
+retrieveAuthorDescription-i
 editAuthorDescription-i-Fantastic author minus the latest book
 retrieveAuthorDescription-i
-deleteAuthorDescription-i
+removeAuthorDescription-i
+retrieveAuthorDescription-i
 
 //Nicks Stuff
 addtag-x-funny-u
