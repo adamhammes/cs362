@@ -269,14 +269,19 @@ public class Controller implements iController{
 
 	@Override
 	public String addRating(String input) {
-		String args[] = input.split("-");
-		String bid = args[1];
-		String rating = args[2];
-		String review = args[3];
+		String[] args = input.split("-");
+		if (args.length < 5) {
+			return "Incorrect number of arguments";
+		}
+		String rid = args[1];
+		String bid = args[2];
+		String rating = args[3];
+		String review = args[4];
 
 		try {
+			int reviewId = Integer.parseInt(rid.trim());
 			int value = Integer.parseInt(rating.trim());
-			if (system.addRating(bid, value, review)) {
+			if (system.addRating(reviewId, bid, value, review)) {
 
 				return "Operation succeeded";
 			}

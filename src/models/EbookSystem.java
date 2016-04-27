@@ -215,11 +215,11 @@ public class EbookSystem implements SystemInterface {
 	}
 
 	@Override
-	public boolean addRating(String bid, int rating, String review) {
+	public boolean addRating(Integer rid, String bid, int rating, String review) {
 		DatabaseSupport db = new DatabaseSupport();
 		BookInterface book = db.getBook(bid);
 
-		Review r = new Review(-1, rating, review);
+		Review r = new Review(rid, rating, review);
 
 		if(book == null)
 			return false;

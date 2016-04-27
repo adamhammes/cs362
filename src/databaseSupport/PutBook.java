@@ -160,10 +160,9 @@ class PutBook extends Putable{
 	 */
 	private void putReviews(Connection conn) throws SQLException {
 		
-		PreparedStatement insertstmt = conn.prepareStatement("INSERT INTO book_review (book_id, rating, review) VALUES (?, ?, ?);", new String[]{"review_id"});
+		PreparedStatement insertstmt = conn.prepareStatement("INSERT INTO book_review (book_id, review_id, rating, review) VALUES (?, ?, ?, ?) "
+															+ " ON CONFLICT (review_id) DO NOTHING;");
 		insertstmt.setString(1, book.getId());
-		PreparedStatement updatestmt = conn.prepareStatement("UPDATE book_review SET book_id=?, rating=?, review=? WHERE review_id=?;");
-		updatestmt.setString(1, book.getId());
 		
 		//Setup for remove
 		StringBuffer rmSQL = new StringBuffer("DELETE FROM book_review WHERE (review_id) NOT IN "
@@ -175,24 +174,16 @@ class PutBook extends Putable{
 
 		PreparedStatement rmstmt = conn.prepareStatement(rmSQL.toString());
 		rmstmt.setString(1, book.getId());
-		
+
 		int index = 2;
 		for (ReviewInterface rev : book.getReviews()){
-			if (rev.getId() == -1){
-				insertstmt.setInt(2, rev.getRating());
-				insertstmt.setString(3, rev.getReview());
-				insertstmt.executeUpdate();
-				
-				//Retrieve generated key from query so that the -1 doesn't conflict with the remove statement
-				insertstmt.getGeneratedKeys().next();
-				rev.setId(insertstmt.getGeneratedKeys().getInt("review_id"));
-			}
-			else{
-				updatestmt.setInt(2, rev.getRating());
-				updatestmt.setString(3, rev.getReview());
-				updatestmt.setInt(4, rev.getId());
-				updatestmt.executeUpdate();
-			}
+			insertstmt.setString(1, book.getId());
+			insertstmt.setInt(2, rev.getId());
+			insertstmt.setInt(3, rev.getRating());
+			insertstmt.setString(4, rev.getReview());
+
+			insertstmt.executeUpdate();
+			
 			rmstmt.setInt(index++, rev.getId());
 		}
 		if (book.getReviews().size() > 0) {

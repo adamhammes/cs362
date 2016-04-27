@@ -38,7 +38,7 @@ CREATE TABLE Book_Version (
 
 CREATE TABLE Book_Review (
     book_id VARCHAR REFERENCES Book (book_id),
-    review_id SERIAL PRIMARY KEY,
+    review_id INTEGER PRIMARY KEY,
     rating INTEGER,
     review TEXT
 );

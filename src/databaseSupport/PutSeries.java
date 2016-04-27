@@ -38,6 +38,8 @@ class PutSeries extends Putable{
 		stmt.setString(2, series.getName());
 		stmt.setString(3, series.getName());
 		
+		System.out.println(stmt);
+		
 		stmt.executeUpdate();
 		alreadyStoredSeries.add(series.getId());
 	}
