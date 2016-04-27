@@ -109,11 +109,46 @@ public class Controller implements iController{
 				
 			case "addauthor":
 				return addAuthor(command);
+
+			case "addauthortobook":
+				return addAuthorToBook(command);
 				
+			case "createseries":
+				return createseries(command);
+
 			default:
 				return "Invalid Command. Please try again";
 		}
 	}
+
+
+	private String createseries(String command) {
+		String[] args = command.split("-");
+		
+		if (args.length != 3) {
+			return "Incorrect number of arguments";
+		}
+		
+		boolean result = system.createSeries(args[1], args[2]);
+		
+		return result ? "Series " + args[2] + " created" :
+						"Operation failed";
+	}
+
+
+	private String addAuthorToBook(String command) {
+		String[] args = command.split("-");
+		
+		if (args.length != 3) {
+			return "Incorrect number of arguments";
+		}
+		
+		boolean result = system.addAuthorToBook(args[1], args[2]);
+		
+		return result ? "Author " + args[1] + " added to book " + args[2] :
+						"Operation failed";
+	}
+
 
 	@Override
 	public String addUser(String input) {
@@ -167,7 +202,7 @@ public class Controller implements iController{
 		String uid = args[3];
 				
 		if (system.addTag(uid, bid, tag))
-			return "";
+			return "Operation succeeded";
 		else
 			return "Unable to add tag";
 	}
@@ -183,7 +218,7 @@ public class Controller implements iController{
 		String uid = args[3];
 				
 		if (system.removeTag(uid, bid, tag))
-			return "";
+			return "Operation succeeded";
 		else
 			return "Unable to remove tag";
 	}
@@ -242,7 +277,8 @@ public class Controller implements iController{
 		try {
 			int value = Integer.parseInt(rating.trim());
 			if (system.addRating(bid, value, review)) {
-				return "Rating added";
+
+				return "Operation succeeded";
 			}
 			else {
 				return "unable to submit review";
@@ -348,7 +384,7 @@ public class Controller implements iController{
 		
 		try {
 			if (system.removeRating(bookId, Integer.parseInt(reviewId))){
-				return "";
+				return "Operation succeeded";
 			}
 			else {
 				return "unable to remove rateing";
@@ -492,6 +528,7 @@ public class Controller implements iController{
 		String desc = input.split("-")[2];
 		
 		boolean b = system.editAuthorDescription(aid, desc);
+
 
 		if(b) return "Author description edited";
 		else return "Action not completed. Please try again";

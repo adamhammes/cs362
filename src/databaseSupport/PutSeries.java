@@ -27,7 +27,7 @@ class PutSeries extends Putable{
 		
 		removeOldBooks(conn);
 		
-		return false;
+		return true;
 	}
 
 	
@@ -77,7 +77,6 @@ class PutSeries extends Putable{
 		for (BookInterface book : series.getBooks()){
 			rmstmt.setString(i++, book.getId());
 		}
-		System.out.println(rmstmt);
 		rmstmt.executeUpdate();
 					
 	}

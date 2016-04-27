@@ -165,6 +165,7 @@ public class Book implements BookInterface, Comparable<BookInterface> {
 	public boolean addDescription(String desc){
 		if(!this.description.isEmpty())
 			return false;
+
 		this.description = desc;
 		return true;
 	}

@@ -1,11 +1,27 @@
+adduser-u
+addbook-u-x-Twig
+addversion-u-x-documents/Twig.mobi-mobi
 
+addbook-u-y-Twig 2
+addbook-u-z-Twig 3
+
+addauthor-i-Adam Hammes
+addauthortobook-i-x
+
+createseries-s-Parahumans
+
+
+addbooktoseries-x-s
+searchbyseries-s
+removebookfromseries-x-s
+searchbyseries-s
 
 
 
 // Steven's portion (assumes user with id u, book with id x,y,z , and author with id i)
 addRating-x-8-Amazing book
 addRating-y-10-My favorite book ever
-addRating-z-3-Book kinda sucked
+addRating-z-3-Up there with Twilight IMO
 
 displayAllBooks-u
 
@@ -18,5 +34,26 @@ deleteDescription-x
 
 addAuthorDescription-i-Fantastic author
 editAuthorDescription-i-Fantastic author minus the latest book
-retrieveDescription-i
-deleteDescription-i
+retrieveAuthorDescription-i
+deleteAuthorDescription-i
+
+//Nicks Stuff
+addtag-x-funny-u
+getbookswithtag-funny-u
+removetag-x-funny-u
+getbookswithtag-funny-u
+
+addrating-x-4-AWESOME BOOK
+getreviews-x
+removerating-x-5
+getreviews-x
+
+listversions-x-u
+getversion-x-tex-u
+getversion-x-mobi-u
+getbookswithauthor-i
+
+
+deleteversion-u-x-mobi
+deletebook-x
+deleteuser-u
