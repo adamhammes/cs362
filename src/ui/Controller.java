@@ -258,10 +258,10 @@ public class Controller implements iController{
 		ArrayList<String> titles = new ArrayList<>();
 		String result = "";
 		for(BookInterface b : l){
-			if(!titles.contains(b.getTitle())){
+		//	if(!titles.contains(b.getTitle())){
 				result += b.getTitle() + "\n";
-				titles.add(b.getTitle());
-			}
+			//	titles.add(b.getTitle());
+		//	}
 			
 		}
 		return result;
@@ -299,10 +299,10 @@ public class Controller implements iController{
 		ArrayList<String> titles = new ArrayList<>();
 		String result = "";
 		for(BookInterface b : l){
-			if(!titles.contains(b.getTitle())){
+			//if(!titles.contains(b.getTitle())){
 				result += b.getTitle() + "\n";
-				titles.add(b.getTitle());
-			}
+			//	titles.add(b.getTitle());
+		//	}
 		}
 		return result;
 	}
