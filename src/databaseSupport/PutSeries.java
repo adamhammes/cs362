@@ -27,7 +27,7 @@ class PutSeries extends Putable{
 		
 		removeOldBooks(conn);
 		
-		return false;
+		return true;
 	}
 
 	
